@@ -12,13 +12,17 @@ public class Player : MonoBehaviour
     [SerializeField] private GameManager _gm;
 
     private Rigidbody2D _rb;
+    private HealthSystem _health;
     private bool _isPressedUpButton = false;  
-    private bool _isPressedDownButton = false;
     private float _rotation;
+
+    private bool _isPressedChargeButton = false;
+    private bool _isCharging = false;
 
     private void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
+        _health = GetComponent<HealthSystem>();
     }
 
     private void Update()
@@ -39,16 +43,16 @@ public class Player : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
             _isPressedUpButton = true;
         else if (Input.GetMouseButtonDown(1))
-            _isPressedDownButton = true;
+            _isPressedChargeButton = true;
 
         if (Input.GetMouseButtonUp(0))
             _isPressedUpButton = false;
         else if (Input.GetMouseButtonUp(1))
-            _isPressedDownButton = false;
+            _isPressedChargeButton = false;
 
         if (_isPressedUpButton)
             _rb.AddForce(Vector2.up * _forceUp, ForceMode2D.Force);
-        else if(_isPressedDownButton) 
+        else if(_isPressedChargeButton) 
             _rb.AddForce(Vector2.down * _forceDown, ForceMode2D.Force);
 
         if (_rb.velocity.y > _forceUp)
@@ -57,11 +61,16 @@ public class Player : MonoBehaviour
 
     private void Charge()
     {
-        if (_isPressedDownButton && transform.position.x < 2.75f)
+        if (_isPressedChargeButton && transform.position.x < 4f)
+        {
+            _isCharging = true;
             _rb.AddForce(Vector2.right * _rightSpeed);
-
+        }
         else if (transform.position.x > 0.15f)
+        {
+            _isCharging = false;
             _rb.AddForce(Vector2.left * _rightSpeed);
+        }
 
         if (transform.position.x < 0.1f)
             _rb.AddForce(Vector2.right * _rightSpeed);
@@ -71,10 +80,19 @@ public class Player : MonoBehaviour
     {
         if (collision.CompareTag("destroyObstacle"))
         {
+            _health.TakeDamage(1);
             if (DebuginggManager.CanDebugging)
                 DebuginggManager.DebugLog("isDestroyObstacle");
         }
-        else if (collision.CompareTag("nonDestroyObstacle")) _gm.GameOver();
-        else if (collision.CompareTag("Scoring")) _gm.IncreaseScore(1);
+        else if (collision.CompareTag("nonDestroyObstacle"))
+        {
+            _health.TakeMaxDamage();
+            _gm.GameOver();
+        }
+        else if (collision.CompareTag("Scoring"))
+            if(_isCharging)
+                _gm.IncreaseScore(2);
+            else
+                _gm.IncreaseScore(1);
     }
 }

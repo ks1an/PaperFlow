@@ -2,10 +2,18 @@ using UnityEngine;
 
 public class Spawner : MonoBehaviour
 {
+    [SerializeField] private float _rightDistanceFromCamera = 5;
+
     [SerializeField] private ObstacleList[] _prefabs = new ObstacleList[1];
     [SerializeField] private float _spawnRate = 1f;
     [SerializeField] private Transform _obstacleContainer;
+
     private int _spawnCount;
+
+    private void Start()
+    {
+        this.transform.position = Camera.main.ScreenToWorldPoint(new Vector3(Camera.main.pixelWidth + _rightDistanceFromCamera, Camera.main.pixelHeight / 2, 10));
+    }
 
     private void OnEnable()
     {

@@ -6,9 +6,12 @@ public class GameManager : MonoBehaviour
     public static bool IsPlayingRound = false;
 
     [SerializeField] private TextMeshProUGUI _scoreText;
+    [SerializeField] private ObstaclesContainerManager _obstacleManager;
+
+    [Header("Player")]
     [SerializeField] private GameObject _player;
     [SerializeField] private Vector2 _startPos;
-    [SerializeField] private ObstaclesContainerManager _obstacleManager;
+    [SerializeField] private HealthSystem _playerHealth;
 
     private int _score = 0;
     private int _recordScore = 0;
@@ -25,6 +28,9 @@ public class GameManager : MonoBehaviour
         if (!IsPlayingRound)
             if (Input.GetKeyDown(KeyCode.Space))
                 GameStart();
+
+        if (_playerHealth.CurrentHelth == 0)
+            GameOver();
     }
 
     public void GameOver()
@@ -50,6 +56,7 @@ public class GameManager : MonoBehaviour
     {
         IsPlayingRound = true;
 
+        _playerHealth.HealthToMax();
         _player.transform.position = _startPos;
         _obstacleManager.DestoryAllObstacles();
 
