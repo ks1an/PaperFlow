@@ -4,20 +4,20 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     [Header("Stats")]
-    [SerializeField] private float _forceUp = 8.25f;   
+    [SerializeField] private float _forceUp = 8.25f;
     [SerializeField] private float _forceDown = 1.25f;
     [SerializeField] private float _rightSpeed = 5f;
+    [SerializeField] private float _maxChargingPosX = 4f;
 
     [Header("")]
     [SerializeField] private GameManager _gm;
 
     private Rigidbody2D _rb;
     private HealthSystem _health;
-    private bool _isPressedUpButton = false;  
+    private bool _isPressedUpButton = false;
     private float _rotation;
 
     private bool _isPressedChargeButton = false;
-    private bool _isCharging = false;
 
     private void Awake()
     {
@@ -29,7 +29,7 @@ public class Player : MonoBehaviour
     {
         Movement();
 
-        if (_rb.velocity.y != 0) _rotation  = _rb.velocity.y * 2;
+        if (_rb.velocity.y != 0) _rotation = _rb.velocity.y * 2;
         transform.eulerAngles = new Vector3(_rotation + 60, 0, -90);
     }
 
@@ -52,7 +52,7 @@ public class Player : MonoBehaviour
 
         if (_isPressedUpButton)
             _rb.AddForce(Vector2.up * _forceUp, ForceMode2D.Force);
-        else if(_isPressedChargeButton) 
+        else if (_isPressedChargeButton)
             _rb.AddForce(Vector2.down * _forceDown, ForceMode2D.Force);
 
         if (_rb.velocity.y > _forceUp)
@@ -61,16 +61,10 @@ public class Player : MonoBehaviour
 
     private void Charge()
     {
-        if (_isPressedChargeButton && transform.position.x < 4f)
-        {
-            _isCharging = true;
+        if (_isPressedChargeButton && transform.position.x < _maxChargingPosX)
             _rb.AddForce(Vector2.right * _rightSpeed);
-        }
         else if (transform.position.x > 0.15f)
-        {
-            _isCharging = false;
             _rb.AddForce(Vector2.left * _rightSpeed);
-        }
 
         if (transform.position.x < 0.1f)
             _rb.AddForce(Vector2.right * _rightSpeed);
@@ -90,7 +84,7 @@ public class Player : MonoBehaviour
             _gm.GameOver();
         }
         else if (collision.CompareTag("Scoring"))
-            if(_isCharging)
+            if (transform.position.x >= _maxChargingPosX / 2)
                 _gm.IncreaseScore(2);
             else
                 _gm.IncreaseScore(1);
