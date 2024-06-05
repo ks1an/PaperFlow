@@ -3,91 +3,95 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D), typeof(Collider2D))]
 public class Player : MonoBehaviour
 {
-    [Header("Stats")]
-    [SerializeField] private float _forceUp = 8.25f;
-    [SerializeField] private float _forceDown = 1.25f;
-    [SerializeField] private float _rightSpeed = 5f;
-    [SerializeField] private float _maxChargingPosX = 4f;
+    public float ForceUp { get => _forceUp; set => ForceUp = _forceUp; }
+    public float ForceDown { get => _forceDown; set => ForceDown = _forceDown; }
+    public float ChargeSpeed { get => _chargeSpeed; set => ChargeSpeed = _chargeSpeed; }
+    public float CorrectionSpeed { get => _correctionSpeed; set => CorrectionSpeed = _correctionSpeed; }
+    public float MaxChargingPoxX { get => _maxChargingPoxX; set => MaxChargingPoxX = _maxChargingPoxX; }
+    public int NeedStaminaForBall { get => _needStaminaForBall; set => NeedStaminaForBall = _needStaminaForBall; }
 
-    [SerializeField] private GameController _gameController;
-    [SerializeField] private Score _score;
+    [SerializeField]
+    float _forceUp = 54f,
+    _forceDown = 16.5f,
+    _chargeSpeed = 21f,
+    _correctionSpeed = 21f,
+    _maxChargingPoxX = 4f;
 
-    private Rigidbody2D _rb;
-    private HealthSystem _health;
-    private bool _isPressedUpButton = false;
-    private float _rotation;
+    [Header("Spells stamina cost")]
+    [SerializeField] int _needStaminaForBall = 80;
 
-    private bool _isPressedChargeButton = false;
+    [Header("")]
+    [SerializeField] Sprite _ballSprite;
+    [SerializeField] Sprite _planeSprite;
+
+    [Header("")]
+    [SerializeField] GameController _controller;
+    [SerializeField] Score _score;
+
+    [Header("Cheat Settings")]
+    [SerializeField] bool _infinityHealth;
+    [SerializeField] bool _infinityStamina;
+
+    Health _health;
+    Stamina _stamina;
+    FsmPlayer _fsm;
+    Rigidbody2D _rb;
+    SpriteRenderer _renderer;
+    Collider2D _planeCollider, _ballCollider;
 
     private void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
-        _health = GetComponent<HealthSystem>();
+        _health = GetComponent<Health>();
+        _stamina = GetComponent<Stamina>();
+        _renderer = GetComponent<SpriteRenderer>();
+        _planeCollider = GetComponent<PolygonCollider2D>();
+        _ballCollider = GetComponent<CircleCollider2D>();   
+
+        _stamina.SetInfinityStamina(_infinityStamina);
+        _health.SetInfinityHealth(_infinityHealth);
     }
 
-    private void Update()
+    void Start()
     {
-        Movement();
+        _fsm = new FsmPlayer();
 
-        if (_rb.velocity.y != 0) _rotation = _rb.velocity.y * 2;
-        transform.eulerAngles = new Vector3(_rotation + 60, 0, -90);
+        _fsm.AddState(new MovementState(_fsm, this, _rb, _stamina));
+        _fsm.AddState(new IdleState(_fsm));
+        _fsm.AddState(new ChargeState(_fsm, this, _rb, _stamina));
+        _fsm.AddState(new BallState(_fsm, _rb, this, _renderer, _ballSprite, _planeSprite, _ballCollider, _planeCollider));
+
+        _fsm.SetState<MovementState>();
     }
 
-    private void FixedUpdate()
-    {
-        Charge();
-    }
+    public void SetIdleState() => _fsm.SetState<IdleState>();
+    public void SetMovementState() => _fsm.SetState<MovementState>();
 
-    private void Movement()
-    {
-        if (Input.GetMouseButtonDown(0))
-            _isPressedUpButton = true;
-        else if (Input.GetMouseButtonDown(1))
-            _isPressedChargeButton = true;
-
-        if (Input.GetMouseButtonUp(0))
-            _isPressedUpButton = false;
-        else if (Input.GetMouseButtonUp(1))
-            _isPressedChargeButton = false;
-
-        if (_isPressedUpButton)
-            _rb.AddForce(Vector2.up * _forceUp, ForceMode2D.Force);
-        else if (_isPressedChargeButton)
-            _rb.AddForce(Vector2.down * _forceDown, ForceMode2D.Force);
-
-        if (_rb.velocity.y > _forceUp)
-            _rb.velocity = new Vector3(0, _forceUp, 0);
-    }
-
-    private void Charge()
-    {
-        if (_isPressedChargeButton && transform.position.x < _maxChargingPosX)
-            _rb.AddForce(Vector2.right * _rightSpeed);
-        else if (transform.position.x > 0.15f)
-            _rb.AddForce(Vector2.left * _rightSpeed);
-
-        if (transform.position.x < 0.1f)
-            _rb.AddForce(Vector2.right * _rightSpeed);
-    }
+    void Update() => _fsm.Update();
+    void FixedUpdate() => _fsm.FixedUpdate();
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("destroyObstacle"))
         {
-            _health.TakeDamage(1);
-            if (_health.CurrentHelth == 0)
-                _gameController.SetGameOverState();
-            DebuginggManager.DebugLog("isDestroyObstacle");
-        }
-        else if (collision.CompareTag("nonDestroyObstacle"))
-        {
-            _health.TakeMaxDamage();
-            _gameController.SetGameOverState();
+            if (_fsm.CurrentState.GetType() == typeof(BallState))
+                Destroy(collision.gameObject);
+            else
+            {
+                _health.TakeDamage(1);
+                if (_health.CurrentHelth == 0)
+                    _controller.SetGameOverState();
+            }
         }
         else if (collision.CompareTag("Scoring"))
-            if (transform.position.x >= _maxChargingPosX / 2)
+            if (transform.position.x >= _maxChargingPoxX / 2)
                 _score.IncreaseScore(2);
             else
                 _score.IncreaseScore(1);
+        else if (collision.CompareTag("nonDestroyObstacle"))
+        {
+            _health.TakeMaxDamage();
+            _controller.SetGameOverState();
+        }
     }
 }

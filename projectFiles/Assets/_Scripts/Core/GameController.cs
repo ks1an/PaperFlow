@@ -14,7 +14,8 @@ public class GameController : MonoBehaviour
 
     [Header("Player")]
     [SerializeField] private Player _player;
-    [SerializeField] private HealthSystem _playerHealthSystem;
+    [SerializeField] private Health _playerHealthSystem;
+    [SerializeField] private Stamina _playerStaminaSystem;
     [SerializeField] private Vector2 _startPos;
 
     [Header("Other")]
@@ -30,9 +31,9 @@ public class GameController : MonoBehaviour
         _fsm = new FsmGame();
 
         _fsm.AddState(new Menu(_fsm, _menuUI, _gameplayUI, _player, _startPos));
-        _fsm.AddState(new StartGame(_fsm,  _gameplayUI, _score, _playerHealthSystem, _obstacleManager));
+        _fsm.AddState(new StartGame(_fsm,  _gameplayUI, _score, _playerHealthSystem, _obstacleManager, _playerStaminaSystem));
         _fsm.AddState(new Play(_fsm, _gameplayUI, _scoreText, _score));
-        _fsm.AddState(new Pause(_fsm, _pauseUI, _scoreText, _score));
+        _fsm.AddState(new Pause(_fsm, _pauseUI, _scoreText, _score, _player));
         _fsm.AddState(new GameOver(_fsm, _gameOverUI, _score));
 
         _fsm.SetState<Menu>();

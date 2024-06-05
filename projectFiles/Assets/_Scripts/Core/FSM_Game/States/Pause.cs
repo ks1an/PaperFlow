@@ -6,12 +6,14 @@ public class Pause : FsmGameState
     private GameObject _pauseUI;
     private TextMeshProUGUI _scoreText;
     private Score _score;
+    private Player _player;
 
-    public Pause(FsmGame fsmUI, GameObject pauseUI, TextMeshProUGUI scoreText, Score score) : base(fsmUI)
+    public Pause(FsmGame fsmUI, GameObject pauseUI, TextMeshProUGUI scoreText, Score score, Player player) : base(fsmUI)
     {
         _pauseUI = pauseUI;
         _scoreText = scoreText;
         _score = score;
+        _player = player;
     }
 
     public override void Enter()
@@ -20,6 +22,7 @@ public class Pause : FsmGameState
 
         Time.timeScale = 0f;
 
+        _player.SetIdleState();
         _pauseUI.SetActive(true);
         FocusBackgroundPanel.FocusBackPanel.SetActive(true);
     }
@@ -28,6 +31,7 @@ public class Pause : FsmGameState
     {
         base.Exit();
 
+        _player.SetMovementState();
         _pauseUI.SetActive(false);
     }
 

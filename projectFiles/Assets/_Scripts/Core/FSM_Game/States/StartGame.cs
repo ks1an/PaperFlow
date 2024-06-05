@@ -6,14 +6,16 @@ public class StartGame : FsmGameState
     private Score _score;
     private ObstaclesContainerManager _obstacleManager;
 
-    private HealthSystem _playerHP;
+    private Health _playerHP;
+    private Stamina _playerStamina;
 
-    public StartGame(FsmGame fsmUI, GameObject gameplayUI, Score score, HealthSystem playerHP, ObstaclesContainerManager obstacleManager) : base(fsmUI)
+    public StartGame(FsmGame fsmUI, GameObject gameplayUI, Score score, Health playerHP, ObstaclesContainerManager obstacleManager, Stamina playerStamina) : base(fsmUI)
     {
         _gameplayUI = gameplayUI;
         _score = score;
         _playerHP = playerHP;
         _obstacleManager = obstacleManager;
+        _playerStamina = playerStamina;
     }
 
     public override void Enter()
@@ -23,6 +25,7 @@ public class StartGame : FsmGameState
         _obstacleManager.DestoryAllObstacles();
         _score.SetCurrentScoreToZero();
         _playerHP.HealthToMax();
+        _playerStamina.SetStandartStamina();
 
         _gameplayUI.SetActive(true);
 
