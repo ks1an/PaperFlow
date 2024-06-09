@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class ObstaclesContainerManager : MonoBehaviour
+public class ObstaclesContainer : MonoBehaviour
 {
     public void DestoryAllObstacles()
     {

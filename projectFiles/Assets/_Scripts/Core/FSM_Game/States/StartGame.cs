@@ -2,30 +2,37 @@ using UnityEngine;
 
 public class StartGame : FsmGameState
 {
-    private GameObject _gameplayUI;
-    private Score _score;
-    private ObstaclesContainerManager _obstacleManager;
+    GameObject _gameplayUI;
+    Score _score;
+    Timer _timer;
+    ObstaclesContainer _obstacleContainer;
+    ObstaclesManager _obstaclesManager;
 
-    private Health _playerHP;
-    private Stamina _playerStamina;
+    Health _playerHP;
+    Stamina _playerStamina;
 
-    public StartGame(FsmGame fsmUI, GameObject gameplayUI, Score score, Health playerHP, ObstaclesContainerManager obstacleManager, Stamina playerStamina) : base(fsmUI)
+    public StartGame(FsmGame fsmUI, GameObject gameplayUI, Score score, Health playerHP, ObstaclesContainer obstacleManager, Stamina playerStamina, Timer timer, ObstaclesManager obstaclesManager) : base(fsmUI)
     {
         _gameplayUI = gameplayUI;
         _score = score;
         _playerHP = playerHP;
-        _obstacleManager = obstacleManager;
+        _obstacleContainer = obstacleManager;
         _playerStamina = playerStamina;
+        _timer = timer;
+        _obstaclesManager = obstaclesManager;
     }
 
     public override void Enter()
     {
         base.Enter();
 
-        _obstacleManager.DestoryAllObstacles();
-        _score.SetCurrentScoreToZero();
+        _obstacleContainer.DestoryAllObstacles();
+        _obstaclesManager.SetStartComplexity();
+
         _playerHP.HealthToMax();
         _playerStamina.SetStandartStamina();
+        _score.SetCurrentScoreToZero();
+        _timer.StartTimer();
 
         _gameplayUI.SetActive(true);
 

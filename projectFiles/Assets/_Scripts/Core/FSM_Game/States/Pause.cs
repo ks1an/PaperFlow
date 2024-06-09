@@ -3,17 +3,19 @@ using UnityEngine;
 
 public class Pause : FsmGameState
 {
-    private GameObject _pauseUI;
-    private TextMeshProUGUI _scoreText;
-    private Score _score;
-    private Player _player;
+    GameObject _pauseUI;
+    TextMeshProUGUI _scoreText;
+    Score _score;
+    Timer _timer;
+    Player _player;
 
-    public Pause(FsmGame fsmUI, GameObject pauseUI, TextMeshProUGUI scoreText, Score score, Player player) : base(fsmUI)
+    public Pause(FsmGame fsmUI, GameObject pauseUI, TextMeshProUGUI scoreText, Score score, Player player, Timer timer) : base(fsmUI)
     {
         _pauseUI = pauseUI;
         _scoreText = scoreText;
         _score = score;
         _player = player;
+        _timer = timer;
     }
 
     public override void Enter()
@@ -21,6 +23,8 @@ public class Pause : FsmGameState
         base.Enter();
 
         Time.timeScale = 0f;
+
+        _timer.stop = true;
 
         _player.SetIdleState();
         _pauseUI.SetActive(true);

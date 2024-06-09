@@ -11,6 +11,7 @@ public class GameController : MonoBehaviour
 
     [Header("UI elements")]
     [SerializeField] private TextMeshProUGUI _scoreText;
+    [SerializeField] private GameObject _pauseGameBttn;
 
     [Header("Player")]
     [SerializeField] private Player _player;
@@ -20,7 +21,9 @@ public class GameController : MonoBehaviour
 
     [Header("Other")]
     [SerializeField] private Score _score;
-    [SerializeField] private ObstaclesContainerManager _obstacleManager;
+    [SerializeField] private Timer _timer;
+    [SerializeField] private ObstaclesManager _obstaclesManager;
+    [SerializeField] private ObstaclesContainer _obstacleContainer;
 
     private FsmGame _fsm;
 
@@ -31,10 +34,10 @@ public class GameController : MonoBehaviour
         _fsm = new FsmGame();
 
         _fsm.AddState(new Menu(_fsm, _menuUI, _gameplayUI, _player, _startPos));
-        _fsm.AddState(new StartGame(_fsm,  _gameplayUI, _score, _playerHealthSystem, _obstacleManager, _playerStaminaSystem));
-        _fsm.AddState(new Play(_fsm, _gameplayUI, _scoreText, _score));
-        _fsm.AddState(new Pause(_fsm, _pauseUI, _scoreText, _score, _player));
-        _fsm.AddState(new GameOver(_fsm, _gameOverUI, _score));
+        _fsm.AddState(new StartGame(_fsm,  _gameplayUI, _score, _playerHealthSystem, _obstacleContainer, _playerStaminaSystem, _timer, _obstaclesManager));
+        _fsm.AddState(new Play(_fsm, _gameplayUI, _scoreText, _score, _pauseGameBttn, _timer));
+        _fsm.AddState(new Pause(_fsm, _pauseUI, _scoreText, _score, _player, _timer));
+        _fsm.AddState(new GameOver(_fsm, _gameOverUI, _score, _timer));
 
         _fsm.SetState<Menu>();
     }
@@ -42,6 +45,7 @@ public class GameController : MonoBehaviour
     private void Update() => _fsm.Update();
 
     public void SetMenuState() => _fsm.SetState<Menu>();
+    public void SetPauseState() => _fsm.SetState<Pause>();
     public void SetPlayState() => _fsm.SetState<Play>();
     public void SetGameOverState() => _fsm.SetState<GameOver>();
 }

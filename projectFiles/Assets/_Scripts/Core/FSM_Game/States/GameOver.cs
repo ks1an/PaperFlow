@@ -2,19 +2,22 @@ using UnityEngine;
 
 public class GameOver : FsmGameState
 {
-    private GameObject _gameOverUI;
-    private Score _score;
+    GameObject _gameOverUI;
+    Score _score;
+    Timer _timer;
 
-    public GameOver(FsmGame fsmUI, GameObject gameOverUI, Score score) : base(fsmUI)
+    public GameOver(FsmGame fsmUI, GameObject gameOverUI, Score score, Timer timer) : base(fsmUI)
     {
         _gameOverUI = gameOverUI;
         _score = score;
+        _timer = timer;
     }
     public override void Enter()
     {
         base.Enter();
 
         Time.timeScale = 0f;
+        _timer.CompleteTimer();
 
         _gameOverUI.SetActive(true);
         FocusBackgroundPanel.FocusBackPanel.SetActive(true);
