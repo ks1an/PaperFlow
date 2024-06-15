@@ -46,8 +46,10 @@ public class BallState : FSMPlayerState
         if (Input.GetKeyUp(KeyCode.S))
         {
             _rb.AddForce(Vector2.up * _player.ForceUp * Time.fixedDeltaTime, ForceMode2D.Impulse);
-            Fsm.SetState<MovementState>();
-            return;
+            if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow) || Input.GetMouseButton(1))
+                Fsm.SetState<ChargeState>();
+            else
+                Fsm.SetState<MovementState>();
         }
     }
 }

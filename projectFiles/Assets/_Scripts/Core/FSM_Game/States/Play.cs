@@ -9,7 +9,8 @@ public class Play : FsmGameState
     TextMeshProUGUI _scoreText;
     GameObject _pauseBttn;
 
-    public Play(FsmGame fsmUI, GameObject gameplayUI, TextMeshProUGUI scoreText, Score score, GameObject pauseGameBttn, Timer timer) : base(fsmUI)
+    public Play(FsmGame fsmUI, GameObject gameplayUI, TextMeshProUGUI scoreText, Score score, GameObject pauseGameBttn,
+        Timer timer) : base(fsmUI)
     {
         _gameplayUI = gameplayUI;
         _scoreText = scoreText;

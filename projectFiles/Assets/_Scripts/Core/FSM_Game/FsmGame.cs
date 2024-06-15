@@ -15,7 +15,7 @@ public class FsmGame
 
         if(StateCurrent != null && StateCurrent.GetType() == type)
         {
-            DebuginggManager.DebugLog($"Trying to toggle {StateCurrent} state on FsmGame, but it's already on");
+            DebuginggManager.Log($"Trying to toggle {StateCurrent} state on FsmGame, but it's already on");
             return;
         }
 
@@ -27,7 +27,7 @@ public class FsmGame
 
             StateCurrent.Enter();
 
-            DebuginggManager.DebugLog($"The interface has entered the state {StateCurrent}");
+            DebuginggManager.Log($"The interface has entered the state {StateCurrent}");
         }
     }
 

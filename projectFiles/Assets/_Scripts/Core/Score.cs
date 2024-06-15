@@ -9,7 +9,7 @@ public class Score : MonoBehaviour
     {
         if (value < 0)
         {
-            DebuginggManager.DebugLogError("Trying to increase the count by a negative number");
+            DebuginggManager.LogError("Trying to increase the count by a negative number");
 
             return;
         }

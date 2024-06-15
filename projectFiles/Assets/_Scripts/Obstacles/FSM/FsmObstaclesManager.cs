@@ -15,7 +15,7 @@ public class FsmObstaclesManager
 
         if (CurrentState != null && CurrentState.GetType() == type)
         {
-            DebuginggManager.DebugLog($"Trying to toggle {CurrentState} state on FsmObstaclesManager, but it's already on");
+            DebuginggManager.Log($"Trying to toggle {CurrentState} state on FsmObstaclesManager, but it's already on");
             return;
         }
 
@@ -27,7 +27,7 @@ public class FsmObstaclesManager
 
             CurrentState.Enter();
 
-            DebuginggManager.DebugLog($"The ObstacleManager has entered the state {CurrentState}");
+            DebuginggManager.Log($"The ObstacleManager has entered the state {CurrentState}");
         }
     }
 }

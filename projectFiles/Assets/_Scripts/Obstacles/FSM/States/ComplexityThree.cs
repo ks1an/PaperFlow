@@ -1,9 +1,9 @@
 public class ComplexityThree : FsmObstaclesManagerState
 {
-    ObstaclesManager _manager;
+    ObstacleManager _manager;
     Timer _timer;
 
-    public ComplexityThree(FsmObstaclesManager fsm, ObstaclesManager manager, Timer timer) : base(fsm)
+    public ComplexityThree(FsmObstaclesManager fsm, ObstacleManager manager, Timer timer) : base(fsm)
     {
         _manager = manager; 
         _timer = timer;

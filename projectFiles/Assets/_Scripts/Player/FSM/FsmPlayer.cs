@@ -15,7 +15,7 @@ public class FsmPlayer
 
         if (CurrentState != null && CurrentState.GetType() == type)
         {
-            DebuginggManager.DebugLog($"Trying to toggle {CurrentState} state on FsmPlayer, but it's already on");
+            DebuginggManager.Log($"Trying to toggle {CurrentState} state on FsmPlayer, but it's already on");
             return;
         }
 
@@ -27,7 +27,7 @@ public class FsmPlayer
 
             CurrentState.Enter();
 
-            DebuginggManager.DebugLog($"The player has entered the state {CurrentState}");
+            DebuginggManager.Log($"The player has entered the state {CurrentState}");
         }
     }
 

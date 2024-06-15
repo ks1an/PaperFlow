@@ -2,10 +2,10 @@ using TMPro;
 
 public class ComplexityOne : FsmObstaclesManagerState
 {
-    ObstaclesManager _obstacleManager;
+    ObstacleManager _obstacleManager;
     Timer _timer;
 
-    public ComplexityOne(FsmObstaclesManager fsm, ObstaclesManager manager, Timer timer) : base(fsm)
+    public ComplexityOne(FsmObstaclesManager fsm, ObstacleManager manager, Timer timer) : base(fsm)
     {
         _obstacleManager = manager;
         _timer = timer;

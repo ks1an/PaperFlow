@@ -5,13 +5,15 @@ public class StartGame : FsmGameState
     GameObject _gameplayUI;
     Score _score;
     Timer _timer;
+    RandomWithSeed _random;
     ObstaclesContainer _obstacleContainer;
-    ObstaclesManager _obstaclesManager;
+    ObstacleManager _obstaclesManager;
 
     Health _playerHP;
     Stamina _playerStamina;
 
-    public StartGame(FsmGame fsmUI, GameObject gameplayUI, Score score, Health playerHP, ObstaclesContainer obstacleManager, Stamina playerStamina, Timer timer, ObstaclesManager obstaclesManager) : base(fsmUI)
+    public StartGame(FsmGame fsmUI, GameObject gameplayUI, Score score, Health playerHP, ObstaclesContainer obstacleManager, Stamina playerStamina, 
+        Timer timer, ObstacleManager obstaclesManager, RandomWithSeed random) : base(fsmUI)
     {
         _gameplayUI = gameplayUI;
         _score = score;
@@ -20,6 +22,7 @@ public class StartGame : FsmGameState
         _playerStamina = playerStamina;
         _timer = timer;
         _obstaclesManager = obstaclesManager;
+        _random = random;
     }
 
     public override void Enter()
@@ -27,6 +30,7 @@ public class StartGame : FsmGameState
         base.Enter();
 
         _obstacleContainer.DestoryAllObstacles();
+        _random.GetFirstSeed();
         _obstaclesManager.SetStartComplexity();
 
         _playerHP.HealthToMax();
@@ -35,6 +39,8 @@ public class StartGame : FsmGameState
         _timer.StartTimer();
 
         _gameplayUI.SetActive(true);
+
+        _obstaclesManager.StartSpawning();
 
         Fsm.SetState<Play>();
     }

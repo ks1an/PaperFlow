@@ -1,8 +1,8 @@
 public class ComplexityFive : FsmObstaclesManagerState
 {
-    ObstaclesManager _manager;
+    ObstacleManager _manager;
 
-    public ComplexityFive(FsmObstaclesManager fsm, ObstaclesManager manager) : base(fsm)
+    public ComplexityFive(FsmObstaclesManager fsm, ObstacleManager manager) : base(fsm)
     {
         _manager = manager;
     }

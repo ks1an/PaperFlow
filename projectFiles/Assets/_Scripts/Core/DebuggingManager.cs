@@ -3,18 +3,18 @@ using UnityEngine;
 public class DebuginggManager : MonoBehaviour
 {
     public static bool CanDebugging;
-    [SerializeField] private bool _canDebugging;
+    [SerializeField] bool _canDebugging;
 
     private void Start() => CanDebugging = _canDebugging;
 
-    public static void DebugLog(string str)
+    public static void Log(string str)
     {
-        if (!CanDebugging | str == "" || str == null) return;
+        if (!CanDebugging || str == "" || str == null) return;
 
         Debug.Log(str);
     }
 
-    public static void DebugLogError(string str)
+    public static void LogError(string str)
     {
         if (str == "" || str == null) return;
 

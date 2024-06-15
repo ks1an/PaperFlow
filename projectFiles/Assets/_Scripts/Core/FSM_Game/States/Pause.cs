@@ -8,14 +8,17 @@ public class Pause : FsmGameState
     Score _score;
     Timer _timer;
     Player _player;
+    ObstacleManager _obstaclesManager;
 
-    public Pause(FsmGame fsmUI, GameObject pauseUI, TextMeshProUGUI scoreText, Score score, Player player, Timer timer) : base(fsmUI)
+    public Pause(FsmGame fsmUI, GameObject pauseUI, TextMeshProUGUI scoreText, Score score, Player player, 
+        Timer timer, ObstacleManager obstaclesManager) : base(fsmUI)
     {
         _pauseUI = pauseUI;
         _scoreText = scoreText;
         _score = score;
         _player = player;
         _timer = timer;
+        _obstaclesManager = obstaclesManager;
     }
 
     public override void Enter()
@@ -25,6 +28,7 @@ public class Pause : FsmGameState
         Time.timeScale = 0f;
 
         _timer.stop = true;
+        _obstaclesManager.PauseSpawning();
 
         _player.SetIdleState();
         _pauseUI.SetActive(true);
@@ -37,6 +41,8 @@ public class Pause : FsmGameState
 
         _player.SetMovementState();
         _pauseUI.SetActive(false);
+
+        _obstaclesManager.ResumSpawning();
     }
 
     public override void Update()

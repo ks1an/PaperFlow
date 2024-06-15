@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class ObstaclesManager : MonoBehaviour
+public class ObstacleManager : MonoBehaviour
 {
     public static float CurrentSpeedObstacles { get; private set; } = 5f;
 
@@ -19,6 +19,7 @@ public class ObstaclesManager : MonoBehaviour
     #endregion
 
     [SerializeField] Timer _timer;
+    [SerializeField] Spawner _spawner;
 
     FsmObstaclesManager _fsm;
 
@@ -41,4 +42,14 @@ public class ObstaclesManager : MonoBehaviour
     public void SetSpeed(float value) => CurrentSpeedObstacles = value;
 
     public void SetStartComplexity() => _fsm.SetState<ComplexityOne>();
+
+    #region Spawning Obstacles
+    public void StartSpawning() => _spawner.StartSpawning();
+
+    public void PauseSpawning() => _spawner.PauseSpawning();
+
+    public void ResumSpawning() => _spawner.ResumeSpawning();
+
+    public void StopPawning() => _spawner.StopSpawning();
+    #endregion
 }
