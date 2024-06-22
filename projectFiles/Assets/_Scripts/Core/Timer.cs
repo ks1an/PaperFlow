@@ -6,10 +6,11 @@ using UnityEngine;
 public class Timer : MonoBehaviour
 {
     public event Action OnComplexityTimeTicked;
-    public bool stop;
+
     public string result;
 
     [SerializeField] int _startMin, _startSec;
+    [SerializeField] bool stop;
 
     int _min, _sec;
     string _m, _s;
@@ -21,21 +22,6 @@ public class Timer : MonoBehaviour
     {
         if (_startMin > 0 && _startMin <= 59) _min = _startMin; else _startMin = 0;
         if (_startSec > 0 && _startSec <= 59) _sec = _startSec; else _startSec = 0;
-    }
-
-    public void StartTimer()
-    {
-        if (stop)
-            stop = false;
-
-        ResetTimer();
-        StartCoroutine(RepeatingFunction());
-    }
-
-    public void CompleteTimer()
-    {
-        StopCoroutine(RepeatingFunction());
-        CurrentTime();
     }
 
     public void SetComplexityTriggerTime(int complexityNumber, int min, int sec)
@@ -91,5 +77,38 @@ public class Timer : MonoBehaviour
             _currentComplexity++;
             OnComplexityTimeTicked?.Invoke();
         }
+    }
+
+    void StartTimer()
+    {
+        if (stop)
+            stop = false;
+
+        ResetTimer();
+        StartCoroutine(RepeatingFunction());
+    }
+
+    void ResumeTimer() => stop = false;
+    void PauseTimer() => stop = true;
+
+    void CompleteTimer()
+    {
+        StopCoroutine(RepeatingFunction());
+        CurrentTime();
+    }
+
+    private void OnEnable()
+    {
+        GameController.onStartGameState += StartTimer;
+        GameController.onPlayState += ResumeTimer;
+        GameController.onPauseState += PauseTimer;
+        GameController.onGameOverState += CompleteTimer;
+    }
+    private void OnDisable()
+    {
+        GameController.onStartGameState -= StartTimer;
+        GameController.onPlayState -= ResumeTimer;
+        GameController.onPauseState -= PauseTimer;
+        GameController.onGameOverState -= CompleteTimer;
     }
 }

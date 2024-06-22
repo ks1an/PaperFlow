@@ -1,9 +1,12 @@
+using TMPro;
 using UnityEngine;
 
 public class Score : MonoBehaviour
 {
     public int CurrentScore { get; private set; }
     public int RecordScore { get; private set; }
+
+    [SerializeField] TextMeshProUGUI _scoreText;
 
     public void IncreaseScore(int value)
     {
@@ -15,7 +18,36 @@ public class Score : MonoBehaviour
         }
 
         CurrentScore += value;
+        _scoreText.text = CurrentScore.ToString();
     }
-    public void SetNewRecord() => RecordScore = CurrentScore;
-    public void SetCurrentScoreToZero() => CurrentScore = 0;
+
+    void SetScoreTextOnPlay() => _scoreText.text = CurrentScore.ToString();
+
+    void SetScoreTextOnPause() => _scoreText.text = $"{CurrentScore}/{RecordScore}";
+
+    public void TrySetNewRecord()
+    {
+        if(CurrentScore > RecordScore)
+        {
+            RecordScore = CurrentScore;
+            DebuginggManager.Log($"New record! Your new record: {CurrentScore}. Your previous record: {RecordScore}.");
+        }
+    }
+
+    void SetCurrentScoreToZero() => CurrentScore = 0;
+
+    private void OnEnable()
+    {
+        GameController.onStartGameState += SetCurrentScoreToZero;
+        GameController.onPauseState += SetScoreTextOnPause;
+        GameController.onPlayState += SetScoreTextOnPlay;
+        GameController.onGameOverState += TrySetNewRecord;
+    }
+    private void OnDisable()
+    {
+        GameController.onStartGameState -= SetCurrentScoreToZero;
+        GameController.onPauseState -= SetScoreTextOnPause;
+        GameController.onPlayState -= SetScoreTextOnPlay;
+        GameController.onGameOverState -= TrySetNewRecord;
+    }
 }

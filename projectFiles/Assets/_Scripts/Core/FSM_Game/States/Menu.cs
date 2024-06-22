@@ -2,27 +2,23 @@ using UnityEngine;
 
 public class Menu : FsmGameState
 {
-    private GameObject _menuUI;
-    private GameObject _gameplayUI;
-    private Player _player;
-    private Vector2 _startPos;
+    GameController _controller;
+    GameObject _menuUI;
+    GameObject _gameplayUI;
 
-    public Menu(FsmGame fsmUI, GameObject menuUI, GameObject gameplayUI, Player player, Vector2 startPos) : base(fsmUI)
+    public Menu(FsmGame fsmUI, GameController controller, GameObject menuUI, GameObject gameplayUI) : base(fsmUI)
     {
+        _controller = controller;
         _menuUI = menuUI;
         _gameplayUI = gameplayUI;
-        _player = player;
-        _startPos = startPos;
     }
 
     public override void Enter()
     {
         base.Enter();
 
+        _controller.CallMenuEvent();
         Time.timeScale = 0f;
-
-
-        _player.transform.position = _startPos;
 
         _menuUI.SetActive(true);
         _gameplayUI.SetActive(false);

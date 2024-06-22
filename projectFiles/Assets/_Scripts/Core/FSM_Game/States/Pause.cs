@@ -1,36 +1,23 @@
-using TMPro;
 using UnityEngine;
 
 public class Pause : FsmGameState
 {
+    GameController _controller;
     GameObject _pauseUI;
-    TextMeshProUGUI _scoreText;
-    Score _score;
-    Timer _timer;
-    Player _player;
-    ObstacleManager _obstaclesManager;
 
-    public Pause(FsmGame fsmUI, GameObject pauseUI, TextMeshProUGUI scoreText, Score score, Player player, 
-        Timer timer, ObstacleManager obstaclesManager) : base(fsmUI)
+    public Pause(FsmGame fsmUI, GameObject pauseUI, GameController controller) : base(fsmUI)
     {
         _pauseUI = pauseUI;
-        _scoreText = scoreText;
-        _score = score;
-        _player = player;
-        _timer = timer;
-        _obstaclesManager = obstaclesManager;
+        _controller = controller;
     }
 
     public override void Enter()
     {
         base.Enter();
 
+        _controller.CallPauseEvent();
         Time.timeScale = 0f;
 
-        _timer.stop = true;
-        _obstaclesManager.PauseSpawning();
-
-        _player.SetIdleState();
         _pauseUI.SetActive(true);
         FocusBackgroundPanel.FocusBackPanel.SetActive(true);
     }
@@ -39,10 +26,7 @@ public class Pause : FsmGameState
     {
         base.Exit();
 
-        _player.SetMovementState();
         _pauseUI.SetActive(false);
-
-        _obstaclesManager.ResumSpawning();
     }
 
     public override void Update()
@@ -51,7 +35,5 @@ public class Pause : FsmGameState
 
         if(Input.GetKeyDown(KeyCode.Escape))
             Fsm.SetState<Play>();
-
-        _scoreText.text = $"{_score.CurrentScore}/{_score.RecordScore}";
     }
 }

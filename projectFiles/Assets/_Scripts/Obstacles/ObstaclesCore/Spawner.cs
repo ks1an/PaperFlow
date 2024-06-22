@@ -18,11 +18,9 @@ public class Spawner : MonoBehaviour
     bool _isWaiting;
 
     bool _isDefinesCategory;
+    bool _readyToSpawn;
     int _currentCategory;
 
-    bool _isDefinesObstacleType;
-    bool _isDefinesComplexObstacleType;
-    bool _isComplexObstacle;
     int _currentObstacleType;
     int _currentObstacleInList;
 
@@ -36,6 +34,7 @@ public class Spawner : MonoBehaviour
     public void StartSpawning()
     {
         _isWaiting = false;
+        _readyToSpawn = true;
         StartCoroutine(Spawn());
     }
 
@@ -49,6 +48,8 @@ public class Spawner : MonoBehaviour
 
     IEnumerator Spawn()
     {
+        yield return new WaitForSeconds(0.1f);
+
         while (!_isWaiting)
         {
             #region DefinesCategory
@@ -81,38 +82,41 @@ public class Spawner : MonoBehaviour
             #region DefinesObstacleType and spawn obstacle
 
             _currentObstacleType = _random.Range(-1, 2);
-
-            if ((_curDynamicObstaclesArray[0].prefab != null || _curConstructionObstaclesArray[0].prefab != null) &&
-                _currentObstacleType == 1 && _random.CheckChance(_category[_currentObstacleType].obstacles.complexChance)) // ComplexChance
+            if (_readyToSpawn)
             {
-                _currentObstacleType = _random.Range(-1, 1);
+                yield return new WaitForSeconds(_spawnRate);
 
-                if (_curDynamicObstaclesArray[0].prefab != null && _random.CheckChance(_category[_currentObstacleType].obstacles.complexObstacles.dynamicChance))  // Dynamic
-                    InstantiateDynamicObstacle();
-                else    // Construction
+                if ((_curDynamicObstaclesArray[0].prefab != null || _curConstructionObstaclesArray[0].prefab != null) && _currentObstacleType == 0 &&
+                     _random.CheckChance(_category[_currentCategory].obstacles.complexChance)) // ComplexChance
                 {
-                    if (_curConstructionObstaclesArray[0].prefab != null)
+                    if (_curDynamicObstaclesArray[0].prefab != null && _currentObstacleType == 1 && 
+                        _random.CheckChance(_category[_currentCategory].obstacles.complexObstacles.dynamicChance))   // Dynamic
                     {
-                        _currentObstacleType = 1;
+                        _readyToSpawn = false;
+                        InstantiateDynamicObstacle();
+                        yield return new WaitForSeconds(0.25f);
+                    }
+                    else if (_curConstructionObstaclesArray[0].prefab != null)   // Construction
+                    {
+                        _readyToSpawn = false;
                         InstantiateConstructionObstacle();
+                        yield return new WaitForSeconds(0.1f);
                     }
                 }
-            }
-            else if (_curEffectorsObstaclesArray[0].prefab != null && _currentObstacleType == 2 && _random.CheckChance(_category[_currentObstacleType].obstacles.effectorChance))    // Effector
-            {
-                InstantiateEffectorObstacle();
-            }
-            else    // Simples
-            {
-                if (_curSimpleObstaclesArray[0].prefab != null)
+                else if (_curEffectorsObstaclesArray[0].prefab != null && _currentObstacleType == 2 && 
+                    _random.CheckChance(_category[_currentCategory].obstacles.effectorChance)) // Effector
+                { 
+                    _readyToSpawn = false;
+                    InstantiateEffectorObstacle();
+                }    
+                else if (_curSimpleObstaclesArray[0].prefab != null) // Simples
+                {
+                    _readyToSpawn = false;
                     InstantiateSimpleObstacle();
+                }  
             }
 
             #endregion
-
-            yield return new WaitForSeconds(_spawnRate);
-
-            DebuginggManager.Log($"Category: {_category[_currentCategory].name}");
         }
     }
 
@@ -128,6 +132,12 @@ public class Spawner : MonoBehaviour
         if (_curSimpleObstaclesArray[_currentObstacleInList].canChangeHeight)
             _curObstacle.transform.position += Vector3.up * Random.Range(_curSimpleObstaclesArray[_currentObstacleInList].minHeight,
               _curSimpleObstaclesArray[_currentObstacleInList].maxHeight);
+
+        if (_curSimpleObstaclesArray[_currentObstacleInList].canRotateY)
+            _curObstacle.transform.Rotate(new Vector2(_curObstacle.transform.rotation.x,
+                _curSimpleObstaclesArray[_currentObstacleInList].transformsRotateY[_random.Range(-1, _curSimpleObstaclesArray[_currentObstacleInList].transformsRotateY.Length - 1)]));
+
+        _readyToSpawn = true;
     }
 
     void InstantiateEffectorObstacle()
@@ -136,6 +146,8 @@ public class Spawner : MonoBehaviour
 
         _curObstacle = Instantiate(_curEffectorsObstaclesArray[_currentObstacleInList].prefab,
             transform.position, Quaternion.identity, parent: _container);
+
+        _readyToSpawn = true;
     }
 
     void InstantiateDynamicObstacle()
@@ -147,6 +159,8 @@ public class Spawner : MonoBehaviour
 
         _curObstacle = Instantiate(_curDynamicObstaclesArray[_currentObstacleInList].prefab,
             transform.position, Quaternion.identity, parent: _container);
+
+        _readyToSpawn = true;
     }
 
     void InstantiateConstructionObstacle()
@@ -159,10 +173,17 @@ public class Spawner : MonoBehaviour
         if (_curConstructionObstaclesArray[_currentObstacleInList].canChangeHeight)
             _curObstacle.transform.position += Vector3.up * Random.Range(_curConstructionObstaclesArray[_currentObstacleInList].minHeight,
                _curConstructionObstaclesArray[_currentObstacleInList].maxHeight);
+
+        if (_curConstructionObstaclesArray[_currentObstacleInList].canRotateY)
+            _curObstacle.transform.Rotate(new Vector2(_curObstacle.transform.rotation.x,
+                _curConstructionObstaclesArray[_currentObstacleInList].transformsRotateY[_random.Range(-1, _curConstructionObstaclesArray[_currentObstacleInList].transformsRotateY.Length - 1)]));
+
+        _readyToSpawn = true;
     }
 
     #endregion
 
+    #region ObstaclesLists
     [System.Serializable]
     public class ObstaclesCategory
     {
@@ -171,7 +192,6 @@ public class Spawner : MonoBehaviour
         public ObstaclesList obstacles = new();
     }
 
-    #region Obtacles
     [System.Serializable]
     public class ObstaclesList
     {
@@ -188,10 +208,13 @@ public class Spawner : MonoBehaviour
         public string name;
         public GameObject prefab;
 
-        [Header("Height")]
+        [Header("Transform")]
         public bool canChangeHeight;
         public float minHeight = -1f;
         public float maxHeight = 1f;
+        [Space(5)]
+        public bool canRotateY;
+        public float[] transformsRotateY;
     }
 
     #region complexObstacle
@@ -200,7 +223,6 @@ public class Spawner : MonoBehaviour
     {
         public int dynamicChance;
         public DynamicComplexObstacle[] dynamicObstacles = new DynamicComplexObstacle[1];
-        public int constructChance;
         public ConstructionComplexObstacle[] constructionObstacles = new ConstructionComplexObstacle[1];
     }
 
@@ -216,10 +238,13 @@ public class Spawner : MonoBehaviour
     {
         public string name;
         public GameObject prefab;
-        [Header("Height")]
+        [Header("Transforms")]
         public bool canChangeHeight;
         public float minHeight = -1f;
         public float maxHeight = 1f;
+        [Space(5)]
+        public bool canRotateY;
+        public float[] transformsRotateY;
     }
     #endregion
 
@@ -230,4 +255,19 @@ public class Spawner : MonoBehaviour
         public GameObject prefab;
     }
     #endregion
+
+    private void OnEnable()
+    {
+        GameController.onStartGameState += StartSpawning;
+        GameController.onPlayState += ResumeSpawning;
+        GameController.onPauseState += PauseSpawning;
+        GameController.onGameOverState += StopSpawning;
+    }
+    private void OnDisable()
+    {
+        GameController.onStartGameState -= StartSpawning;
+        GameController.onPlayState -= ResumeSpawning;
+        GameController.onPauseState -= PauseSpawning;
+        GameController.onGameOverState -= StopSpawning;
+    }
 }

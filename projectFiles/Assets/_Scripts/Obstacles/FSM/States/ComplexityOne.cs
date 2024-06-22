@@ -17,7 +17,7 @@ public class ComplexityOne : FsmObstaclesManagerState
 
         _timer.OnComplexityTimeTicked += NextComplexity;
 
-        _obstacleManager.SetSpeed(_obstacleManager.speedOne);
+        _obstacleManager.SetSpeed(_obstacleManager._speedsComplexityes[0]);
     }
 
     public override void Exit()

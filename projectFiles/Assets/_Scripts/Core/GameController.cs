@@ -1,8 +1,14 @@
-using TMPro;
+using System;
 using UnityEngine;
 
 public class GameController : MonoBehaviour
 {
+    public static Action onMenuState;
+    public static Action onStartGameState;
+    public static Action onPlayState;
+    public static Action onPauseState;
+    public static Action onGameOverState;
+
     [Header("UIs")]
     [SerializeField] GameObject _menuUI;
     [SerializeField] GameObject _pauseUI;
@@ -10,46 +16,39 @@ public class GameController : MonoBehaviour
     [SerializeField] GameObject _gameOverUI;
 
     [Header("UI elements")]
-    [SerializeField] TextMeshProUGUI _scoreText;
     [SerializeField] GameObject _pauseGameBttn;
 
-    [Header("Player")]
-    [SerializeField] Player _player;
-    [SerializeField] Health _playerHealthSystem;
-    [SerializeField] Stamina _playerStaminaSystem;
-    [SerializeField] Vector2 _startPos;
+    FsmGame _fsm;
 
-    [Header("Other")]
-    [SerializeField] ObstacleManager _obstacleManager;
-    [SerializeField] ObstaclesContainer _obstacleContainer;
-
-    private FsmGame _fsm;
-    Score _score; 
-    Timer _timer;
-    RandomWithSeed _random;
-
-    private void Start()
+    void Start()
     {
-        _startPos = _player.transform.position;
-        _score = GetComponent<Score>();
-        _timer = GetComponent<Timer>();
-        _random = GetComponent<RandomWithSeed>();
-
         _fsm = new FsmGame();
 
-        _fsm.AddState(new Menu(_fsm, _menuUI, _gameplayUI, _player, _startPos));
-        _fsm.AddState(new StartGame(_fsm,  _gameplayUI, _score, _playerHealthSystem, _obstacleContainer, _playerStaminaSystem, _timer, _obstacleManager, _random));
-        _fsm.AddState(new Play(_fsm, _gameplayUI, _scoreText, _score, _pauseGameBttn, _timer));
-        _fsm.AddState(new Pause(_fsm, _pauseUI, _scoreText, _score, _player, _timer, _obstacleManager));
-        _fsm.AddState(new GameOver(_fsm, _gameOverUI, _score, _timer, _obstacleManager));
+        _fsm.AddState(new Menu(_fsm, this, _menuUI, _gameplayUI));
+        _fsm.AddState(new StartGame(_fsm,  _gameplayUI, this));
+        _fsm.AddState(new Play(_fsm, _gameplayUI, _pauseGameBttn, this));
+        _fsm.AddState(new Pause(_fsm, _pauseUI, this));
+        _fsm.AddState(new GameOver(_fsm, _gameOverUI, this));
 
         _fsm.SetState<Menu>();
     }
 
-    private void Update() => _fsm.Update();
+    #region CallEvent
+    public void CallMenuEvent() => onMenuState?.Invoke();
+    public void CallStartGameEvent() => onStartGameState?.Invoke();
+    public void CallPlayEvent() => onPlayState?.Invoke();
+    public void CallPauseEvent() => onPauseState?.Invoke();
+    public void CallGameOverEvent() => onGameOverState?.Invoke();
+    #endregion
+
+    #region SetStates
 
     public void SetMenuState() => _fsm.SetState<Menu>();
     public void SetPauseState() => _fsm.SetState<Pause>();
     public void SetPlayState() => _fsm.SetState<Play>();
     public void SetGameOverState() => _fsm.SetState<GameOver>();
+
+    #endregion
+
+    void Update() => _fsm.Update();
 }

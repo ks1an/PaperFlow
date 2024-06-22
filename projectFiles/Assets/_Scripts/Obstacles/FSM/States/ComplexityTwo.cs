@@ -15,7 +15,7 @@ public class ComplexityTwo : FsmObstaclesManagerState
 
         _timer.OnComplexityTimeTicked += NextComplexity;
 
-        _manager.SetSpeed(_manager.speedTwo);
+        _manager.SetSpeed(_manager._speedsComplexityes[1]);
     }
 
     public override void Exit()

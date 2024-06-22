@@ -8,17 +8,6 @@ public class RandomWithSeed : MonoBehaviour
     string _lastSeedNumbers;
     int _x, _y, _z, _w, _t;
 
-    public void GetFirstSeed()
-    {
-        _x = DateTime.Now.Second + 1;
-        _y = DateTime.Now.Minute + 1;
-        _z = DateTime.Now.Hour + 1;
-        _w = DateTime.Now.Day;
-
-        _curSeed = RefreshSeed();
-        DebuginggManager.Log($"FirstSeed = {_curSeed}. x = {_x}, y = {_y}, z = {_z}");
-    }
-
     public int RefreshSeed()
     {
         _t = _x ^ (_x << 11);
@@ -49,14 +38,35 @@ public class RandomWithSeed : MonoBehaviour
         RefreshSeed();
 
         _strCurSeed = _curSeed.ToString();
+        DebuginggManager.Log(_strCurSeed);
 
         _lastSeedNumbers = "";
-        for (int i = 1; i <= 2; i++)
+        for (int i = 1; i < 3; i++)
             _lastSeedNumbers += _strCurSeed[^i];
-
+        
         if(int.Parse(_lastSeedNumbers) <= chance) 
             return true;
         else 
             return false;
+    }
+
+    void GetFirstSeed()
+    {
+        _x = DateTime.Now.Second + 1;
+        _y = DateTime.Now.Minute + 1;
+        _z = DateTime.Now.Hour + 1;
+        _w = DateTime.Now.Day;
+
+        _curSeed = RefreshSeed();
+        DebuginggManager.Log($"FirstSeed = {_curSeed}. x = {_x}, y = {_y}, z = {_z}");
+    }
+
+    private void OnEnable()
+    {
+        GameController.onStartGameState += GetFirstSeed;
+    }
+    private void OnDisable()
+    {
+        GameController.onStartGameState -= GetFirstSeed;
     }
 }

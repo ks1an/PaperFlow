@@ -6,16 +6,9 @@ public class ObstacleManager : MonoBehaviour
 
     #region Complexity Settings
     public int[] _minForComplexityNum, _secForComplexityNum;
-    [Space(5)]
-    public float speedOne = 5f;
     [Space(10)]
-    public float speedTwo = 5.25f;
+    public float[] _speedsComplexityes = { 5.5f, 6f, 6.5f, 7.25f, 8f};
     [Space(10)]
-    public float speedThree = 5.5f;
-    [Space(10)]
-    public float speedFour = 6f;
-    [Space(10)]
-    public float speedFive = 8f;
     #endregion
 
     [SerializeField] Timer _timer;
@@ -43,13 +36,12 @@ public class ObstacleManager : MonoBehaviour
 
     public void SetStartComplexity() => _fsm.SetState<ComplexityOne>();
 
-    #region Spawning Obstacles
-    public void StartSpawning() => _spawner.StartSpawning();
-
-    public void PauseSpawning() => _spawner.PauseSpawning();
-
-    public void ResumSpawning() => _spawner.ResumeSpawning();
-
-    public void StopPawning() => _spawner.StopSpawning();
-    #endregion
+    private void OnEnable()
+    {
+        GameController.onStartGameState += SetStartComplexity;
+    }
+    private void OnDisable()
+    {
+        GameController.onStartGameState -= SetStartComplexity;
+    }
 }

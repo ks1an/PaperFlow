@@ -1,8 +1,14 @@
+using System;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D), typeof(Collider2D))]
 public class Player : MonoBehaviour
 {
+    #region Actions
+    public static Action onChargeEntered;
+    public static Action onChargeExited;
+    #endregion
+
     public float ForceUp { get => _forceUp; set => ForceUp = _forceUp; }
     public float ForceDown { get => _forceDown; set => ForceDown = _forceDown; }
     public float ChargeSpeed { get => _chargeSpeed; set => ChargeSpeed = _chargeSpeed; }
@@ -38,8 +44,9 @@ public class Player : MonoBehaviour
     Rigidbody2D _rb;
     SpriteRenderer _renderer;
     Collider2D _planeCollider, _ballCollider;
+    Vector3 _startPos;
 
-    private void Awake()
+    void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
         _health = GetComponent<Health>();
@@ -54,6 +61,7 @@ public class Player : MonoBehaviour
 
     void Start()
     {
+        _startPos = transform.position;
         _fsm = new FsmPlayer();
 
         _fsm.AddState(new MovementState(_fsm, this, _rb, _stamina));
@@ -64,18 +72,40 @@ public class Player : MonoBehaviour
         _fsm.SetState<MovementState>();
     }
 
+    #region CallActions
+    public void CallOnChargeEntered() => onChargeEntered?.Invoke();
+    public void CallOnChargeExited() => onChargeExited?.Invoke();
+    #endregion
+
+    #region SetStates
     public void SetIdleState() => _fsm.SetState<IdleState>();
     public void SetMovementState() => _fsm.SetState<MovementState>();
+    #endregion
 
-    void Update() => _fsm.Update();
-    void FixedUpdate() => _fsm.FixedUpdate();
+    #region SetPlayerOnGameStates
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    void SetPlayerOnMenu()
+    {
+        transform.position = _startPos;
+    }
+
+    void SetPlayerOnStartGame()
+    {
+        _health.HealthToMax();
+        _stamina.StaminaToMax();
+    }
+
+    #endregion
+
+    void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("destroyObstacle"))
         {
             if (_fsm.CurrentState.GetType() == typeof(BallState))
+            {
                 Destroy(collision.gameObject);
+                _stamina.IncreaseStamina(10);
+            }
             else
             {
                 _health.TakeDamage(1);
@@ -93,5 +123,25 @@ public class Player : MonoBehaviour
             _health.TakeMaxDamage();
             _controller.SetGameOverState();
         }
+    }
+
+    void Update() => _fsm.Update();
+
+    void FixedUpdate() => _fsm.FixedUpdate();
+
+
+    void OnEnable()
+    {
+        GameController.onMenuState += SetPlayerOnMenu;
+        GameController.onStartGameState += SetPlayerOnStartGame;
+        GameController.onPlayState += SetMovementState;
+        GameController.onPauseState += SetIdleState;
+    }
+    void OnDisable()
+    {
+        GameController.onMenuState -= SetPlayerOnMenu;
+        GameController.onStartGameState -= SetPlayerOnStartGame;
+        GameController.onPlayState -= SetMovementState;
+        GameController.onPauseState -= SetIdleState;
     }
 }

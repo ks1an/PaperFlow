@@ -13,6 +13,20 @@ public class ChargeState : FSMPlayerState
         _stamina = stamina;
     }
 
+    public override void Enter()
+    {
+        base.Enter();
+
+        _player.CallOnChargeEntered();
+    }
+
+    public override void Exit()
+    {
+        base.Exit();
+
+        _player.CallOnChargeExited();
+    }
+
     public override void FixedUpdate()
     {
         base.FixedUpdate();
@@ -45,7 +59,8 @@ public class ChargeState : FSMPlayerState
         }
         else if(Input.GetKeyDown(KeyCode.S) && _stamina.CurrentStamina >= 80)
         {
-            _stamina.DeacreaseStamina(80);
+            _stamina.DeacreaseStamina(_player.NeedStaminaForBall);
+            _rb.AddForce(_player.ChargeSpeed * Time.fixedDeltaTime * 10 * Vector2.up, ForceMode2D.Impulse);
             Fsm.SetState<BallState>();
             return;
         }
