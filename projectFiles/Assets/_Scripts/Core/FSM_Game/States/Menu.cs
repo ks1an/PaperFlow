@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Menu : FsmGameState
+public sealed class Menu : FsmGameState
 {
     GameController _controller;
     GameObject _menuUI;

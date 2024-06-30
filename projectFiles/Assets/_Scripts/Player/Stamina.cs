@@ -2,10 +2,14 @@ using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Stamina : MonoBehaviour
+public sealed class Stamina : MonoBehaviour
 {
     public float CurrentStamina { get => _currentStamina; set => CurrentStamina = _currentStamina; }
 
+    [Header("Spells stamina cost")]
+    public int staminaForBall = 65;
+
+    [Space(10)]
     [SerializeField] Slider _staminaSlider;
     [SerializeField] float _fillSpeed;
 
@@ -15,6 +19,9 @@ public class Stamina : MonoBehaviour
     [Header("Increase Effect Settings")]
     [SerializeField] Slider _staminaIncreaseEffectSlider;
     [SerializeField] float _staminaIncreaseAnimTime = 0.2f, _staminaIncreaseAnimDelayTime = 0.15f;
+
+    [Space(10)]
+    [SerializeField] BallStateIndicator _ballIndicator;
 
     float _maxStamina = 100f;
     float _currentStamina = 100f;
@@ -26,6 +33,7 @@ public class Stamina : MonoBehaviour
         if (_currentStamina < _maxStamina && _canRegenStamina)
         {
             _currentStamina += _fillSpeed * Time.deltaTime;
+            CheckNeedStamina();
             _staminaSlider.value = _currentStamina;
         }
     }
@@ -44,8 +52,9 @@ public class Stamina : MonoBehaviour
 
         _currentStamina -= value;
         _canRegenStamina = false;
-        _staminaIncreaseEffectSlider.value = _currentStamina - 10;
+        _staminaIncreaseEffectSlider.value = _currentStamina;
 
+        CheckNeedStamina();
         DeacreaseEffectAnim();
     }
 
@@ -63,7 +72,16 @@ public class Stamina : MonoBehaviour
 
         _currentStamina += value;
 
+        CheckNeedStamina();
         IncreaseEffectAnim();
+    }
+
+    void CheckNeedStamina()
+    {
+        if (CurrentStamina < staminaForBall)
+            _ballIndicator.SetCannotGoToBallCollor();
+        else
+            _ballIndicator.SetCanGoToBallCollor();
     }
 
     public void StaminaToMax()
@@ -79,6 +97,8 @@ public class Stamina : MonoBehaviour
 
         _staminaIncreaseEffectSlider.maxValue = _maxStamina;
         _staminaIncreaseEffectSlider.value = _currentStamina;
+
+        _ballIndicator.SetCanGoToBallCollor();
     }
 
     public void SetInfinityStamina(bool isTrue) => _infinityStamina = isTrue;
@@ -90,5 +110,10 @@ public class Stamina : MonoBehaviour
         _canRegenStamina = true;
     }
 
-    void IncreaseEffectAnim() => _staminaIncreaseEffectSlider.DOValue(_currentStamina, _staminaIncreaseAnimTime).SetDelay(_staminaIncreaseAnimDelayTime);
+    void IncreaseEffectAnim()
+    {
+        _staminaIncreaseEffectSlider.DOKill();
+        _staminaIncreaseEffectSlider.DOValue(_currentStamina + 8, _staminaIncreaseAnimTime).SetDelay(_staminaIncreaseAnimDelayTime);
+    }
 }
+

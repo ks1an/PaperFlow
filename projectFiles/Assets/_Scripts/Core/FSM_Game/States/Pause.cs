@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Pause : FsmGameState
+public sealed class Pause : FsmGameState
 {
     GameController _controller;
     GameObject _pauseUI;

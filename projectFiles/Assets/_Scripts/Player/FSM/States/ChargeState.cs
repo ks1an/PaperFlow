@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class ChargeState : FSMPlayerState
+public sealed class ChargeState : FSMPlayerState
 {
     Player _player;
     Stamina _stamina;
@@ -11,20 +11,6 @@ public class ChargeState : FSMPlayerState
         _player = player;
         _rb = rb;
         _stamina = stamina;
-    }
-
-    public override void Enter()
-    {
-        base.Enter();
-
-        _player.CallOnChargeEntered();
-    }
-
-    public override void Exit()
-    {
-        base.Exit();
-
-        _player.CallOnChargeExited();
     }
 
     public override void FixedUpdate()
@@ -57,7 +43,7 @@ public class ChargeState : FSMPlayerState
             Fsm.SetState<MovementState>();
             return;
         }
-        else if(Input.GetKeyDown(KeyCode.S) && _stamina.CurrentStamina >= 80)
+        else if(Input.GetKeyDown(KeyCode.S) && _stamina.CurrentStamina >= _player.NeedStaminaForBall)
         {
             _stamina.DeacreaseStamina(_player.NeedStaminaForBall);
             _rb.AddForce(_player.ChargeSpeed * Time.fixedDeltaTime * 10 * Vector2.up, ForceMode2D.Impulse);

@@ -1,4 +1,4 @@
-public class ComplexityFive : FsmObstaclesManagerState
+public sealed class ComplexityFive : FsmObstaclesManagerState
 {
     ObstacleManager _manager;
 
@@ -11,6 +11,6 @@ public class ComplexityFive : FsmObstaclesManagerState
     {
         base.Enter();
 
-        _manager.SetSpeed(_manager._speedsComplexityes[4]);
+        _manager.SetSpeed(_manager.speedsComplexityes[4]);
     }
 }

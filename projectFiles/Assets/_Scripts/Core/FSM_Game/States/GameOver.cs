@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class GameOver : FsmGameState
+public sealed class GameOver : FsmGameState
 {
     GameController _controller;
     GameObject _gameOverUI;

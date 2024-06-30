@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class StartGame : FsmGameState
+public sealed class StartGame : FsmGameState
 {
     GameController _controller;
     GameObject _gameplayUI;

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class DebuginggManager : MonoBehaviour
+public sealed class DebuginggManager : MonoBehaviour
 {
     public static bool CanDebugging;
     [SerializeField] bool _canDebugging;

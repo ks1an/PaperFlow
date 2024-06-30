@@ -1,14 +1,15 @@
 using UnityEngine;
 
-public class BallState : FSMPlayerState
+public sealed class BallState : FSMPlayerState
 {
     Player _player;
+    Health _hp;
     Rigidbody2D _rb;
     SpriteRenderer _renderer;
     Sprite _ballSprite, _planeSprite;
     Collider2D _ballCollider, _planeCollider;
 
-    public BallState(FsmPlayer fsm, Rigidbody2D rb, Player player, SpriteRenderer renderer, Sprite ballSprite, Sprite planeSprite, Collider2D ballCollider, Collider2D planeCollider) : base(fsm)
+    public BallState(FsmPlayer fsm, Rigidbody2D rb, Player player, SpriteRenderer renderer, Sprite ballSprite, Sprite planeSprite, Collider2D ballCollider, Collider2D planeCollider, Health hp) : base(fsm)
     {
         _rb = rb;
         _player = player;
@@ -17,6 +18,7 @@ public class BallState : FSMPlayerState
         _renderer = renderer;
         _ballCollider = ballCollider;
         _planeCollider = planeCollider;
+        _hp = hp;
     }
 
     public override void Enter()
@@ -35,6 +37,7 @@ public class BallState : FSMPlayerState
         base.Exit();
 
         _renderer.sprite = _planeSprite;
+        _hp.StartCooldawnDamage(0.1f);
         _planeCollider.enabled = true;
         _ballCollider.enabled = false;
     }

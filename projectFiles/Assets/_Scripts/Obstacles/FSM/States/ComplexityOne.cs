@@ -1,6 +1,4 @@
-using TMPro;
-
-public class ComplexityOne : FsmObstaclesManagerState
+public sealed class ComplexityOne : FsmObstaclesManagerState
 {
     ObstacleManager _obstacleManager;
     Timer _timer;
@@ -17,7 +15,7 @@ public class ComplexityOne : FsmObstaclesManagerState
 
         _timer.OnComplexityTimeTicked += NextComplexity;
 
-        _obstacleManager.SetSpeed(_obstacleManager._speedsComplexityes[0]);
+        _obstacleManager.SetSpeed(_obstacleManager.speedsComplexityes[0]);
     }
 
     public override void Exit()

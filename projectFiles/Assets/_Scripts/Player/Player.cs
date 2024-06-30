@@ -1,20 +1,14 @@
-using System;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D), typeof(Collider2D))]
-public class Player : MonoBehaviour
+public sealed class Player : MonoBehaviour
 {
-    #region Actions
-    public static Action onChargeEntered;
-    public static Action onChargeExited;
-    #endregion
-
     public float ForceUp { get => _forceUp; set => ForceUp = _forceUp; }
     public float ForceDown { get => _forceDown; set => ForceDown = _forceDown; }
     public float ChargeSpeed { get => _chargeSpeed; set => ChargeSpeed = _chargeSpeed; }
     public float CorrectionSpeed { get => _correctionSpeed; set => CorrectionSpeed = _correctionSpeed; }
     public float MaxChargingPoxX { get => _maxChargingPoxX; set => MaxChargingPoxX = _maxChargingPoxX; }
-    public int NeedStaminaForBall { get => _needStaminaForBall; set => NeedStaminaForBall = _needStaminaForBall; }
+    public int NeedStaminaForBall { get => _stamina.staminaForBall; set => NeedStaminaForBall = _stamina.staminaForBall; }
 
     [SerializeField]
     float _forceUp = 54f,
@@ -22,9 +16,6 @@ public class Player : MonoBehaviour
     _chargeSpeed = 21f,
     _correctionSpeed = 21f,
     _maxChargingPoxX = 4f;
-
-    [Header("Spells stamina cost")]
-    [SerializeField] int _needStaminaForBall = 80;
 
     [Header("")]
     [SerializeField] Sprite _ballSprite;
@@ -41,6 +32,7 @@ public class Player : MonoBehaviour
     Health _health;
     Stamina _stamina;
     FsmPlayer _fsm;
+
     Rigidbody2D _rb;
     SpriteRenderer _renderer;
     Collider2D _planeCollider, _ballCollider;
@@ -53,7 +45,7 @@ public class Player : MonoBehaviour
         _stamina = GetComponent<Stamina>();
         _renderer = GetComponent<SpriteRenderer>();
         _planeCollider = GetComponent<PolygonCollider2D>();
-        _ballCollider = GetComponent<CircleCollider2D>();   
+        _ballCollider = GetComponent<CircleCollider2D>();
 
         _stamina.SetInfinityStamina(_infinityStamina);
         _health.SetInfinityHealth(_infinityHealth);
@@ -67,15 +59,10 @@ public class Player : MonoBehaviour
         _fsm.AddState(new MovementState(_fsm, this, _rb, _stamina));
         _fsm.AddState(new IdleState(_fsm));
         _fsm.AddState(new ChargeState(_fsm, this, _rb, _stamina));
-        _fsm.AddState(new BallState(_fsm, _rb, this, _renderer, _ballSprite, _planeSprite, _ballCollider, _planeCollider));
+        _fsm.AddState(new BallState(_fsm, _rb, this, _renderer, _ballSprite, _planeSprite, _ballCollider, _planeCollider, _health));
 
         _fsm.SetState<MovementState>();
     }
-
-    #region CallActions
-    public void CallOnChargeEntered() => onChargeEntered?.Invoke();
-    public void CallOnChargeExited() => onChargeExited?.Invoke();
-    #endregion
 
     #region SetStates
     public void SetIdleState() => _fsm.SetState<IdleState>();
@@ -126,9 +113,7 @@ public class Player : MonoBehaviour
     }
 
     void Update() => _fsm.Update();
-
     void FixedUpdate() => _fsm.FixedUpdate();
-
 
     void OnEnable()
     {

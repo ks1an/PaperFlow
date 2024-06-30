@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class MovementState : FSMPlayerState
+public sealed class MovementState : FSMPlayerState
 {
     Player _player;
     Rigidbody2D _rb;
@@ -31,7 +31,7 @@ public class MovementState : FSMPlayerState
         }
 
         if (_player.transform.position.x < -0.1f)
-            _rb.AddForce(_player.CorrectionSpeed * Time.fixedDeltaTime * Vector2.right);
+            _rb.AddForce(_player.CorrectionSpeed * Time.fixedDeltaTime * 2 * Vector2.right);
         else if (_player.transform.position.x > 0.1f)
             _rb.AddForce(_player.CorrectionSpeed * Time.fixedDeltaTime * 5 * Vector2.left);
     }

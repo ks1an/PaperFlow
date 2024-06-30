@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 
-public class Score : MonoBehaviour
+public sealed class Score : MonoBehaviour
 {
     public int CurrentScore { get; private set; }
     public int RecordScore { get; private set; }

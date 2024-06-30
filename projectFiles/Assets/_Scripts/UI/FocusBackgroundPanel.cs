@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [RequireComponent (typeof(Animator))]
-public class FocusBackgroundPanel : MonoBehaviour
+public sealed class FocusBackgroundPanel : MonoBehaviour
 {
     public static GameObject FocusBackPanel;
     private Animator _anim;

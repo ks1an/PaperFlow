@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class GameController : MonoBehaviour
+public sealed class GameController : MonoBehaviour
 {
     public static Action onMenuState;
     public static Action onStartGameState;

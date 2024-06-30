@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Health : MonoBehaviour
+public sealed class Health : MonoBehaviour
 {
     public int CurrentHelth { get => _currentHealth; set => CurrentHelth = _currentHealth; }
 
@@ -38,7 +38,7 @@ public class Health : MonoBehaviour
         else
             ChangeHealth(_currentHealth -= damageAmount);
 
-        StartCoroutine(TakeDamageCooldown());
+        StartCoroutine(TakeDamageCooldown(_cooldownTakeDamage));
     }
 
     public void Heal(int healtAmount)
@@ -62,7 +62,11 @@ public class Health : MonoBehaviour
     }
 
     public void HealthToMax() => ChangeHealth(_maxhealth);
+
     public void TakeMaxDamage() => ChangeHealth(0);
+
+    public void StartCooldawnDamage(float cooldawn) => StartCoroutine(TakeDamageCooldown(cooldawn));
+
     public void SetInfinityHealth(bool isTrue) => _infinityHealth = isTrue;
 
     void ChangeHealth(int amount)
@@ -72,11 +76,11 @@ public class Health : MonoBehaviour
         _textHealth.text = amount.ToString();
     }
 
-    IEnumerator TakeDamageCooldown()
+    IEnumerator TakeDamageCooldown(float cooldown)
     {
         _canTakeDamage = false;
-        yield return new WaitForSeconds(_cooldownTakeDamage);
+        yield return new WaitForSeconds(cooldown);
         _canTakeDamage = true;
-        StopCoroutine(TakeDamageCooldown());
+        StopCoroutine(TakeDamageCooldown(cooldown));
     }
 }
