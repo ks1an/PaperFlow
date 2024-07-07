@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3590717906737942456}
   - component: {fileID: 7584330187232260691}
-  - component: {fileID: 2547887913222215910}
+  - component: {fileID: 6411973095395688485}
   m_Layer: 3
   m_Name: Table + Chair
   m_TagString: Untagged
@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a994213d251076409d40818b42bee6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!58 &2547887913222215910
+--- !u!58 &6411973095395688485
 CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -76,12 +76,12 @@ CircleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.88031757, y: -3.2756076}
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 1.8580147
 --- !u!1001 &2281913652727591458
 PrefabInstance:
   m_ObjectHideFlags: 0

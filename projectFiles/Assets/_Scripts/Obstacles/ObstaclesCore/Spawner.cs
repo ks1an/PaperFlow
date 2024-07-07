@@ -15,7 +15,6 @@ public sealed class Spawner : MonoBehaviour
     ConstructionComplexObstacle[] _curConstructionObstaclesArray;
 
     GameObject _curObstacle = null;
-    bool _isPauseSpawning;
     bool _isDefiningCategory;
 
     bool _readyToSpawn;
@@ -26,81 +25,82 @@ public sealed class Spawner : MonoBehaviour
 
     void Start()
     {
-        transform.position = Camera.main.ScreenToWorldPoint(new Vector2(Camera.main.pixelWidth, Camera.main.pixelHeight / 2));
+        transform.position = UnityEngine.Camera.main.ScreenToWorldPoint(new Vector2(UnityEngine.Camera.main.pixelWidth, UnityEngine.Camera.main.pixelHeight / 2));
         transform.position = new Vector2(transform.position.x + _DistanceFromCameraX, transform.position.y);
     }
 
-    IEnumerator Spawn()
+    IEnumerator Spawning()
     {
         yield return new WaitForFixedUpdate();
 
         while (true)
         {
-            do
-                if (!_isPauseSpawning && _readyToSpawn)
-                    break;
-            while (!_readyToSpawn || _isPauseSpawning);
-
-            #region DefinesCategory
-            _isDefiningCategory = true;
-            do
+            if (_readyToSpawn)
             {
-                _currentCategory = _random.Range(0, _category.Length);
-
-                if (_random.CheckChance(_category[_currentCategory].chance))
+                #region DefinesCategory
+                _isDefiningCategory = true;
+                while (_isDefiningCategory)
                 {
-                    _isDefiningCategory = false;
-                    _category[_currentCategory].chance--;
+                    _currentCategory = _random.Range(0, _category.Length);
+
+                    if (_random.CheckChance(_category[_currentCategory].chance))
+                    {
+                        _isDefiningCategory = false;
+                        _category[_currentCategory].chance--;
+                    }
+                    else
+                        _category[_currentCategory].chance++;
                 }
-                else
-                    _category[_currentCategory].chance++;
-            } while (_isDefiningCategory);
-            #endregion
+                #endregion
 
-            #region Update link in obstaclesArray
+                #region Update link in obstaclesArray
 
-            _curSimpleObstaclesArray = _category[_currentCategory].obstacles.simpleObstacles;
-            _curEffectorsObstaclesArray = _category[_currentCategory].obstacles.effectorsObtacles;
-            _curDynamicObstaclesArray = _category[_currentCategory].obstacles.complexObstacles.dynamicObstacles;
-            _curConstructionObstaclesArray = _category[_currentCategory].obstacles.complexObstacles.constructionObstacles;
+                _curSimpleObstaclesArray = _category[_currentCategory].obstacles.simpleObstacles;
+                _curEffectorsObstaclesArray = _category[_currentCategory].obstacles.effectorsObtacles;
+                _curDynamicObstaclesArray = _category[_currentCategory].obstacles.complexObstacles.dynamicObstacles;
+                _curConstructionObstaclesArray = _category[_currentCategory].obstacles.complexObstacles.constructionObstacles;
+                #endregion
 
-            #endregion
+                _currentObstacleType = _random.Range(0, 3);
 
-            #region DefinesObstacleType and spawn obstacle
+                yield return new WaitForSeconds(_spawnRate);
 
-            _currentObstacleType = _random.Range(0, 3);
-
-            if ((_curDynamicObstaclesArray[0].prefab != null || _curConstructionObstaclesArray[0].prefab != null) && _currentObstacleType == 0 &&
-                 _random.CheckChance(_category[_currentCategory].obstacles.complexChance)) // ComplexChance
-            {
-                if (_curDynamicObstaclesArray[0].prefab != null && _currentObstacleType == 1 &&
-                    _random.CheckChance(_category[_currentCategory].obstacles.complexObstacles.dynamicChance))   // Dynamic
+                if (_random.CheckChance(_category[_currentCategory].obstacles.complexChance))
                 {
+                    if (_curConstructionObstaclesArray.Length > 0 && _currentObstacleType == 0 
+                        && !_random.CheckChance(_category[_currentCategory].obstacles.complexObstacles.dynamicChance))
+                    {
+                        InstantiateConstructionObstacle();
+                        _readyToSpawn = false;
+                        yield return new WaitForSeconds(0.15f);
+                    }
+                    else if (_curDynamicObstaclesArray.Length > 0 && _currentObstacleType == 1
+                        && _random.CheckChance(_category[_currentCategory].obstacles.complexObstacles.dynamicChance))
+                    {
+                        InstantiateDynamicObstacle();
+                        _readyToSpawn = false;
+                        yield return new WaitForSeconds(0.25f);
+                    }
+                    else if(_curSimpleObstaclesArray.Length > 0)
+                    {
+                        InstantiateSimpleObstacle();
+                        _readyToSpawn = false;
+                    }
+                }
+                else if (_curEffectorsObstaclesArray.Length > 0 && _currentObstacleType == 2
+                        && _random.CheckChance(_category[_currentCategory].obstacles.effectorChance))
+                {
+                    InstantiateEffectorObstacle();
                     _readyToSpawn = false;
-                    InstantiateDynamicObstacle();
-                    yield return new WaitForSeconds(0.25f);
                 }
-                else if (_curConstructionObstaclesArray[0].prefab != null)   // Construction
+                else if(_curSimpleObstaclesArray.Length > 0)
                 {
+                    InstantiateSimpleObstacle();
                     _readyToSpawn = false;
-                    InstantiateConstructionObstacle();
-                    yield return new WaitForSeconds(0.15f);
                 }
             }
-            else if (_curEffectorsObstaclesArray[0].prefab != null && _currentObstacleType == 2 &&
-                _random.CheckChance(_category[_currentCategory].obstacles.effectorChance)) // Effector
-            {
-                _readyToSpawn = false;
-                InstantiateEffectorObstacle();
-            }
-            else if (_curSimpleObstaclesArray[0].prefab != null) // Simples
-            {
-                _readyToSpawn = false;
-                InstantiateSimpleObstacle();
-            }
-            #endregion
-
-            yield return new WaitForSeconds(_spawnRate);
+            else
+                yield return null;
         }
     }
 
@@ -159,19 +159,15 @@ public sealed class Spawner : MonoBehaviour
 
     #endregion
 
-    #region Start/Stop/Pause/Resume Spawning
+    #region Start/Stop Spawning
     void StartSpawning()
     {
-        _isPauseSpawning = false;
+        StopAllCoroutines();
         _readyToSpawn = true;
-        StartCoroutine(Spawn());
+        StartCoroutine(Spawning());
     }
 
-    void PauseSpawning() => _isPauseSpawning = true;
-
-    void ResumeSpawning() => _isPauseSpawning = false;
-
-    void StopSpawning() => StopCoroutine(Spawn());
+    void StopSpawning() => StopCoroutine(Spawning());
 
     #endregion
 
@@ -255,17 +251,15 @@ public sealed class Spawner : MonoBehaviour
     private void OnEnable()
     {
         GameController.onStartGameState += StartSpawning;
-        GameController.onPlayState += ResumeSpawning;
-        GameController.onPauseState += PauseSpawning;
         GameController.onGameOverState += StopSpawning;
+        GameController.onMenuState += StopSpawning;
         RightObstaclesTrigger.onObstacleExitRightTrigger += SetTrueReadyToSpawn;
     }
     private void OnDisable()
     {
         GameController.onStartGameState -= StartSpawning;
-        GameController.onPlayState -= ResumeSpawning;
-        GameController.onPauseState -= PauseSpawning;
         GameController.onGameOverState -= StopSpawning;
+        GameController.onMenuState -= StopSpawning;
         RightObstaclesTrigger.onObstacleExitRightTrigger -= SetTrueReadyToSpawn;
     }
 }

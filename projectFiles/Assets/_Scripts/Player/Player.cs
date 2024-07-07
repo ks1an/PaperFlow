@@ -1,3 +1,4 @@
+using DG.Tweening;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D), typeof(Collider2D))]
@@ -17,6 +18,10 @@ public sealed class Player : MonoBehaviour
     _correctionSpeed = 21f,
     _maxChargingPoxX = 4f;
 
+    [Header("DieNonDestoryObstacle")]
+    [SerializeField, Range(1, 5)] int _numJumps;
+    [SerializeField] float _jumpPower, _jumpDuration, _jumpPosX;
+
     [Header("")]
     [SerializeField] Sprite _ballSprite;
     [SerializeField] Sprite _planeSprite;
@@ -32,6 +37,7 @@ public sealed class Player : MonoBehaviour
     Health _health;
     Stamina _stamina;
     FsmPlayer _fsm;
+    CameraControll _cam;
 
     Rigidbody2D _rb;
     SpriteRenderer _renderer;
@@ -40,6 +46,7 @@ public sealed class Player : MonoBehaviour
 
     void Awake()
     {
+        _cam = Camera.main.GetComponent<CameraControll>();
         _rb = GetComponent<Rigidbody2D>();
         _health = GetComponent<Health>();
         _stamina = GetComponent<Stamina>();
@@ -73,11 +80,21 @@ public sealed class Player : MonoBehaviour
 
     void SetPlayerOnMenu()
     {
+        gameObject.transform.DOKill();
         transform.position = _startPos;
+
+        _renderer.sprite = _planeSprite;
+        _planeCollider.enabled = true;
+        _ballCollider.enabled = false;
+
+        _rb.velocity = Vector3.zero;
+        transform.rotation = Quaternion.Euler(60, 0, -90);
     }
 
     void SetPlayerOnStartGame()
     {
+        _fsm.SetState<MovementState>();
+
         _health.HealthToMax();
         _stamina.StaminaToMax();
     }
@@ -96,19 +113,34 @@ public sealed class Player : MonoBehaviour
             else
             {
                 _health.TakeDamage(1);
+                _stamina.DeacreaseStamina(5);
+
                 if (_health.CurrentHelth == 0)
                     _controller.SetGameOverState();
+                else
+                    _cam.Shake();
             }
         }
         else if (collision.CompareTag("Scoring"))
+        {
             if (transform.position.x >= _maxChargingPoxX / 2)
                 _score.IncreaseScore(2);
             else
                 _score.IncreaseScore(1);
+        }
         else if (collision.CompareTag("nonDestroyObstacle"))
         {
             _health.TakeMaxDamage();
             _controller.SetGameOverState();
+            _cam.Shake();
+
+            _planeCollider.enabled = false;
+            _renderer.sprite = _ballSprite;
+            _ballCollider.enabled = true;
+ 
+            gameObject.transform.DOLocalJump(new Vector3(gameObject.transform.position.x + _jumpPosX, gameObject.transform.position.y, gameObject.transform.position.z),
+                _jumpPower, _numJumps, _jumpDuration).SetUpdate(true);
+            gameObject.transform.DOLocalMoveX(gameObject.transform.position.x + 1.5f, 5).SetUpdate(true).WaitForCompletion();
         }
     }
 

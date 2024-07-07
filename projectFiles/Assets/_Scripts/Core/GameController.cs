@@ -1,3 +1,4 @@
+using Assets._Scripts.UI.Menu;
 using System;
 using UnityEngine;
 
@@ -10,7 +11,7 @@ public sealed class GameController : MonoBehaviour
     public static Action onGameOverState;
 
     [Header("UIs")]
-    [SerializeField] GameObject _menuUI;
+    [SerializeField] MenuUI _menuUI;
     [SerializeField] GameObject _pauseUI;
     [SerializeField] GameObject _gameplayUI;
     [SerializeField] GameObject _gameOverUI;
@@ -44,8 +45,9 @@ public sealed class GameController : MonoBehaviour
     #region SetStates
 
     public void SetMenuState() => _fsm.SetState<Menu>();
-    public void SetPauseState() => _fsm.SetState<Pause>();
+    public void  SetStartGameState() => _fsm.SetState<StartGame>();
     public void SetPlayState() => _fsm.SetState<Play>();
+    public void SetPauseState() => _fsm.SetState<Pause>();
     public void SetGameOverState() => _fsm.SetState<GameOver>();
 
     #endregion

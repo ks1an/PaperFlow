@@ -1,16 +1,23 @@
 using System;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
-public sealed class Seed: MonoBehaviour
+public sealed class Seed : MonoBehaviour
 {
-    [SerializeField] uint _firstSeed;
+    [SerializeField] string _firstSeed;
+    [SerializeField] bool _dontGenerateFirstSeed = false;
     [SerializeField] RandomNumberGenerator _numberGenerator;
 
     void GetFirstSeed()
     {
-        _firstSeed = Convert.ToUInt32("11" + DateTime.Now.Second.ToString() + DateTime.Now.Millisecond.ToString());
+        if (!_dontGenerateFirstSeed)
+        {
+            _firstSeed = DateTime.Now.Second.ToString() + DateTime.Now.Minute.ToString();
+            while (_firstSeed.Length < 4)
+                _firstSeed += Random.Range(0, 9).ToString();
+        }
 
-       _numberGenerator.GetSeed(_firstSeed);
+        _numberGenerator.GetSeed(Convert.ToUInt32(_firstSeed));
     }
 
     private void OnEnable()
