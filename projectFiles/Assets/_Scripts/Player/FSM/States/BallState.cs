@@ -26,7 +26,7 @@ public sealed class BallState : FSMPlayerState
         base.Enter();
 
         _renderer.sprite = _ballSprite;
-        _player.transform.eulerAngles = new Vector3(0, 0, -90);
+        _player.transform.eulerAngles = new Vector3(0,0,-90);
         _planeCollider.enabled = false;
         _ballCollider.enabled = true;
         _rb.AddForce(_player.ForceUp * Time.fixedDeltaTime * Vector2.up, ForceMode2D.Impulse);

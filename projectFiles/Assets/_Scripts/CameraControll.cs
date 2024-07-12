@@ -7,6 +7,7 @@ public sealed class CameraControll : MonoBehaviour
     [SerializeField] float _zoomOutSize;
     [SerializeField] float _zoomOutPosX, _onPlayStartPosX;
     [SerializeField, Range(0, 10)] float _zoomSpeed;
+
     [Header("OnMenu")]
     [SerializeField] float _onMenuPosX;
     [SerializeField, Range(0, 10)] float _durationMenuChange;
@@ -61,12 +62,12 @@ public sealed class CameraControll : MonoBehaviour
 
     private void OnEnable()
     {
-        GameController.onMenuState += OnMenu;
-        GameController.onStartGameState += OnPlay;
+        GameStateController.onMenuState += OnMenu;
+        GameStateController.onStartGameState += OnPlay;
     }
     private void OnDisable()
     {
-        GameController.onMenuState -= OnMenu;
-        GameController.onStartGameState -= OnPlay;
+        GameStateController.onMenuState -= OnMenu;
+        GameStateController.onStartGameState -= OnPlay;
     }
 }

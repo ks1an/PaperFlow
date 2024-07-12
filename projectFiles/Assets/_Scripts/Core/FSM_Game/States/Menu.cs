@@ -1,13 +1,12 @@
-using Assets._Scripts.UI.Menu;
 using UnityEngine;
 
 public sealed class Menu : FsmGameState
 {
-    GameController _controller;
+    GameStateController _controller;
     MenuUI _menuUI;
     GameObject _gameplayUI;
 
-    public Menu(FsmGame fsmUI, GameController controller, MenuUI menuUI, GameObject gameplayUI) : base(fsmUI)
+    public Menu(FsmGame fsmUI, GameStateController controller, MenuUI menuUI, GameObject gameplayUI) : base(fsmUI)
     {
         _controller = controller;
         _menuUI = menuUI;
@@ -22,7 +21,7 @@ public sealed class Menu : FsmGameState
         Time.timeScale = 0f;
 
         _gameplayUI.SetActive(false);
-        _menuUI.MenuIntro();
+        _menuUI.SetActiveMenu(true);
         FocusBackgroundPanel.FocusBackPanel.SetActive(true);
     }
 
@@ -30,7 +29,7 @@ public sealed class Menu : FsmGameState
     {
         base.Exit();
 
-        _menuUI.MenuOutro();
+        _menuUI.SetActiveMenu(false);
     }
 
     public override void Update()

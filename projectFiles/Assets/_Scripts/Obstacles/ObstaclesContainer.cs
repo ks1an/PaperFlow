@@ -2,7 +2,7 @@ using UnityEngine;
 
 public sealed class ObstaclesContainer : MonoBehaviour
 {
-    public void DestoryAllObstacles()
+    void DestoryAllObstacles()
     {
         foreach (Transform child in transform)
             Destroy(child.gameObject);
@@ -10,10 +10,10 @@ public sealed class ObstaclesContainer : MonoBehaviour
 
     private void OnEnable()
     {
-        GameController.onStartGameState += DestoryAllObstacles;
+        GameStateController.onStartGameState += DestoryAllObstacles;
     }
     private void OnDisable()
     {
-        GameController.onStartGameState -= DestoryAllObstacles;
+        GameStateController.onStartGameState -= DestoryAllObstacles;
     }
 }

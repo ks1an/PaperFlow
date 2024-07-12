@@ -72,14 +72,14 @@ public sealed class Spawner : MonoBehaviour
                     {
                         InstantiateConstructionObstacle();
                         _readyToSpawn = false;
-                        yield return new WaitForSeconds(0.15f);
+                        yield return new WaitForSeconds(0.2f);
                     }
                     else if (_curDynamicObstaclesArray.Length > 0 && _currentObstacleType == 1
                         && _random.CheckChance(_category[_currentCategory].obstacles.complexObstacles.dynamicChance))
                     {
                         InstantiateDynamicObstacle();
                         _readyToSpawn = false;
-                        yield return new WaitForSeconds(0.25f);
+                        yield return new WaitForSeconds(0.4f);
                     }
                     else if(_curSimpleObstaclesArray.Length > 0)
                     {
@@ -139,6 +139,10 @@ public sealed class Spawner : MonoBehaviour
 
         _curObstacle = Instantiate(_curDynamicObstaclesArray[_currentObstacleInList].prefab,
             transform.position, Quaternion.identity, parent: _container);
+
+        if(_curDynamicObstaclesArray[_currentObstacleInList].canChangeHeight)
+            _curObstacle.transform.position += Vector3.up * Random.Range(_curDynamicObstaclesArray[_currentObstacleInList].minHeight,
+   _curDynamicObstaclesArray[_currentObstacleInList].maxHeight);
     }
 
     void InstantiateConstructionObstacle()
@@ -223,6 +227,10 @@ public sealed class Spawner : MonoBehaviour
     {
         public string name;
         public GameObject prefab;
+        [Header("Transforms")]
+        public bool canChangeHeight;
+        public float minHeight = -1f;
+        public float maxHeight = 1f;
     }
 
     [System.Serializable]
@@ -250,16 +258,16 @@ public sealed class Spawner : MonoBehaviour
 
     private void OnEnable()
     {
-        GameController.onStartGameState += StartSpawning;
-        GameController.onGameOverState += StopSpawning;
-        GameController.onMenuState += StopSpawning;
+        GameStateController.onStartGameState += StartSpawning;
+        GameStateController.onGameOverState += StopSpawning;
+        GameStateController.onMenuState += StopSpawning;
         RightObstaclesTrigger.onObstacleExitRightTrigger += SetTrueReadyToSpawn;
     }
     private void OnDisable()
     {
-        GameController.onStartGameState -= StartSpawning;
-        GameController.onGameOverState -= StopSpawning;
-        GameController.onMenuState -= StopSpawning;
+        GameStateController.onStartGameState -= StartSpawning;
+        GameStateController.onGameOverState -= StopSpawning;
+        GameStateController.onMenuState -= StopSpawning;
         RightObstaclesTrigger.onObstacleExitRightTrigger -= SetTrueReadyToSpawn;
     }
 }

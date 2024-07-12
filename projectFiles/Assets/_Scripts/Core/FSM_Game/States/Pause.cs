@@ -2,10 +2,10 @@ using UnityEngine;
 
 public sealed class Pause : FsmGameState
 {
-    GameController _controller;
+    GameStateController _controller;
     GameObject _pauseUI;
 
-    public Pause(FsmGame fsmUI, GameObject pauseUI, GameController controller) : base(fsmUI)
+    public Pause(FsmGame fsmUI, GameObject pauseUI, GameStateController controller) : base(fsmUI)
     {
         _pauseUI = pauseUI;
         _controller = controller;

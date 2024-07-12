@@ -2,10 +2,10 @@ using UnityEngine;
 
 public sealed class GameOver : FsmGameState
 {
-    GameController _controller;
+    GameStateController _controller;
     GameObject _gameOverUI;
 
-    public GameOver(FsmGame fsmUI, GameObject gameOverUI, GameController controller) : base(fsmUI)
+    public GameOver(FsmGame fsmUI, GameObject gameOverUI, GameStateController controller) : base(fsmUI)
     {
         _controller = controller;
         _gameOverUI = gameOverUI;

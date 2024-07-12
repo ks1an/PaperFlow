@@ -2,12 +2,12 @@ using UnityEngine;
 
 public sealed class Play : FsmGameState
 {
-    GameController _controller;
+    GameStateController _controller;
     GameObject _gameplayUI;
     GameObject _pauseBttn;
 
     public Play(FsmGame fsmUI, GameObject gameplayUI, GameObject pauseGameBttn,
-        GameController controller) : base(fsmUI)
+        GameStateController controller) : base(fsmUI)
     {
         _controller = controller;
         _gameplayUI = gameplayUI;

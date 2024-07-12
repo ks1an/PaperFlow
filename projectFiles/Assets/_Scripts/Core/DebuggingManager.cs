@@ -3,6 +3,7 @@ using UnityEngine;
 public sealed class DebuginggManager : MonoBehaviour
 {
     public static bool CanDebugging;
+
     [SerializeField] bool _canDebugging;
 
     private void Start() => CanDebugging = _canDebugging;

@@ -2,5 +2,5 @@ using UnityEngine;
 
 public sealed class Obstacle : MonoBehaviour
 {
-    private void Update() => transform.position += Vector3.left* ObstacleManager.CurrentSpeedObstacles * Time.deltaTime;
+    void Update() => transform.position += ObstacleManager.CurrentSpeedObstacles * Time.deltaTime * Vector3.left;
 }

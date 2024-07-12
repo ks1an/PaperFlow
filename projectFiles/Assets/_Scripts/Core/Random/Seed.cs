@@ -1,16 +1,19 @@
 using System;
+using TMPro;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
 public sealed class Seed : MonoBehaviour
 {
     [SerializeField] string _firstSeed;
-    [SerializeField] bool _dontGenerateFirstSeed = false;
     [SerializeField] RandomNumberGenerator _numberGenerator;
+    [SerializeField] TMP_InputField _inputSeedTxt;
 
     void GetFirstSeed()
     {
-        if (!_dontGenerateFirstSeed)
+        if (_inputSeedTxt.gameObject.activeSelf && _inputSeedTxt.text.Length > 2 && _inputSeedTxt.text[0] != '0')
+            _firstSeed = _inputSeedTxt.text;
+        else
         {
             _firstSeed = DateTime.Now.Second.ToString() + DateTime.Now.Minute.ToString();
             while (_firstSeed.Length < 4)
@@ -22,10 +25,10 @@ public sealed class Seed : MonoBehaviour
 
     private void OnEnable()
     {
-        GameController.onStartGameState += GetFirstSeed;
+        GameStateController.onStartGameState += GetFirstSeed;
     }
     private void OnDisable()
     {
-        GameController.onStartGameState -= GetFirstSeed;
+        GameStateController.onStartGameState -= GetFirstSeed;
     }
 }

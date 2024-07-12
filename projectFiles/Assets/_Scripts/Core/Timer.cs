@@ -99,16 +99,16 @@ public sealed class Timer : MonoBehaviour
 
     private void OnEnable()
     {
-        GameController.onStartGameState += StartTimer;
-        GameController.onPlayState += ResumeTimer;
-        GameController.onPauseState += PauseTimer;
-        GameController.onGameOverState += CompleteTimer;
+        GameStateController.onStartGameState += StartTimer;
+        GameStateController.onPlayState += ResumeTimer;
+        GameStateController.onPauseState += PauseTimer;
+        GameStateController.onGameOverState += CompleteTimer;
     }
     private void OnDisable()
     {
-        GameController.onStartGameState -= StartTimer;
-        GameController.onPlayState -= ResumeTimer;
-        GameController.onPauseState -= PauseTimer;
-        GameController.onGameOverState -= CompleteTimer;
+        GameStateController.onStartGameState -= StartTimer;
+        GameStateController.onPlayState -= ResumeTimer;
+        GameStateController.onPauseState -= PauseTimer;
+        GameStateController.onGameOverState -= CompleteTimer;
     }
 }

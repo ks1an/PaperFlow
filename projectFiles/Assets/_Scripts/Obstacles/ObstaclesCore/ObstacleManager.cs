@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public sealed class ObstacleManager : MonoBehaviour
@@ -72,10 +71,10 @@ public sealed class ObstacleManager : MonoBehaviour
 
     private void OnEnable()
     {
-        GameController.onStartGameState += SetStartComplexity;
+        GameStateController.onStartGameState += SetStartComplexity;
     }
     private void OnDisable()
     {
-        GameController.onStartGameState -= SetStartComplexity;
+        GameStateController.onStartGameState -= SetStartComplexity;
     }
 }

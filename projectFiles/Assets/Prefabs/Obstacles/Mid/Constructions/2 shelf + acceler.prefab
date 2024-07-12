@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5479925332728577887}
   - component: {fileID: 402271913939181796}
   - component: {fileID: 2173182385660542954}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: 2 shelf + acceler
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -208,6 +208,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 8699423066466884137, guid: 0802c87add2d89c46a2fe2d37bc3ebc9, type: 3}
+    - {fileID: 0}
     - {fileID: 5919950563277912470, guid: 0802c87add2d89c46a2fe2d37bc3ebc9, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

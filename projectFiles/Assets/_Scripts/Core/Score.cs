@@ -3,7 +3,7 @@ using UnityEngine;
 
 public sealed class Score : MonoBehaviour
 {
-    public int CurrentScore { get; private set; }
+    public static int CurrentScore { get; private set; }
     public int RecordScore { get; private set; }
 
     [SerializeField] TextMeshProUGUI _scoreText;
@@ -38,16 +38,16 @@ public sealed class Score : MonoBehaviour
 
     private void OnEnable()
     {
-        GameController.onStartGameState += SetCurrentScoreToZero;
-        GameController.onPauseState += SetScoreTextOnPause;
-        GameController.onPlayState += SetScoreTextOnPlay;
-        GameController.onGameOverState += TrySetNewRecord;
+        GameStateController.onStartGameState += SetCurrentScoreToZero;
+        GameStateController.onPauseState += SetScoreTextOnPause;
+        GameStateController.onPlayState += SetScoreTextOnPlay;
+        GameStateController.onGameOverState += TrySetNewRecord;
     }
     private void OnDisable()
     {
-        GameController.onStartGameState -= SetCurrentScoreToZero;
-        GameController.onPauseState -= SetScoreTextOnPause;
-        GameController.onPlayState -= SetScoreTextOnPlay;
-        GameController.onGameOverState -= TrySetNewRecord;
+        GameStateController.onStartGameState -= SetCurrentScoreToZero;
+        GameStateController.onPauseState -= SetScoreTextOnPause;
+        GameStateController.onPlayState -= SetScoreTextOnPlay;
+        GameStateController.onGameOverState -= TrySetNewRecord;
     }
 }

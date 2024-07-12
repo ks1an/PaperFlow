@@ -27,7 +27,7 @@ public sealed class Player : MonoBehaviour
     [SerializeField] Sprite _planeSprite;
 
     [Header("")]
-    [SerializeField] GameController _controller;
+    [SerializeField] GameStateController _controller;
     [SerializeField] Score _score;
 
     [Header("Cheat Settings")]
@@ -80,6 +80,8 @@ public sealed class Player : MonoBehaviour
 
     void SetPlayerOnMenu()
     {
+        _fsm.SetState<IdleState>();
+
         gameObject.transform.DOKill();
         transform.position = _startPos;
 
@@ -87,7 +89,7 @@ public sealed class Player : MonoBehaviour
         _planeCollider.enabled = true;
         _ballCollider.enabled = false;
 
-        _rb.velocity = Vector3.zero;
+        _rb.velocity = Vector2.zero;
         transform.rotation = Quaternion.Euler(60, 0, -90);
     }
 
@@ -149,16 +151,16 @@ public sealed class Player : MonoBehaviour
 
     void OnEnable()
     {
-        GameController.onMenuState += SetPlayerOnMenu;
-        GameController.onStartGameState += SetPlayerOnStartGame;
-        GameController.onPlayState += SetMovementState;
-        GameController.onPauseState += SetIdleState;
+        GameStateController.onMenuState += SetPlayerOnMenu;
+        GameStateController.onStartGameState += SetPlayerOnStartGame;
+        GameStateController.onPlayState += SetMovementState;
+        GameStateController.onPauseState += SetIdleState;
     }
     void OnDisable()
     {
-        GameController.onMenuState -= SetPlayerOnMenu;
-        GameController.onStartGameState -= SetPlayerOnStartGame;
-        GameController.onPlayState -= SetMovementState;
-        GameController.onPauseState -= SetIdleState;
+        GameStateController.onMenuState -= SetPlayerOnMenu;
+        GameStateController.onStartGameState -= SetPlayerOnStartGame;
+        GameStateController.onPlayState -= SetMovementState;
+        GameStateController.onPauseState -= SetIdleState;
     }
 }
