@@ -29,7 +29,7 @@ public sealed class DynamicObstacle : MonoBehaviour
     {
         _fsm.Update();
 
-        transform.position += ObstacleManager.CurrentSpeedObstacles * Time.deltaTime * Vector3.left;
+        transform.position += ComplexityController.CurrentSpeedObstacles * Time.deltaTime * Vector3.left;
     }
     private void FixedUpdate()
     {

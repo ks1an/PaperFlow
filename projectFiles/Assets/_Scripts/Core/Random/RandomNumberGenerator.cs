@@ -7,8 +7,8 @@ public class RandomNumberGenerator : MonoBehaviour
 {
     const int _n = 624;
     const int _m = 397;
-    int _index = _n;
-    readonly uint[] _mt = new uint[_n];
+    int _index = _n ;
+    uint[] _mt = new uint[_n];
 
     string _firstNumbersStr;
 
@@ -16,9 +16,12 @@ public class RandomNumberGenerator : MonoBehaviour
     public void GetSeed(uint seed)
     {
         _mt[0] = seed;
+        _index = _n;
 
         for (uint i = 1; i < _n; i++)
             _mt[i] = 1812433253 * (_mt[i - 1] ^ (_mt[i - 1] >> 30)) + i;
+
+        Debug.Log(NextUInt());
     }
 
     public uint NextUInt() { return ExtractNumber(); }
@@ -32,10 +35,7 @@ public class RandomNumberGenerator : MonoBehaviour
     {
         _firstNumbersStr = NextUInt().ToString()[..2];
 
-        if (Convert.ToInt16(_firstNumbersStr) <= chance)
-            return true;
-        else
-            return false;
+        return Convert.ToInt16(_firstNumbersStr) <= chance;
     }
     #endregion
 
@@ -46,12 +46,12 @@ public class RandomNumberGenerator : MonoBehaviour
 
         uint y = _mt[_index];
 
-        // right shift by 11 bits
         y = y ^ (y >> 11);
         y = y ^ ((y << 7) & 2636928640);
         y = y ^ ((y << 15) & 4022730752);
         y = y ^ (y >> 18);
         _index++;
+
         return y;
     }
 
@@ -65,6 +65,7 @@ public class RandomNumberGenerator : MonoBehaviour
             if (y % 2 != 0)
                 _mt[i] = _mt[i] ^ 0x9908b0df;
         }
+
         _index = 0;
     }
 }

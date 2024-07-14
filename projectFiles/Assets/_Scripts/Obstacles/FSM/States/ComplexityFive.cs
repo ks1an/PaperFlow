@@ -1,16 +1,16 @@
 public sealed class ComplexityFive : FsmObstaclesManagerState
 {
-    ObstacleManager _manager;
+    ComplexityController _complexityController;
 
-    public ComplexityFive(FsmObstaclesManager fsm, ObstacleManager manager) : base(fsm)
+    public ComplexityFive(FsmObstaclesManager fsm, ComplexityController manager) : base(fsm)
     {
-        _manager = manager;
+        _complexityController = manager;
     }
 
     public override void Enter()
     {
         base.Enter();
 
-        _manager.SetSpeed(_manager.speedsComplexityes[4]);
+        _complexityController.SetSpeed(_complexityController.speedsComplexityes[4]);
     }
 }

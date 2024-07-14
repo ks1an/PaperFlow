@@ -6,19 +6,24 @@ public sealed class Stamina : MonoBehaviour
 {
     public float CurrentStamina { get => _currentStamina; set => CurrentStamina = _currentStamina; }
 
+    [SerializeField] int addStaminaOnChangedComplexity = 5;
+
     [Header("Spells stamina cost")]
-    public int staminaForBall = 65;
+    public int staminaForBall = 60;
 
     [Space(10)]
     [SerializeField] Slider _staminaSlider;
     [SerializeField] float _fillSpeed;
 
+    #region Effects Settings
     [Header("Decrease Effect Settings")]
     [SerializeField] Slider _staminaDecreaseEffectSlider;
     [SerializeField] float _staminaDeacreaseAnimTime = 0.3f, _staminaDeacreaseAnimDelayTime = 0.15f;
+
     [Header("Increase Effect Settings")]
     [SerializeField] Slider _staminaIncreaseEffectSlider;
     [SerializeField] float _staminaIncreaseAnimTime = 0.2f, _staminaIncreaseAnimDelayTime = 0.15f;
+    #endregion
 
     [Space(10)]
     [SerializeField] BallStateIndicator _ballIndicator;
@@ -28,15 +33,18 @@ public sealed class Stamina : MonoBehaviour
     bool _canRegenStamina = true;
     bool _infinityStamina = false;
 
-    private void LateUpdate()
+    private void Update()
     {
-        if (_currentStamina < _maxStamina && _canRegenStamina)
+        if (_canRegenStamina && _currentStamina < _maxStamina)
         {
             _currentStamina += _fillSpeed * Time.deltaTime;
-            CheckNeedStamina();
             _staminaSlider.value = _currentStamina;
+
+            CheckNeedStamina();
         }
     }
+
+    #region public methods
 
     public void DeacreaseStamina(int value)
     {
@@ -54,6 +62,9 @@ public sealed class Stamina : MonoBehaviour
         _canRegenStamina = false;
         _staminaIncreaseEffectSlider.value = _currentStamina;
 
+        if (_currentStamina < 0)
+            _currentStamina = 0;
+
         CheckNeedStamina();
         DeacreaseEffectAnim();
     }
@@ -69,12 +80,35 @@ public sealed class Stamina : MonoBehaviour
         }
 
         _staminaIncreaseEffectSlider.value = _currentStamina;
-
         _currentStamina += value;
+
+        if (_currentStamina > _maxStamina)
+            _currentStamina = _maxStamina;
 
         CheckNeedStamina();
         IncreaseEffectAnim();
     }
+
+    public void StaminaToMax()
+    {
+        _staminaSlider.DOKill();
+
+        _staminaSlider.maxValue = _maxStamina;
+        _staminaDecreaseEffectSlider.maxValue = _maxStamina;
+        _staminaIncreaseEffectSlider.maxValue = _maxStamina;
+
+        _currentStamina = _maxStamina;
+
+        _staminaSlider.value = _currentStamina;
+        _staminaDecreaseEffectSlider.value = _currentStamina;
+        _staminaIncreaseEffectSlider.value = _currentStamina;
+
+        CheckNeedStamina();
+    }
+
+    public void SetInfinityStamina(bool isTrue) => _infinityStamina = isTrue;
+
+    #endregion
 
     void CheckNeedStamina()
     {
@@ -84,24 +118,9 @@ public sealed class Stamina : MonoBehaviour
             _ballIndicator.SetCanGoToBallCollor();
     }
 
-    public void StaminaToMax()
-    {
-        _staminaSlider.DOKill();
+    void AddStaminaOnChangedComplexity() => IncreaseStamina(addStaminaOnChangedComplexity);
 
-        _staminaSlider.maxValue = _maxStamina;
-        _currentStamina = _maxStamina;
-        _staminaSlider.value = _currentStamina;
-
-        _staminaDecreaseEffectSlider.maxValue = _maxStamina;
-        _staminaDecreaseEffectSlider.value = _currentStamina;
-
-        _staminaIncreaseEffectSlider.maxValue = _maxStamina;
-        _staminaIncreaseEffectSlider.value = _currentStamina;
-
-        _ballIndicator.SetCanGoToBallCollor();
-    }
-
-    public void SetInfinityStamina(bool isTrue) => _infinityStamina = isTrue;
+    #region Effects
 
     void DeacreaseEffectAnim()
     {
@@ -114,6 +133,18 @@ public sealed class Stamina : MonoBehaviour
     {
         _staminaIncreaseEffectSlider.DOKill();
         _staminaIncreaseEffectSlider.DOValue(_currentStamina + 8, _staminaIncreaseAnimTime).SetDelay(_staminaIncreaseAnimDelayTime);
+    }
+
+    #endregion
+
+    void OnEnable()
+    {
+        Timer.OnComplexityTimeTicked += AddStaminaOnChangedComplexity;
+    }
+
+    void OnDisable()
+    {
+        Timer.OnComplexityTimeTicked -= AddStaminaOnChangedComplexity;
     }
 }
 

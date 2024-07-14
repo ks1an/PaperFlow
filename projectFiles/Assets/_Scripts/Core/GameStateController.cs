@@ -15,7 +15,7 @@ public sealed class GameStateController : MonoBehaviour
     [SerializeField] GameObject _gameplayUI;
     [SerializeField] GameObject _gameOverUI;
 
-    [Header("UI elements")]
+    [Header("Elements in UI")]
     [SerializeField] GameObject _pauseGameBttn;
 
     FsmGame _fsm;

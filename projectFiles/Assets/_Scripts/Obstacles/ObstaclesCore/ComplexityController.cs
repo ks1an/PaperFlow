@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public sealed class ObstacleManager : MonoBehaviour
+public sealed class ComplexityController : MonoBehaviour
 {
     public static float CurrentSpeedObstacles { get; private set; } = 5f;
 
@@ -12,8 +12,8 @@ public sealed class ObstacleManager : MonoBehaviour
     [Space(10)]
     #endregion
 
-    [SerializeField] Timer _timer;
     [SerializeField] Spawner _spawner;
+    [SerializeField] Timer _timer;
 
     FsmObstaclesManager _fsm;
     int[] _minForComplexityNum, _secForComplexityNum;
@@ -22,10 +22,10 @@ public sealed class ObstacleManager : MonoBehaviour
     {
         _fsm = new FsmObstaclesManager();
 
-        _fsm.AddState(new ComplexityOne(_fsm, this, _timer));
-        _fsm.AddState(new ComplexityTwo(_fsm, this, _timer));
-        _fsm.AddState(new ComplexityThree(_fsm, this, _timer));
-        _fsm.AddState(new ComplexityFour(_fsm, this, _timer));
+        _fsm.AddState(new ComplexityOne(_fsm, this));
+        _fsm.AddState(new ComplexityTwo(_fsm, this));
+        _fsm.AddState(new ComplexityThree(_fsm, this));
+        _fsm.AddState(new ComplexityFour(_fsm, this));
         _fsm.AddState(new ComplexityFive(_fsm, this));
 
         _minForComplexityNum = new int[_timeForComplexityNum.Length];
@@ -60,7 +60,7 @@ public sealed class ObstacleManager : MonoBehaviour
         }
 
         for (int i = 0; i < _fsm.states.Count; i++)
-            _timer.SetComplexityTriggerTime(i, _minForComplexityNum[i], _secForComplexityNum[i]);
+            _timer.SetComplexityTriggerTime(_minForComplexityNum[i], _secForComplexityNum[i]);
 
         _fsm.SetState<ComplexityOne>();
     }

@@ -13,7 +13,6 @@ public sealed class Score : MonoBehaviour
         if (value < 0)
         {
             DebuginggManager.LogError("Trying to increase the count by a negative number");
-
             return;
         }
 

@@ -1,7 +1,7 @@
 using DG.Tweening;
 using UnityEngine;
 
-public sealed class CameraControll : MonoBehaviour
+public sealed class CameraController : MonoBehaviour
 {
     [Header("OnPlay")]
     [SerializeField] float _zoomOutSize;
@@ -26,25 +26,6 @@ public sealed class CameraControll : MonoBehaviour
         transform.DOShakeRotation(0.25f, 0.1f);
     }
 
-    void OnMenu() => _cam.transform.DOLocalMoveX(_onMenuPosX, _durationMenuChange).SetUpdate(true);
-
-    void OnPlay()
-    {
-        _cam.transform.DOKill();
-        _cam.transform.DOLocalMoveX(_onPlayStartPosX, 1).SetUpdate(true);
-    }
-
-    void ZoomIn()
-    {
-        _cam.orthographicSize = Mathf.Lerp(_cam.orthographicSize, 5, _zoomSpeed * Time.deltaTime);
-        _cam.transform.position = new Vector3(Mathf.Lerp(_cam.transform.position.x, 0, _zoomSpeed * Time.deltaTime), _cam.transform.position.y, _cam.transform.position.z);
-    }
-
-    void ZoomOut()
-    {
-        _cam.orthographicSize = Mathf.Lerp(_cam.orthographicSize, _zoomOutSize, _zoomSpeed * Time.deltaTime);
-        _cam.transform.position = new Vector3(Mathf.Lerp(_cam.transform.position.x, _zoomOutPosX, _zoomSpeed * Time.deltaTime), _cam.transform.position.y, _cam.transform.position.z);
-    }
 
     void LateUpdate()
     {
@@ -59,6 +40,35 @@ public sealed class CameraControll : MonoBehaviour
             else
                 ZoomOut();
     }
+
+    #region Zoom
+
+    void ZoomIn()
+    {
+        _cam.orthographicSize = Mathf.Lerp(_cam.orthographicSize, 5, _zoomSpeed * Time.deltaTime);
+        transform.position = new Vector3(Mathf.Lerp(transform.position.x, 0, _zoomSpeed * Time.deltaTime), transform.position.y, transform.position.z);
+    }
+
+    void ZoomOut()
+    {
+        _cam.orthographicSize = Mathf.Lerp(_cam.orthographicSize, _zoomOutSize, _zoomSpeed * Time.deltaTime);
+        transform.position = new Vector3(Mathf.Lerp(transform.position.x, _zoomOutPosX, _zoomSpeed * Time.deltaTime), transform.position.y, transform.position.z);
+    }
+
+    #endregion
+
+    #region OnGameState
+
+    void OnMenu() => transform.DOLocalMoveX(_onMenuPosX, _durationMenuChange).SetUpdate(true);
+
+    void OnPlay()
+    {
+        transform.DOKill();
+        transform.DOLocalMoveX(_onPlayStartPosX, 1).SetUpdate(true);
+    }
+
+    #endregion
+
 
     private void OnEnable()
     {

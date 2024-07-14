@@ -22,11 +22,11 @@ public sealed class Player : MonoBehaviour
     [SerializeField, Range(1, 5)] int _numJumps;
     [SerializeField] float _jumpPower, _jumpDuration, _jumpPosX;
 
-    [Header("")]
+    [Header("Sprites")]
     [SerializeField] Sprite _ballSprite;
     [SerializeField] Sprite _planeSprite;
 
-    [Header("")]
+    [Header("Scripts")]
     [SerializeField] GameStateController _controller;
     [SerializeField] Score _score;
 
@@ -37,7 +37,7 @@ public sealed class Player : MonoBehaviour
     Health _health;
     Stamina _stamina;
     FsmPlayer _fsm;
-    CameraControll _cam;
+    CameraController _cam;
 
     Rigidbody2D _rb;
     SpriteRenderer _renderer;
@@ -46,7 +46,8 @@ public sealed class Player : MonoBehaviour
 
     void Awake()
     {
-        _cam = Camera.main.GetComponent<CameraControll>();
+        _cam = Camera.main.GetComponent<CameraController>();
+
         _rb = GetComponent<Rigidbody2D>();
         _health = GetComponent<Health>();
         _stamina = GetComponent<Stamina>();
@@ -61,6 +62,7 @@ public sealed class Player : MonoBehaviour
     void Start()
     {
         _startPos = transform.position;
+
         _fsm = new FsmPlayer();
 
         _fsm.AddState(new MovementState(_fsm, this, _rb, _stamina));
@@ -107,6 +109,7 @@ public sealed class Player : MonoBehaviour
     {
         if (collision.CompareTag("destroyObstacle"))
         {
+
             if (_fsm.CurrentState.GetType() == typeof(BallState))
             {
                 Destroy(collision.gameObject);
@@ -122,6 +125,7 @@ public sealed class Player : MonoBehaviour
                 else
                     _cam.Shake();
             }
+
         }
         else if (collision.CompareTag("Scoring"))
         {
@@ -129,9 +133,11 @@ public sealed class Player : MonoBehaviour
                 _score.IncreaseScore(2);
             else
                 _score.IncreaseScore(1);
+
         }
         else if (collision.CompareTag("nonDestroyObstacle"))
         {
+
             _health.TakeMaxDamage();
             _controller.SetGameOverState();
             _cam.Shake();
@@ -143,6 +149,7 @@ public sealed class Player : MonoBehaviour
             gameObject.transform.DOLocalJump(new Vector3(gameObject.transform.position.x + _jumpPosX, gameObject.transform.position.y, gameObject.transform.position.z),
                 _jumpPower, _numJumps, _jumpDuration).SetUpdate(true);
             gameObject.transform.DOLocalMoveX(gameObject.transform.position.x + 1.5f, 5).SetUpdate(true).WaitForCompletion();
+
         }
     }
 

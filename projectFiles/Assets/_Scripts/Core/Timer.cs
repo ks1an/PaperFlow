@@ -5,7 +5,7 @@ using UnityEngine;
 
 public sealed class Timer : MonoBehaviour
 {
-    public event Action OnComplexityTimeTicked;
+    public static event Action OnComplexityTimeTicked;
 
     public string result;
 
@@ -24,7 +24,7 @@ public sealed class Timer : MonoBehaviour
         if (_startSec > 0 && _startSec <= 59) _sec = _startSec; else _startSec = 0;
     }
 
-    public void SetComplexityTriggerTime(int complexityNumber, int min, int sec)
+    public void SetComplexityTriggerTime(int min, int sec)
     {
         _complexityMin.Add(min);
         _complexitySec.Add(sec);
@@ -43,7 +43,8 @@ public sealed class Timer : MonoBehaviour
     {
         while (true)
         {
-            if (!stop) TimeCount();
+            if (!stop) 
+                TimeCount();
             yield return new WaitForSeconds(1f);
         }
     }
@@ -64,8 +65,11 @@ public sealed class Timer : MonoBehaviour
 
     void CurrentTime()
     {
-        if (_sec < 10) _s = "0" + _sec; else _s = _sec.ToString();
-        if (_min < 10) _m = "0" + _min; else _m = _min.ToString();
+        if (_sec < 10) _s = "0" + _sec; 
+        else _s = _sec.ToString();
+
+        if (_min < 10) _m = "0" + _min;
+        else _m = _min.ToString();
 
         result = _m + ":" + _s;
     }

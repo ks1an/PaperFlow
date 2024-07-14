@@ -9,6 +9,7 @@ public sealed class Spawner : MonoBehaviour
     [SerializeField] Transform _container;
     [SerializeField] RandomNumberGenerator _random;
 
+    [Header("Obstacle Arrays")]
     SimpleObstacle[] _curSimpleObstaclesArray;
     EffectorsObtacle[] _curEffectorsObstaclesArray;
     DynamicComplexObstacle[] _curDynamicObstaclesArray;
@@ -25,7 +26,7 @@ public sealed class Spawner : MonoBehaviour
 
     void Start()
     {
-        transform.position = UnityEngine.Camera.main.ScreenToWorldPoint(new Vector2(UnityEngine.Camera.main.pixelWidth, UnityEngine.Camera.main.pixelHeight / 2));
+        transform.position = Camera.main.ScreenToWorldPoint(new Vector2(Camera.main.pixelWidth, Camera.main.pixelHeight / 2));
         transform.position = new Vector2(transform.position.x + _DistanceFromCameraX, transform.position.y);
     }
 
@@ -65,23 +66,25 @@ public sealed class Spawner : MonoBehaviour
 
                 yield return new WaitForSeconds(_spawnRate);
 
+                #region Defines Obstacle
+
                 if (_random.CheckChance(_category[_currentCategory].obstacles.complexChance))
                 {
-                    if (_curConstructionObstaclesArray.Length > 0 && _currentObstacleType == 0 
+                    if (_curConstructionObstaclesArray.Length > 0 && _currentObstacleType == 0
                         && !_random.CheckChance(_category[_currentCategory].obstacles.complexObstacles.dynamicChance))
                     {
+                        yield return new WaitForSeconds(0.2f);
                         InstantiateConstructionObstacle();
                         _readyToSpawn = false;
-                        yield return new WaitForSeconds(0.2f);
                     }
                     else if (_curDynamicObstaclesArray.Length > 0 && _currentObstacleType == 1
                         && _random.CheckChance(_category[_currentCategory].obstacles.complexObstacles.dynamicChance))
                     {
+                        yield return new WaitForSeconds(0.3f);
                         InstantiateDynamicObstacle();
                         _readyToSpawn = false;
-                        yield return new WaitForSeconds(0.4f);
                     }
-                    else if(_curSimpleObstaclesArray.Length > 0)
+                    else if (_curSimpleObstaclesArray.Length > 0)
                     {
                         InstantiateSimpleObstacle();
                         _readyToSpawn = false;
@@ -93,11 +96,13 @@ public sealed class Spawner : MonoBehaviour
                     InstantiateEffectorObstacle();
                     _readyToSpawn = false;
                 }
-                else if(_curSimpleObstaclesArray.Length > 0)
+                else if (_curSimpleObstaclesArray.Length > 0)
                 {
                     InstantiateSimpleObstacle();
                     _readyToSpawn = false;
                 }
+
+                #endregion
             }
             else
                 yield return null;
@@ -140,7 +145,7 @@ public sealed class Spawner : MonoBehaviour
         _curObstacle = Instantiate(_curDynamicObstaclesArray[_currentObstacleInList].prefab,
             transform.position, Quaternion.identity, parent: _container);
 
-        if(_curDynamicObstaclesArray[_currentObstacleInList].canChangeHeight)
+        if (_curDynamicObstaclesArray[_currentObstacleInList].canChangeHeight)
             _curObstacle.transform.position += Vector3.up * Random.Range(_curDynamicObstaclesArray[_currentObstacleInList].minHeight,
    _curDynamicObstaclesArray[_currentObstacleInList].maxHeight);
     }

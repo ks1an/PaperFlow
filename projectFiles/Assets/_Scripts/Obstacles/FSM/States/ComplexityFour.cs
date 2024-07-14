@@ -1,27 +1,25 @@
 public sealed class ComplexityFour : FsmObstaclesManagerState
 {
-    ObstacleManager _manager;
-    Timer _timer;
-    public ComplexityFour(FsmObstaclesManager fsm, ObstacleManager manager, Timer timer) : base(fsm)
+    ComplexityController _complexityController;
+    public ComplexityFour(FsmObstaclesManager fsm, ComplexityController manager) : base(fsm)
     {
-        _manager = manager;
-        _timer = timer;
+        _complexityController = manager;
     }
 
     public override void Enter()
     {
         base.Enter();
 
-        _timer.OnComplexityTimeTicked += NextComplexity;
+        Timer.OnComplexityTimeTicked += NextComplexity;
 
-        _manager.SetSpeed(_manager.speedsComplexityes[3]);
+        _complexityController.SetSpeed(_complexityController.speedsComplexityes[3]);
     }
 
     public override void Exit()
     {
         base.Exit();
 
-        _timer.OnComplexityTimeTicked -= NextComplexity;
+        Timer.OnComplexityTimeTicked -= NextComplexity;
     }
 
     void NextComplexity() => Fsm.SetState<ComplexityFive>();
