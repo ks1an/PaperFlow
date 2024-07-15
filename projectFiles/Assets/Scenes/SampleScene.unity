@@ -6381,12 +6381,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _spritesHealth:
-  - {fileID: -739162617, guid: cffaa79e5baaf5a4f9bb52131ca3a41e, type: 3}
-  - {fileID: -1181247285, guid: cffaa79e5baaf5a4f9bb52131ca3a41e, type: 3}
-  - {fileID: -2054895772, guid: cffaa79e5baaf5a4f9bb52131ca3a41e, type: 3}
-  - {fileID: -283321645, guid: cffaa79e5baaf5a4f9bb52131ca3a41e, type: 3}
-  - {fileID: -1612887149, guid: cffaa79e5baaf5a4f9bb52131ca3a41e, type: 3}
-  - {fileID: 700572430, guid: cffaa79e5baaf5a4f9bb52131ca3a41e, type: 3}
+  - {fileID: 414652337, guid: ea3a78bb340a21748a7106d6f6b56844, type: 3}
+  - {fileID: -1035485695, guid: ea3a78bb340a21748a7106d6f6b56844, type: 3}
+  - {fileID: -542379310, guid: ea3a78bb340a21748a7106d6f6b56844, type: 3}
+  - {fileID: 46339503, guid: ea3a78bb340a21748a7106d6f6b56844, type: 3}
+  - {fileID: -451406534, guid: ea3a78bb340a21748a7106d6f6b56844, type: 3}
+  - {fileID: -1615347665, guid: ea3a78bb340a21748a7106d6f6b56844, type: 3}
   _imageHealth: {fileID: 563162838}
   _textHealth: {fileID: 1702985263}
   _cooldownTakeDamage: 1
