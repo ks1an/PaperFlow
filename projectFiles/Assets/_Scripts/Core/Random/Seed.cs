@@ -6,8 +6,9 @@ using Random = UnityEngine.Random;
 public sealed class Seed : MonoBehaviour
 {
     [SerializeField] string _firstSeed;
-    [SerializeField] RandomNumberGenerator _numberGenerator;
     [SerializeField] TMP_InputField _inputSeedTxt;
+
+    RandomNumberGenerator _random = RandomNumberGenerator.GetInstance();
 
     void GetFirstSeed()
     {
@@ -20,7 +21,8 @@ public sealed class Seed : MonoBehaviour
                 _firstSeed += Random.Range(0, 9).ToString();
         }
 
-        _numberGenerator.GetSeed(Convert.ToUInt32(_firstSeed));
+        _random.GetSeed(Convert.ToUInt32(_firstSeed));
+        Debug.Log(_firstSeed);
     }
 
     private void OnEnable()

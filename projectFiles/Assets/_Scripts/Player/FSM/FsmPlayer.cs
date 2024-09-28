@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 public class FsmPlayer
 {
@@ -15,7 +16,7 @@ public class FsmPlayer
 
         if (CurrentState != null && CurrentState.GetType() == type)
         {
-            DebuginggManager.Log($"Trying to toggle {CurrentState} state on FsmPlayer, but it's already on");
+            Debug.Log($"Trying to toggle {CurrentState} state on FsmPlayer, but it's already on");
             return;
         }
 
@@ -27,7 +28,7 @@ public class FsmPlayer
 
             CurrentState.Enter();
 
-            DebuginggManager.Log($"The player has entered the state {CurrentState}");
+            Debug.Log($"The player has entered the state {CurrentState}");
         }
     }
 

@@ -30,8 +30,13 @@ public sealed class MovementState : FSMPlayerState
             return;
         }
 
-        if (_player.transform.position.x < -0.1f)
+        if (_player.transform.position.x < -4)
+            _rb.AddForce(_player.CorrectionSpeed * Time.deltaTime * 10 * Vector2.right);
+        else if(_player.transform.position.x < -0.1f)
             _rb.AddForce(_player.CorrectionSpeed * Time.deltaTime * 2 * Vector2.right);
+
+        if (_player.transform.position.x > 8f)
+            _rb.AddForce(_player.CorrectionSpeed * Time.deltaTime * 15 * Vector2.left);
         else if (_player.transform.position.x > 0.1f)
             _rb.AddForce(_player.CorrectionSpeed * Time.deltaTime * 8 * Vector2.left);
     }

@@ -23,7 +23,7 @@ public sealed class Health : MonoBehaviour
 
         if (damageAmount < 0)
         {
-            DebuginggManager.LogError("Amount in TakeDamage method < 0 on " + this.gameObject);
+            Debug.LogError("Amount in TakeDamage method < 0 on " + this.gameObject);
             return;
         }
 
@@ -33,7 +33,7 @@ public sealed class Health : MonoBehaviour
         if (_currentHealth - damageAmount <= 0)
         {
             ChangeHealth(0);
-            DebuginggManager.Log("Death");
+            Debug.Log("Death");
         }
         else
             ChangeHealth(_currentHealth -= damageAmount);
@@ -45,13 +45,13 @@ public sealed class Health : MonoBehaviour
     {
         if (healtAmount <= 0)
         {
-            DebuginggManager.LogError("Amount in Heal method < 0 on " + this.gameObject);
+            Debug.LogError("Amount in Heal method < 0 on " + this.gameObject);
             return;
         }
 
         if (_currentHealth == _maxhealth)
         {
-            DebuginggManager.Log("Try heal but currentHealth is max! On " + this.gameObject);
+            Debug.Log("Try heal but currentHealth is max! On " + this.gameObject);
             return;
         }
 

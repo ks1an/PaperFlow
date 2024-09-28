@@ -52,7 +52,7 @@ public sealed class Stamina : MonoBehaviour
 
         if (value < 0)
         {
-            DebuginggManager.LogError("Received a negative number in the DeacreaseStamina() method");
+            Debug.LogError("Received a negative number in the DeacreaseStamina() method");
             return;
         }
 
@@ -75,7 +75,7 @@ public sealed class Stamina : MonoBehaviour
 
         if (value < 0)
         {
-            DebuginggManager.LogError("Received a negative number in the IncreaseStamina() method");
+            Debug.LogError("Received a negative number in the IncreaseStamina() method");
             return;
         }
 

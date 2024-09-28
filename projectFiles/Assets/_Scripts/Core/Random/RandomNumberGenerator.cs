@@ -1,13 +1,23 @@
 // based: https://github.com/frozax/misc/blob/master/fgRandom/fgRandom.cs 28.06.24;
 
 using System;
-using UnityEngine;
 
-public class RandomNumberGenerator : MonoBehaviour
+public class RandomNumberGenerator
 {
+    #region singleton
+    private RandomNumberGenerator() { }
+
+    private static RandomNumberGenerator _instance;
+    public static RandomNumberGenerator GetInstance()
+    {
+        _instance ??= new RandomNumberGenerator();
+        return _instance;
+    }
+    #endregion
+
     const int _n = 624;
     const int _m = 397;
-    int _index = _n ;
+    int _index = _n;
     uint[] _mt = new uint[_n];
 
     string _firstNumbersStr;
@@ -15,27 +25,29 @@ public class RandomNumberGenerator : MonoBehaviour
     #region public methods
     public void GetSeed(uint seed)
     {
-        _mt[0] = seed;
-        _index = _n;
+        _instance._mt[0] = seed;
+        _instance._index = _n;
 
         for (uint i = 1; i < _n; i++)
-            _mt[i] = 1812433253 * (_mt[i - 1] ^ (_mt[i - 1] >> 30)) + i;
-
-        Debug.Log(NextUInt());
+            _instance._mt[i] = 1812433253 * (_instance._mt[i - 1] ^ (_instance._mt[i - 1] >> 30)) + i;
     }
 
-    public uint NextUInt() { return ExtractNumber(); }
+    public uint NextUInt() { return _instance.ExtractNumber(); }
 
     /// <summary>
     /// between min (included) and max (excluded)
     /// </summary>
-    public int Range(int min, int max) { return (int)(NextUInt() % ((max) - min) + min);}
+    public int Range(int min, int max) { return (int)(NextUInt() % ((max) - min) + min); }
+
+    public float RangeFloat(float min, float max) { return ((NextFloat() * (max - min)) + min); }
+
+    public float NextFloat() { return (float)(NextUInt() % 65536) / 65535.0f; }
 
     public bool CheckChance(int chance)
     {
-        _firstNumbersStr = NextUInt().ToString()[..2];
+        _instance._firstNumbersStr = NextUInt().ToString()[..2];
 
-        return Convert.ToInt16(_firstNumbersStr) <= chance;
+        return Convert.ToInt16(_instance._firstNumbersStr) <= chance;
     }
     #endregion
 

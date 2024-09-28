@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 public class FsmGame
 {
@@ -15,7 +16,7 @@ public class FsmGame
 
         if(StateCurrent != null && StateCurrent.GetType() == type)
         {
-            DebuginggManager.Log($"Trying to toggle {StateCurrent} state on FsmGame, but it's already on");
+            Debug.Log($"Trying to toggle {StateCurrent} state on FsmGame, but it's already on");
             return;
         }
 
@@ -27,7 +28,7 @@ public class FsmGame
 
             StateCurrent.Enter();
 
-            DebuginggManager.Log($"The interface has entered the state {StateCurrent}");
+            Debug.Log($"The interface has entered the state {StateCurrent}");
         }
     }
 

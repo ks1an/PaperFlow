@@ -12,7 +12,7 @@ public sealed class Score : MonoBehaviour
     {
         if (value < 0)
         {
-            DebuginggManager.LogError("Trying to increase the count by a negative number");
+            Debug.LogError("Trying to increase the count by a negative number");
             return;
         }
 
@@ -29,7 +29,7 @@ public sealed class Score : MonoBehaviour
         if(CurrentScore > RecordScore)
         {
             RecordScore = CurrentScore;
-            DebuginggManager.Log($"New record! Your new record: {CurrentScore}. Your previous record: {RecordScore}.");
+            Debug.Log($"New record! Your new record: {CurrentScore}. Your previous record: {RecordScore}.");
         }
     }
 
