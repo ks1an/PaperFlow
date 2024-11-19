@@ -15,8 +15,10 @@ public sealed class Timer : MonoBehaviour
     int _min, _sec;
     string _m, _s;
 
-    List<int> _complexityMin = new List<int>(), _complexitySec = new List<int>();
+    List<int> _complexityMin = new(), _complexitySec = new();
     int _currentComplexity = 1;
+
+    WaitForSeconds _oneSecDelay = new(1);
 
     void Awake()
     {
@@ -45,7 +47,7 @@ public sealed class Timer : MonoBehaviour
         {
             if (!stop) 
                 TimeCount();
-            yield return new WaitForSeconds(1f);
+            yield return _oneSecDelay;
         }
     }
 

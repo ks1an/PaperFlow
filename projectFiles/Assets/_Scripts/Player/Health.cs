@@ -33,7 +33,6 @@ public sealed class Health : MonoBehaviour
         if (_currentHealth - damageAmount <= 0)
         {
             ChangeHealth(0);
-            Debug.Log("Death");
         }
         else
             ChangeHealth(_currentHealth -= damageAmount);

@@ -29,7 +29,6 @@ public sealed class Score : MonoBehaviour
         if(CurrentScore > RecordScore)
         {
             RecordScore = CurrentScore;
-            Debug.Log($"New record! Your new record: {CurrentScore}. Your previous record: {RecordScore}.");
         }
     }
 

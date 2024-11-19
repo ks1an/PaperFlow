@@ -39,9 +39,10 @@ public sealed class Stamina : MonoBehaviour
         {
             _currentStamina += _fillSpeed * Time.deltaTime;
             _staminaSlider.value = _currentStamina;
-
-            CheckNeedStamina();
         }
+
+        if(Time.frameCount % 3 == 0)
+            CheckNeedStamina();
     }
 
     #region public methods

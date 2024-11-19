@@ -2,7 +2,7 @@
 
 using System;
 
-public class RandomNumberGenerator
+public sealed class RandomNumberGenerator
 {
     #region singleton
     private RandomNumberGenerator() { }

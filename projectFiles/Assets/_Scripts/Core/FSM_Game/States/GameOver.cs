@@ -26,6 +26,7 @@ public sealed class GameOver : FsmGameState
         base.Exit();
 
         _gameOverUI.SetActive(false);
+        System.GC.Collect();
     }
 
     public override void Update()

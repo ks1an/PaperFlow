@@ -13,23 +13,16 @@ public sealed class CameraController : MonoBehaviour
     [SerializeField, Range(0, 10)] float _durationMenuChange;
 
     [Space(10)]
-    [SerializeReference] Player _player;
+    [SerializeReference] Transform _playerTransform;
 
     Camera _cam;
     bool _zoomIn = true;
 
     void Awake() => _cam = Camera.main;
 
-    public void Shake() 
-    {
-        transform.DOShakePosition(0.5f, 0.1f);
-        transform.DOShakeRotation(0.25f, 0.1f);
-    }
-
-
     void LateUpdate()
     {
-        if (_player.transform.position.x > _onPlayStartPosX + 0.25f)
+        if (_playerTransform.position.x > _onPlayStartPosX + 0.25f)
             _zoomIn = false;
         else
             _zoomIn = true;
@@ -39,6 +32,12 @@ public sealed class CameraController : MonoBehaviour
                 ZoomIn();
             else
                 ZoomOut();
+    }
+
+    public void Shake() 
+    {
+        transform.DOShakePosition(0.5f, 0.1f);
+        transform.DOShakeRotation(0.25f, 0.1f);
     }
 
     #region Zoom

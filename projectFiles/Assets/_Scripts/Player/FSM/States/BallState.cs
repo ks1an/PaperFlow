@@ -29,7 +29,7 @@ public sealed class BallState : FSMPlayerState
         _player.transform.eulerAngles = new Vector3(0,0,-90);
         _planeCollider.enabled = false;
         _ballCollider.enabled = true;
-        _rb.AddForce(_player.ForceUp * Time.fixedDeltaTime * Vector2.up, ForceMode2D.Impulse);
+        _rb.AddForce(_player.ForceUp * Time.fixedDeltaTime * CachedMath.Vector2Up, ForceMode2D.Impulse);
     }
 
     public override void Exit()
@@ -48,10 +48,10 @@ public sealed class BallState : FSMPlayerState
 
         if (Input.GetKeyUp(KeyCode.S))
         {
-            _rb.AddForce(_player.ForceUp * Time.fixedDeltaTime * 5 * Vector2.up, ForceMode2D.Impulse);
+            _rb.AddForce(_player.ForceUp * Time.fixedDeltaTime * 5 * CachedMath.Vector2Up, ForceMode2D.Impulse);
             if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow) || Input.GetMouseButton(1))
             {
-                _rb.AddForce(_player.ChargeSpeed * Time.fixedDeltaTime * 10 * Vector2.up, ForceMode2D.Impulse);
+                _rb.AddForce(_player.ChargeSpeed * Time.fixedDeltaTime * 10 * CachedMath.Vector2Up, ForceMode2D.Impulse);
                 Fsm.SetState<ChargeState>();
             }
             else

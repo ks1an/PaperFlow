@@ -1,0 +1,133 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27cd773012c27034ea58e9f31b1b152d, type: 3}
+  m_Name: Bd_FabricTopObs
+  m_EditorClassIdentifier: 
+  nameFabric: Top
+  chance: 35
+  obstacles:
+    types:
+    - nameType: Effector
+      chance: 10
+      SubTypes:
+      - nameSubType: Acceler
+        chance: 90
+        obs:
+        - nameId: Acceler-To-90
+          prefab: {fileID: 3651771616299894701, guid: 26ab40298bfdd0a4bb1a5e83dc3516f4, type: 3}
+          position: {x: 0, y: 3.5, z: 0}
+          rotation: {x: 0, y: 0, z: -90}
+          maxHeight: -1
+          minHeight: 1
+          rotateYOnSpawn: 0
+          spawnDelay: 1.25
+        - nameId: Acceler-To-145
+          prefab: {fileID: 3651771616299894701, guid: 26ab40298bfdd0a4bb1a5e83dc3516f4, type: 3}
+          position: {x: 0, y: 3.5, z: 0}
+          rotation: {x: 0, y: 0, z: -145}
+          maxHeight: -1
+          minHeight: 1
+          rotateYOnSpawn: 0
+          spawnDelay: 1.25
+        - nameId: Acceler-To-180
+          prefab: {fileID: 3651771616299894701, guid: 26ab40298bfdd0a4bb1a5e83dc3516f4, type: 3}
+          position: {x: 0, y: 3.5, z: 0}
+          rotation: {x: 0, y: 0, z: -180}
+          maxHeight: -1
+          minHeight: 1
+          rotateYOnSpawn: 0
+          spawnDelay: 1.25
+      - nameSubType: Inhibitor
+        chance: 15
+        obs:
+        - nameId: Inhibitor-To-90
+          prefab: {fileID: 6230648263947538207, guid: fa45b8e400a274f47a6c7b036dcca3c5, type: 3}
+          position: {x: 0, y: 3.5, z: 0}
+          rotation: {x: 0, y: 0, z: 90}
+          maxHeight: -1
+          minHeight: 1
+          rotateYOnSpawn: 0
+          spawnDelay: 1.25
+        - nameId: Inhibitor-To-145
+          prefab: {fileID: 6230648263947538207, guid: fa45b8e400a274f47a6c7b036dcca3c5, type: 3}
+          position: {x: 0, y: 3.5, z: 0}
+          rotation: {x: 0, y: 0, z: 145}
+          maxHeight: -1
+          minHeight: 1
+          rotateYOnSpawn: 0
+          spawnDelay: 1.25
+    - nameType: Simple
+      chance: 100
+      SubTypes:
+      - nameSubType: Standart
+        chance: 100
+        obs:
+        - nameId: Lamp
+          prefab: {fileID: 7797247004186894903, guid: a677a010ab1947340ad4dd454a510375, type: 3}
+          position: {x: 0, y: 3.5, z: 0}
+          rotation: {x: 0, y: 0, z: 0}
+          maxHeight: 0.5
+          minHeight: -0.75
+          rotateYOnSpawn: 0
+          spawnDelay: 1.25
+        - nameId: CellingLamp
+          prefab: {fileID: 3379722516047864418, guid: ad19e977b00356e4096a34753e489f56, type: 3}
+          position: {x: 0, y: 5.1, z: 0}
+          rotation: {x: 0, y: 0, z: 0}
+          maxHeight: 0
+          minHeight: 0
+          rotateYOnSpawn: 0
+          spawnDelay: 1
+    - nameType: Construction
+      chance: 20
+      SubTypes:
+      - nameSubType: Standart
+        chance: 100
+        obs:
+        - nameId: Lamp+CellingLamp
+          prefab: {fileID: 8725900968192892299, guid: 6d2a152aa6f1a5943abd424071779773, type: 3}
+          position: {x: 0, y: 3.5, z: 0}
+          rotation: {x: 0, y: 0, z: 0}
+          maxHeight: 0.3
+          minHeight: 0
+          rotateYOnSpawn: 1
+          spawnDelay: 1.65
+        - nameId: Lamp+CellingLamp+Acceler45
+          prefab: {fileID: 8725900968192892299, guid: 2febe576239c39b4f8a5a392c55d10c8, type: 3}
+          position: {x: 0, y: 3.5, z: 0}
+          rotation: {x: 0, y: 0, z: 0}
+          maxHeight: 0.25
+          minHeight: 0
+          rotateYOnSpawn: 0
+          spawnDelay: 1.6
+    - nameType: Dynamic
+      chance: 15
+      SubTypes:
+      - nameSubType: Plane
+        chance: 100
+        obs:
+        - nameId: PlaneSimple
+          prefab: {fileID: 5232357457848350440, guid: 151c3623bd8a51f4785770cda4377948, type: 3}
+          position: {x: 0, y: 3, z: 0}
+          rotation: {x: 0, y: 0, z: 0}
+          maxHeight: 0.25
+          minHeight: -0.25
+          rotateYOnSpawn: 0
+          spawnDelay: 1.25
+        - nameId: PlaneSimple2
+          prefab: {fileID: 5232357457848350440, guid: 3b481692e2bb3b5468c18b57476b69ba, type: 3}
+          position: {x: 0, y: 3, z: 0}
+          rotation: {x: 0, y: 0, z: 0}
+          maxHeight: 0.25
+          minHeight: -0.25
+          rotateYOnSpawn: 0
+          spawnDelay: 1.25

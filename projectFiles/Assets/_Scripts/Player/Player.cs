@@ -91,7 +91,7 @@ public sealed class Player : MonoBehaviour
         _planeCollider.enabled = true;
         _ballCollider.enabled = false;
 
-        _rb.velocity = Vector2.zero;
+        _rb.velocity = CachedMath.Vector2Zero;
         transform.rotation = Quaternion.Euler(60, 0, -90);
     }
 
@@ -118,7 +118,7 @@ public sealed class Player : MonoBehaviour
             else
             {
                 _health.TakeDamage(1);
-                _stamina.DeacreaseStamina(5);
+                _stamina.IncreaseStamina(5);
 
                 if (_health.CurrentHelth == 0)
                     _controller.SetGameOverState();
