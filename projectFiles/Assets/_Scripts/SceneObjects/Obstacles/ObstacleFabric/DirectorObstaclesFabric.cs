@@ -5,7 +5,7 @@ using UnityEngine;
 public sealed class DirectorObstaclesFabric : MonoBehaviour
 {
     [SerializeField] float _distanceXFromCamera = 6f;
-    [SerializeField] BaseDataObsFabrics _bdMidFabric, _bdTopFabric, _bdBotFabric;
+    [SerializeField] BaseDataObsFabrics _bdMidFabric, _bdTopFabric, _bdBotFabric, _bdCollabFabric;
     [SerializeField] Transform _container;
 
     List<FabricResume> _fabrics = new();
@@ -19,7 +19,8 @@ public sealed class DirectorObstaclesFabric : MonoBehaviour
     {
         _fabrics.Add(new FabricResume(new FabricOnTheTop(), _bdTopFabric, _container));
         _fabrics.Add(new FabricResume(new FabricOnTheMid(), _bdMidFabric, _container));
-        _fabrics.Add(new FabricResume(new FabricOnTheBot(), _bdBotFabric, _container));
+        _fabrics.Add(new FabricResume(new FabricOnTheBot(), _bdBotFabric, _container));  
+        _fabrics.Add(new FabricResume(new FabricCollab(), _bdCollabFabric, _container));        
     }
 
     private void Start()

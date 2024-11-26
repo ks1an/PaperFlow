@@ -86,7 +86,7 @@ MonoBehaviour:
           maxHeight: 0.25
           minHeight: -0.75
           rotateYOnSpawn: 1
-          spawnDelay: 1.5
+          spawnDelay: 1.25
         - nameId: Table
           prefab: {fileID: 3740690923077581404, guid: 759aa4b231776ea4b93189a76c225503, type: 3}
           position: {x: 0, y: -3.5, z: 0}

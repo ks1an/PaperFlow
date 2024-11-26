@@ -34,7 +34,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 2
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -123,7 +123,28 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: BackGroundObj-Sheet_0
+      name: FurnitureBack_0
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 97
+        width: 28
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a7be564022fd20e40b3ade14fb831c22
+      internalID: 1834633311
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FurnitureBack_1
       rect:
         serializedVersion: 2
         x: 0
@@ -137,8 +158,92 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8cd094eb2021907429a564d0372680f4
-      internalID: -660266365
+      spriteID: b95ce7724e869294a99f7cc11bc9677b
+      internalID: -2101267696
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FurnitureBack_2
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 0
+        width: 34
+        height: 85
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9932e6a5d0d58b74abb966ae8e81eabd
+      internalID: -1634863614
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FurnitureBack_3
+      rect:
+        serializedVersion: 2
+        x: 92
+        y: 0
+        width: 54
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f5c86006ccc254846b2267405ae329f7
+      internalID: -1866214716
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FurnitureBack_4
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 0
+        width: 15
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 29d5ae7fc8544a642bf0426f9ec069e2
+      internalID: -1881309051
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FurnitureBack_5
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 0
+        width: 48
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d838db4362911b746bbec312d18dae0b
+      internalID: 2063745900
       vertices: []
       indices: 
       edges: []
@@ -154,7 +259,12 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      BackGroundObj-Sheet_0: -660266365
+      FurnitureBack_0: 1834633311
+      FurnitureBack_1: -2101267696
+      FurnitureBack_2: -1634863614
+      FurnitureBack_3: -1866214716
+      FurnitureBack_4: -1881309051
+      FurnitureBack_5: 2063745900
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

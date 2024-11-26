@@ -1,0 +1,67 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27cd773012c27034ea58e9f31b1b152d, type: 3}
+  m_Name: Bd_FabricCollabObs
+  m_EditorClassIdentifier: 
+  nameFabric: Collab
+  chance: 30
+  obstacles:
+    types:
+    - nameType: Simples
+      chance: 100
+      SubTypes:
+      - nameSubType: Simple+Simple
+        chance: 100
+        obs:
+        - nameId: Lamp+Closet
+          prefab: {fileID: 8173481551994355729, guid: 45aa31bb40d6cdb4bacc3ca5b4f50d12, type: 3}
+          position: {x: 0, y: 0, z: 0}
+          rotation: {x: 0, y: 0, z: 0}
+          maxHeight: 0
+          minHeight: -0.25
+          rotateYOnSpawn: 0
+          spawnDelay: 1.25
+      - nameSubType: Simple+Const
+        chance: 30
+        obs:
+        - nameId: Lamp+(Table+Chair)
+          prefab: {fileID: 153580830303849122, guid: c1a5c994c8d70734dba4d578dd9605b6, type: 3}
+          position: {x: 0, y: 0, z: 0}
+          rotation: {x: 0, y: 0, z: 0}
+          maxHeight: 0
+          minHeight: -0.25
+          rotateYOnSpawn: 1
+          spawnDelay: 1
+        - nameId: Lamp+(Table+2Chair)
+          prefab: {fileID: 5684414970598477940, guid: 937999785a4ab3e4189f8707edcbfa8a, type: 3}
+          position: {x: 0, y: 0, z: 0}
+          rotation: {x: 0, y: 0, z: 0}
+          maxHeight: 0
+          minHeight: -0.25
+          rotateYOnSpawn: 0
+          spawnDelay: 1
+        - nameId: Lamp+(Table+2chair)+2Shelf
+          prefab: {fileID: 5684414970598477940, guid: 34ff100fbf082ba42bce2df3889aac6f, type: 3}
+          position: {x: 0, y: 0, z: 0}
+          rotation: {x: 0, y: 0, z: 0}
+          maxHeight: 0
+          minHeight: -0.25
+          rotateYOnSpawn: 0
+          spawnDelay: 1.25
+        - nameId: Lamp+CellingLamp+Acceler
+          prefab: {fileID: 5684414970598477940, guid: 6dde93a468259594fb57b8a8b709944e, type: 3}
+          position: {x: 0, y: 0, z: 0}
+          rotation: {x: 0, y: 0, z: 0}
+          maxHeight: 0
+          minHeight: -0.25
+          rotateYOnSpawn: 0
+          spawnDelay: 1.65

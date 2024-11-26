@@ -15,10 +15,10 @@ MonoBehaviour:
   decorObjects:
     categories:
     - nameCategory: Corridor
-      chance: 50
+      chance: 100
       types:
       - nameType: AroundWall
-        chance: 80
+        chance: 100
         obj:
         - nameId: VendingMachine
           prefab: {fileID: 5191982840403783520, guid: df683c135f3ab30409075cb49ebef88b, type: 3}
@@ -28,3 +28,43 @@ MonoBehaviour:
           minHeight: 0
           rotateYOnSpawn: 0
           spawnDelay: 15
+        - nameId: Chair
+          prefab: {fileID: 5191982840403783520, guid: d0478200044813c4a9306b0d0ea751d4, type: 3}
+          position: {x: 0, y: -3.3, z: 0}
+          rotation: {x: 0, y: 0, z: 0}
+          maxHeight: 0
+          minHeight: 0
+          rotateYOnSpawn: 1
+          spawnDelay: 10
+        - nameId: Clock
+          prefab: {fileID: 5191982840403783520, guid: ccf3fd48aec8f544eb6610f40f3a82b1, type: 3}
+          position: {x: 0, y: 0, z: 0}
+          rotation: {x: 0, y: 0, z: 0}
+          maxHeight: 1
+          minHeight: -1
+          rotateYOnSpawn: 0
+          spawnDelay: 5
+        - nameId: Closet
+          prefab: {fileID: 5191982840403783520, guid: 758c9e019b6d57e4cbfc486b6ede982a, type: 3}
+          position: {x: 0, y: -3.5, z: 0}
+          rotation: {x: 0, y: 0, z: 0}
+          maxHeight: 0
+          minHeight: 0
+          rotateYOnSpawn: 0
+          spawnDelay: 15
+        - nameId: Table
+          prefab: {fileID: 5191982840403783520, guid: 0ef2628b03dd6424389de95f185bc337, type: 3}
+          position: {x: 0, y: -3.48, z: 0}
+          rotation: {x: 0, y: 0, z: 0}
+          maxHeight: 0
+          minHeight: 0
+          rotateYOnSpawn: 0
+          spawnDelay: 10
+        - nameId: SchoolCloset
+          prefab: {fileID: 5191982840403783520, guid: 3cec7f02d0943b449acd356fc6473557, type: 3}
+          position: {x: 0, y: -2.63, z: 0}
+          rotation: {x: 0, y: 0, z: 0}
+          maxHeight: 0
+          minHeight: 0
+          rotateYOnSpawn: 0
+          spawnDelay: 8

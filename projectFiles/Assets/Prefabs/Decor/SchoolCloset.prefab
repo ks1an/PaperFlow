@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 9119306119247881159}
   - component: {fileID: 4647401721664695853}
   m_Layer: 0
-  m_Name: VendingMachine
+  m_Name: SchoolCloset
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -27,8 +27,8 @@ Transform:
   m_GameObject: {fileID: 5191982840403783520}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -2.63, z: 0}
-  m_LocalScale: {x: 3.810448, y: 3.298795, z: 1.3103}
+  m_LocalPosition: {x: -0.125, y: -2.65, z: 0}
+  m_LocalScale: {x: 3.0750315, y: 3.298795, z: 1.3103}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -74,8 +74,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: -5
-  m_Sprite: {fileID: -2101267696, guid: fe00cd6218a89d4438c241213af86eba, type: 3}
-  m_Color: {r: 0.34901962, g: 0.69803923, b: 0.5783754, a: 1}
+  m_Sprite: {fileID: -1634863614, guid: fe00cd6218a89d4438c241213af86eba, type: 3}
+  m_Color: {r: 0.6282353, g: 0.69803923, b: 0.67477125, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
