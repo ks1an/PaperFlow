@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class ConstructionStandartObs : Construction
+public sealed class ConstructionStandartObs : Construction
 {
     Vector2 _followPos;
 
@@ -9,5 +9,5 @@ public class ConstructionStandartObs : Construction
         _followPos = new Vector2(-100, transform.position.y);
     }
 
-    void Update() => transform.position = Vector2.MoveTowards(transform.position, _followPos, ComplexityController.CurrentSpeedObstacles * Time.deltaTime);
+    void Update() => transform.position = Vector2.MoveTowards(transform.position, _followPos, ComplexityController.CurrentComplexitySpeed * Time.deltaTime);
 }

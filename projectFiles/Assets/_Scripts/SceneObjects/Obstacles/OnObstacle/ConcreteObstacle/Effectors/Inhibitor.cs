@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Inhibitor : Effector
+public sealed class Inhibitor : Effector
 {
     Vector2 _followPos;
 
@@ -9,5 +9,5 @@ public class Inhibitor : Effector
         _followPos = new Vector2(-100, transform.position.y);
     }
 
-    void Update() => transform.position = Vector2.MoveTowards(transform.position, _followPos, ComplexityController.CurrentSpeedObstacles * Time.deltaTime);
+    void Update() => transform.position = Vector2.MoveTowards(transform.position, _followPos, ComplexityController.CurrentComplexitySpeed * Time.deltaTime);
 }

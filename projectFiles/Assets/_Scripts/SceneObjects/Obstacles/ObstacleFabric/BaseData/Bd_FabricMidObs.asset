@@ -17,7 +17,7 @@ MonoBehaviour:
   obstacles:
     types:
     - nameType: Effector
-      chance: 13
+      chance: 20
       SubTypes:
       - nameSubType: Acceler
         chance: 90
@@ -37,7 +37,7 @@ MonoBehaviour:
           maxHeight: -1
           minHeight: 1
           rotateYOnSpawn: 0
-          spawnDelay: 1.25
+          spawnDelay: 1
         - nameId: Acceler-To-60
           prefab: {fileID: 3651771616299894701, guid: 26ab40298bfdd0a4bb1a5e83dc3516f4, type: 3}
           position: {x: 0, y: 0, z: 0}
@@ -45,7 +45,7 @@ MonoBehaviour:
           maxHeight: -1
           minHeight: 1
           rotateYOnSpawn: 0
-          spawnDelay: 1.25
+          spawnDelay: 1
         - nameId: Acceler-To-90
           prefab: {fileID: 3651771616299894701, guid: 26ab40298bfdd0a4bb1a5e83dc3516f4, type: 3}
           position: {x: 0, y: 0, z: 0}
@@ -53,7 +53,7 @@ MonoBehaviour:
           maxHeight: -1
           minHeight: 1
           rotateYOnSpawn: 0
-          spawnDelay: 1.25
+          spawnDelay: 1
         - nameId: Acceler-To-145
           prefab: {fileID: 3651771616299894701, guid: 26ab40298bfdd0a4bb1a5e83dc3516f4, type: 3}
           position: {x: 0, y: 0, z: 0}
@@ -61,7 +61,7 @@ MonoBehaviour:
           maxHeight: -1
           minHeight: 1
           rotateYOnSpawn: 0
-          spawnDelay: 1.25
+          spawnDelay: 1
         - nameId: Acceler-To-180
           prefab: {fileID: 3651771616299894701, guid: 26ab40298bfdd0a4bb1a5e83dc3516f4, type: 3}
           position: {x: 0, y: 0, z: 0}
@@ -69,7 +69,7 @@ MonoBehaviour:
           maxHeight: -1
           minHeight: 1
           rotateYOnSpawn: 0
-          spawnDelay: 1.25
+          spawnDelay: 1
         - nameId: AccelerX2-To-90
           prefab: {fileID: 8780904778331403937, guid: b4cb814077f717847a7c05d0ae116eaf, type: 3}
           position: {x: 0, y: 0, z: 0}

@@ -14,9 +14,9 @@ public sealed class StartGame : FsmGameState
     public override void Enter()
     {
         base.Enter();
-
         _controller.CallStartGameEvent();
         _gameplayUI.SetActive(true);
+
 
         Fsm.SetState<Play>();
     }

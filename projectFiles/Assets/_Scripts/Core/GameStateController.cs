@@ -4,7 +4,7 @@ using UnityEngine;
 public sealed class GameStateController : MonoBehaviour
 {
     public static Action onMenuState;
-    public static Action onStartGameState;
+    public static Action OnStartGameState;
     public static Action onPlayState;
     public static Action onPauseState;
     public static Action onGameOverState;
@@ -26,7 +26,7 @@ public sealed class GameStateController : MonoBehaviour
 
         _fsm.AddState(new Menu(_fsm, this, _menuUI, _gameplayUI));
         _fsm.AddState(new StartGame(_fsm, _gameplayUI, this));
-        _fsm.AddState(new Play(_fsm, _gameplayUI, _pauseGameBttn, this));
+        _fsm.AddState(new Play(_fsm, _pauseGameBttn, this));
         _fsm.AddState(new Pause(_fsm, _pauseUI, this));
         _fsm.AddState(new GameOver(_fsm, _gameOverUI, this));
 
@@ -36,7 +36,7 @@ public sealed class GameStateController : MonoBehaviour
     #region CallEvent
 
     public void CallMenuEvent() => onMenuState?.Invoke();
-    public void CallStartGameEvent() => onStartGameState?.Invoke();
+    public void CallStartGameEvent() => OnStartGameState?.Invoke();
     public void CallPlayEvent() => onPlayState?.Invoke();
     public void CallPauseEvent() => onPauseState?.Invoke();
     public void CallGameOverEvent() => onGameOverState?.Invoke();

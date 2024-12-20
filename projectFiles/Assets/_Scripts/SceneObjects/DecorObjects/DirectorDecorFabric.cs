@@ -9,7 +9,7 @@ public sealed class DirectorDecorFabric : MonoBehaviour
 
     DecorFabric _fabric;
     bool _readyToSpawnCall = true;
-    Vector3 _rigPos;
+    Vector3 _rightSpawnPos;
 
     private void Awake()
     {
@@ -18,11 +18,11 @@ public sealed class DirectorDecorFabric : MonoBehaviour
 
     private void Start()
     {
-        _rigPos = Camera.main.ScreenToWorldPoint(new Vector2(Camera.main.pixelWidth, Camera.main.pixelHeight / 2));
-        _rigPos = new Vector2(transform.position.x + _distanceXFromCamera, transform.position.y);
+        _rightSpawnPos = Camera.main.ScreenToWorldPoint(new Vector2(Camera.main.pixelWidth, Camera.main.pixelHeight / 2));
+        _rightSpawnPos = new Vector2(transform.position.x + _distanceXFromCamera, transform.position.y);
 
         _fabric.SetFabricBaseData(_bdFabric, _container);
-        _fabric.SetFabricSpawnsPos(_rigPos);
+        _fabric.SetFabricSpawnsPos(_rightSpawnPos);
     }
 
     #region ByRandom
@@ -32,7 +32,7 @@ public sealed class DirectorDecorFabric : MonoBehaviour
 
         while (true)
         {
-            if (!_readyToSpawnCall) { yield return null; continue; }
+            if (!_readyToSpawnCall) continue;
 
             _fabric.CreateObjByRandom();
             _readyToSpawnCall = false;
@@ -56,14 +56,14 @@ public sealed class DirectorDecorFabric : MonoBehaviour
 
     private void OnEnable()
     {
-        GameStateController.onStartGameState += StartSpawning;
+        GameStateController.OnStartGameState += StartSpawning;
         GameStateController.onGameOverState += StopSpawning;
         GameStateController.onMenuState += StopSpawning;
         RightObstaclesTrigger.onObstacleExitRightTrigger += SetTrueReadyToSpawnCall;
     }
     private void OnDisable()
     {
-        GameStateController.onStartGameState -= StartSpawning;
+        GameStateController.OnStartGameState -= StartSpawning;
         GameStateController.onGameOverState -= StopSpawning;
         GameStateController.onMenuState -= StopSpawning;
         RightObstaclesTrigger.onObstacleExitRightTrigger -= SetTrueReadyToSpawnCall;

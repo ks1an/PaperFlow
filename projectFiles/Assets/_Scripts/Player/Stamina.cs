@@ -41,8 +41,7 @@ public sealed class Stamina : MonoBehaviour
             _staminaSlider.value = _currentStamina;
         }
 
-        if(Time.frameCount % 3 == 0)
-            CheckNeedStamina();
+        CheckNeedStamina();
     }
 
     #region public methods
@@ -140,12 +139,12 @@ public sealed class Stamina : MonoBehaviour
 
     void OnEnable()
     {
-        Timer.OnComplexityTimeTicked += AddStaminaOnChangedComplexity;
+        ComplexityController.OnComplexityAddedStamina += AddStaminaOnChangedComplexity;
     }
 
     void OnDisable()
     {
-        Timer.OnComplexityTimeTicked -= AddStaminaOnChangedComplexity;
+        ComplexityController.OnComplexityAddedStamina -= AddStaminaOnChangedComplexity;
     }
 }
 

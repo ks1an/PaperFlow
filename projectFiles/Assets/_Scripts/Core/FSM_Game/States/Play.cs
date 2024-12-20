@@ -3,14 +3,12 @@ using UnityEngine;
 public sealed class Play : FsmGameState
 {
     GameStateController _controller;
-    GameObject _gameplayUI;
     GameObject _pauseBttn;
 
-    public Play(FsmGame fsmUI, GameObject gameplayUI, GameObject pauseGameBttn,
+    public Play(FsmGame fsmUI, GameObject pauseGameBttn,
         GameStateController controller) : base(fsmUI)
     {
         _controller = controller;
-        _gameplayUI = gameplayUI;
         _pauseBttn = pauseGameBttn;
     }
 

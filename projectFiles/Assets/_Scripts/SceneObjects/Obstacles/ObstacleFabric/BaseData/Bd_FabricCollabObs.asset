@@ -13,25 +13,14 @@ MonoBehaviour:
   m_Name: Bd_FabricCollabObs
   m_EditorClassIdentifier: 
   nameFabric: Collab
-  chance: 30
+  chance: 25
   obstacles:
     types:
-    - nameType: Simples
+    - nameType: Type
       chance: 100
       SubTypes:
-      - nameSubType: Simple+Simple
+      - nameSubType: SubType
         chance: 100
-        obs:
-        - nameId: Lamp+Closet
-          prefab: {fileID: 8173481551994355729, guid: 45aa31bb40d6cdb4bacc3ca5b4f50d12, type: 3}
-          position: {x: 0, y: 0, z: 0}
-          rotation: {x: 0, y: 0, z: 0}
-          maxHeight: 0
-          minHeight: -0.25
-          rotateYOnSpawn: 0
-          spawnDelay: 1.25
-      - nameSubType: Simple+Const
-        chance: 30
         obs:
         - nameId: Lamp+(Table+Chair)
           prefab: {fileID: 153580830303849122, guid: c1a5c994c8d70734dba4d578dd9605b6, type: 3}
@@ -65,3 +54,19 @@ MonoBehaviour:
           minHeight: -0.25
           rotateYOnSpawn: 0
           spawnDelay: 1.65
+        - nameId: Lamp+Closet
+          prefab: {fileID: 8173481551994355729, guid: 45aa31bb40d6cdb4bacc3ca5b4f50d12, type: 3}
+          position: {x: 0, y: 0, z: 0}
+          rotation: {x: 0, y: 0, z: 0}
+          maxHeight: 0
+          minHeight: -0.25
+          rotateYOnSpawn: 0
+          spawnDelay: 1.25
+        - nameId: (acceler+closet)+(lamp+celling)
+          prefab: {fileID: 6173518472459466057, guid: b3be734371a94b34186ad131facf5d76, type: 3}
+          position: {x: 0, y: 0, z: 0}
+          rotation: {x: 0, y: 0, z: 0}
+          maxHeight: 0.25
+          minHeight: -0.25
+          rotateYOnSpawn: 0
+          spawnDelay: 1.25

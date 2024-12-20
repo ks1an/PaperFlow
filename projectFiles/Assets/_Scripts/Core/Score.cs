@@ -36,14 +36,14 @@ public sealed class Score : MonoBehaviour
 
     private void OnEnable()
     {
-        GameStateController.onStartGameState += SetCurrentScoreToZero;
+        GameStateController.OnStartGameState += SetCurrentScoreToZero;
         GameStateController.onPauseState += SetScoreTextOnPause;
         GameStateController.onPlayState += SetScoreTextOnPlay;
         GameStateController.onGameOverState += TrySetNewRecord;
     }
     private void OnDisable()
     {
-        GameStateController.onStartGameState -= SetCurrentScoreToZero;
+        GameStateController.OnStartGameState -= SetCurrentScoreToZero;
         GameStateController.onPauseState -= SetScoreTextOnPause;
         GameStateController.onPlayState -= SetScoreTextOnPlay;
         GameStateController.onGameOverState -= TrySetNewRecord;

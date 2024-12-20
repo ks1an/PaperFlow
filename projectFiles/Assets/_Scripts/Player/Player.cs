@@ -4,19 +4,14 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D), typeof(Collider2D))]
 public sealed class Player : MonoBehaviour
 {
-    public float ForceUp { get => _forceUp; set => ForceUp = _forceUp; }
-    public float ForceDown { get => _forceDown; set => ForceDown = _forceDown; }
-    public float ChargeSpeed { get => _chargeSpeed; set => ChargeSpeed = _chargeSpeed; }
-    public float CorrectionSpeed { get => _correctionSpeed; set => CorrectionSpeed = _correctionSpeed; }
-    public float MaxChargingPoxX { get => _maxChargingPoxX; set => MaxChargingPoxX = _maxChargingPoxX; }
-    public int NeedStaminaForBall { get => _stamina.staminaForBall; set => NeedStaminaForBall = _stamina.staminaForBall; }
+    internal int NeedStaminaForBall { get => _stamina.staminaForBall; set => NeedStaminaForBall = _stamina.staminaForBall; }
 
     [SerializeField]
-    float _forceUp = 54f,
-    _forceDown = 16.5f,
-    _chargeSpeed = 21f,
-    _correctionSpeed = 21f,
-    _maxChargingPoxX = 4f;
+    internal float forceUp = 54f,
+    forceDown = 6f,
+    chargeSpeed = 3.25f,
+    correctionSpeed = 20f,
+    maxChargingPoxX = 3.5f;
 
     [Header("DieNonDestoryObstacle")]
     [SerializeField, Range(1, 5)] int _numJumps;
@@ -34,10 +29,12 @@ public sealed class Player : MonoBehaviour
     [SerializeField] bool _infinityHealth;
     [SerializeField] bool _infinityStamina;
 
+    internal bool canUseBallSkill = false;
+    internal CameraController _cam;
+
     Health _health;
     Stamina _stamina;
     FsmPlayer _fsm;
-    CameraController _cam;
 
     Rigidbody2D _rb;
     SpriteRenderer _renderer;
@@ -73,6 +70,9 @@ public sealed class Player : MonoBehaviour
         _fsm.SetState<MovementState>();
     }
 
+    void Update() => _fsm.Update();
+    void FixedUpdate() => _fsm.FixedUpdate();
+
     #region SetStates
     public void SetIdleState() => _fsm.SetState<IdleState>();
     public void SetMovementState() => _fsm.SetState<MovementState>();
@@ -101,9 +101,18 @@ public sealed class Player : MonoBehaviour
 
         _health.HealthToMax();
         _stamina.StaminaToMax();
+
+        _stamina.enabled = false;
+        canUseBallSkill = false;
     }
 
     #endregion
+
+    void PurchaseBallSkillAndStamina()
+    {
+        _stamina.enabled = true;
+        canUseBallSkill = true;
+    }
 
     void OnTriggerEnter2D(Collider2D collision)
     {
@@ -113,6 +122,7 @@ public sealed class Player : MonoBehaviour
             if (_fsm.CurrentState.GetType() == typeof(BallState))
             {
                 Destroy(collision.gameObject);
+                _cam.DoLightShake();
                 _stamina.IncreaseStamina(10);
             }
             else
@@ -123,13 +133,13 @@ public sealed class Player : MonoBehaviour
                 if (_health.CurrentHelth == 0)
                     _controller.SetGameOverState();
                 else
-                    _cam.Shake();
+                    _cam.DoMediumShake();
             }
 
         }
         else if (collision.CompareTag("Scoring"))
         {
-            if (transform.position.x >= _maxChargingPoxX / 2)
+            if (transform.position.x >= maxChargingPoxX / 2)
                 _score.IncreaseScore(2);
             else
                 _score.IncreaseScore(1);
@@ -140,7 +150,7 @@ public sealed class Player : MonoBehaviour
 
             _health.TakeMaxDamage();
             _controller.SetGameOverState();
-            _cam.Shake();
+            _cam.DoMediumShake();
 
             _planeCollider.enabled = false;
             _renderer.sprite = _ballSprite;
@@ -153,21 +163,23 @@ public sealed class Player : MonoBehaviour
         }
     }
 
-    void Update() => _fsm.Update();
-    void FixedUpdate() => _fsm.FixedUpdate();
 
     void OnEnable()
     {
         GameStateController.onMenuState += SetPlayerOnMenu;
-        GameStateController.onStartGameState += SetPlayerOnStartGame;
+        GameStateController.OnStartGameState += SetPlayerOnStartGame;
         GameStateController.onPlayState += SetMovementState;
         GameStateController.onPauseState += SetIdleState;
+
+        ComplexityController.OnPurchasedBallSkillAndStaminaBar += PurchaseBallSkillAndStamina;
     }
     void OnDisable()
     {
         GameStateController.onMenuState -= SetPlayerOnMenu;
-        GameStateController.onStartGameState -= SetPlayerOnStartGame;
+        GameStateController.OnStartGameState -= SetPlayerOnStartGame;
         GameStateController.onPlayState -= SetMovementState;
         GameStateController.onPauseState -= SetIdleState;
+
+        ComplexityController.OnPurchasedBallSkillAndStaminaBar -= PurchaseBallSkillAndStamina;
     }
 }

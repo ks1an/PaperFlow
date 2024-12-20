@@ -40,7 +40,7 @@ public class Plane : PathFollower
     private void Update()
     {
         if(_canMoveToLeft)
-            transform.position = Vector2.MoveTowards(transform.position, _followMovePos, ComplexityController.CurrentSpeedObstacles * Time.deltaTime);
+            transform.position = Vector2.MoveTowards(transform.position, _followMovePos, ComplexityController.CurrentComplexitySpeed * Time.deltaTime);
 
         if (_pointInPath == null || _pointInPath.Current == null || _body == null) return;
         _body.position = Vector2.MoveTowards(_body.position, _pointInPath.Current.position, _speed * Time.deltaTime);

@@ -27,10 +27,10 @@ public sealed class Seed : MonoBehaviour
 
     private void OnEnable()
     {
-        GameStateController.onStartGameState += GetFirstSeed;
+        GameStateController.OnStartGameState += GetFirstSeed;
     }
     private void OnDisable()
     {
-        GameStateController.onStartGameState -= GetFirstSeed;
+        GameStateController.OnStartGameState -= GetFirstSeed;
     }
 }

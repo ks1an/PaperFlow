@@ -1,7 +1,8 @@
-public sealed class ComplexityFour : FsmComplexityControllerState
+public sealed class Complexity_8 : FsmComplexityControllerState
 {
     ComplexityController _complexityController;
-    public ComplexityFour(FsmComplexityController fsm, ComplexityController manager) : base(fsm)
+
+    public Complexity_8(FsmComplexityController fsm, ComplexityController manager) : base(fsm)
     {
         _complexityController = manager;
     }
@@ -12,7 +13,7 @@ public sealed class ComplexityFour : FsmComplexityControllerState
 
         Timer.OnComplexityTimeTicked += NextComplexity;
 
-        _complexityController.SetSpeed(_complexityController.speedsComplexityes[3]);
+        _complexityController.SetSpeed(_complexityController.speedsComplexityes[8]);
     }
 
     public override void Exit()
@@ -22,5 +23,5 @@ public sealed class ComplexityFour : FsmComplexityControllerState
         Timer.OnComplexityTimeTicked -= NextComplexity;
     }
 
-    void NextComplexity() => Fsm.SetState<ComplexityFive>();
+    void NextComplexity() => Fsm.SetState<Complexity_9>();
 }

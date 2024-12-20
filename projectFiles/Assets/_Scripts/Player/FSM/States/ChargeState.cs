@@ -13,7 +13,21 @@ public sealed class ChargeState : FSMPlayerState
         _rb = rb;
         _stamina = stamina;
 
-        maxForceUp = new Vector3(0, _player.ForceUp, 0);
+        maxForceUp = new Vector3(0, _player.forceUp, 0);
+    }
+
+    public override void Enter()
+    {
+        base.Enter();
+
+        _player._cam.DoLoopingShake(true);
+    }
+
+    public override void Exit()
+    {
+        base.Exit();
+
+        _player._cam.DoLoopingShake(false);
     }
 
     public override void FixedUpdate()
@@ -21,16 +35,16 @@ public sealed class ChargeState : FSMPlayerState
         base.FixedUpdate();
 
         if (Input.GetMouseButton(0) || Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
-            _rb.AddForce(_player.ForceUp * Time.fixedDeltaTime * CachedMath.Vector2Up, ForceMode2D.Impulse);
+            _rb.AddForce(_player.forceUp * Time.fixedDeltaTime * CachedMath.Vector2Up, ForceMode2D.Impulse);
         else
-            _rb.AddForce(_player.ForceDown * Time.fixedDeltaTime * CachedMath.Vector2Down, ForceMode2D.Impulse);
+            _rb.AddForce(_player.forceDown * Time.fixedDeltaTime * CachedMath.Vector2Down, ForceMode2D.Impulse);
 
-        if (_player.transform.position.x < _player.MaxChargingPoxX)
-            _rb.AddForce(_player.ChargeSpeed * Time.fixedDeltaTime * CachedMath.Vector2Right, ForceMode2D.Impulse);
-        else if (_player.transform.position.x > _player.MaxChargingPoxX)
-            _rb.AddForce(_player.ChargeSpeed * Time.fixedDeltaTime * CachedMath.Vector2Left, ForceMode2D.Impulse);
+        if (_player.transform.position.x < _player.maxChargingPoxX)
+            _rb.AddForce(_player.chargeSpeed * Time.fixedDeltaTime * CachedMath.Vector2Right, ForceMode2D.Impulse);
+        else if (_player.transform.position.x > _player.maxChargingPoxX)
+            _rb.AddForce(_player.chargeSpeed * Time.fixedDeltaTime * CachedMath.Vector2Left, ForceMode2D.Impulse);
 
-        if (_rb.velocity.y > _player.ForceUp)
+        if (_rb.velocity.y > _player.forceUp)
             _rb.velocity = maxForceUp;
 
         if (_rb.velocity.y != 0)
@@ -46,10 +60,10 @@ public sealed class ChargeState : FSMPlayerState
             Fsm.SetState<MovementState>();
             return;
         }
-        else if(Input.GetKeyDown(KeyCode.S) && _stamina.CurrentStamina >= _player.NeedStaminaForBall)
+        else if(_player.canUseBallSkill && Input.GetKeyDown(KeyCode.S) && _stamina.CurrentStamina >= _player.NeedStaminaForBall)
         {
             _stamina.DeacreaseStamina(_player.NeedStaminaForBall);
-            _rb.AddForce(_player.ChargeSpeed * Time.fixedDeltaTime * 10 * CachedMath.Vector2Up, ForceMode2D.Impulse);
+            _rb.AddForce(_player.chargeSpeed * Time.fixedDeltaTime * 10 * CachedMath.Vector2Up, ForceMode2D.Impulse);
             Fsm.SetState<BallState>();
             return;
         }

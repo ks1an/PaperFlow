@@ -82,14 +82,14 @@ public sealed class DirectorObstaclesFabric : MonoBehaviour
 
     private void OnEnable()
     {
-        GameStateController.onStartGameState += StartSpawning;
+        GameStateController.OnStartGameState += StartSpawning;
         GameStateController.onGameOverState += StopSpawning;
         GameStateController.onMenuState += StopSpawning;
         RightObstaclesTrigger.onObstacleExitRightTrigger += SetTrueReadyToSpawnCall;
     }
     private void OnDisable()
     {
-        GameStateController.onStartGameState -= StartSpawning;
+        GameStateController.OnStartGameState -= StartSpawning;
         GameStateController.onGameOverState -= StopSpawning;
         GameStateController.onMenuState -= StopSpawning;
         RightObstaclesTrigger.onObstacleExitRightTrigger -= SetTrueReadyToSpawnCall;

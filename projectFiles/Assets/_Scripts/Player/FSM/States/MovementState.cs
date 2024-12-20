@@ -13,7 +13,7 @@ public sealed class MovementState : FSMPlayerState
         _rb = rb;
         _stamina = stamina;
 
-        maxForceUp = new Vector3(0, _player.ForceUp, 0);
+        maxForceUp = new Vector3(0, _player.forceUp, 0);
     }
 
     public override void Update()
@@ -25,23 +25,23 @@ public sealed class MovementState : FSMPlayerState
             Fsm.SetState<ChargeState>();
             return;
         }
-        else if (Input.GetKeyDown(KeyCode.S) && _stamina.CurrentStamina >= _player.NeedStaminaForBall)
+        else if (_player.canUseBallSkill &&  Input.GetKeyDown(KeyCode.S) && _stamina.CurrentStamina >= _player.NeedStaminaForBall)
         {
             _stamina.DeacreaseStamina(_player.NeedStaminaForBall);
-            _rb.AddForce(_player.ChargeSpeed * Time.fixedDeltaTime * 5 * CachedMath.Vector2Up, ForceMode2D.Impulse);
+            _rb.AddForce(_player.chargeSpeed * Time.fixedDeltaTime * 5 * CachedMath.Vector2Up, ForceMode2D.Impulse);
             Fsm.SetState<BallState>();
             return;
         }
 
         if (_player.transform.position.x < -4)
-            _rb.AddForce(_player.CorrectionSpeed * Time.deltaTime * 10 * CachedMath.Vector2Right);
+            _rb.AddForce(_player.correctionSpeed * Time.deltaTime * 10 * CachedMath.Vector2Right);
         else if(_player.transform.position.x < -0.1f)
-            _rb.AddForce(_player.CorrectionSpeed * Time.deltaTime * 2 * CachedMath.Vector2Right);
+            _rb.AddForce(_player.correctionSpeed * Time.deltaTime * 2 * CachedMath.Vector2Right);
 
         if (_player.transform.position.x > 8f)
-            _rb.AddForce(_player.CorrectionSpeed * Time.deltaTime * 15 * CachedMath.Vector2Left);
+            _rb.AddForce(_player.correctionSpeed * Time.deltaTime * 15 * CachedMath.Vector2Left);
         else if (_player.transform.position.x > 0.1f)
-            _rb.AddForce(_player.CorrectionSpeed * Time.deltaTime * 8 * CachedMath.Vector2Left);
+            _rb.AddForce(_player.correctionSpeed * Time.deltaTime * 8 * CachedMath.Vector2Left);
     }
 
     public override void FixedUpdate()
@@ -49,9 +49,9 @@ public sealed class MovementState : FSMPlayerState
         base.FixedUpdate();
 
         if (Input.GetMouseButton(0) || Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
-            _rb.AddForce(_player.ForceUp * Time.fixedDeltaTime * CachedMath.Vector2Up, ForceMode2D.Impulse);
+            _rb.AddForce(_player.forceUp * Time.fixedDeltaTime * CachedMath.Vector2Up, ForceMode2D.Impulse);
 
-        if (_rb.velocity.y > _player.ForceUp)
+        if (_rb.velocity.y > _player.forceUp)
             _rb.velocity = maxForceUp;
 
         if (_rb.velocity.y != 0)
