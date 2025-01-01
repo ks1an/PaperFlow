@@ -9,36 +9,20 @@ public sealed class Timer : MonoBehaviour
 
     public string result;
 
-    [SerializeField] int _startMin, _startSec;
     [SerializeField] bool stop;
 
     int _min, _sec;
     string _m, _s;
 
     List<int> _complexityMin = new(), _complexitySec = new();
-    int _currentComplexity = 1;
+    int _currentComplexity = 0;
 
     WaitForSeconds _oneSecDelay = new(1);
 
-    void Awake()
-    {
-        if (_startMin > 0 && _startMin <= 59) _min = _startMin; else _startMin = 0;
-        if (_startSec > 0 && _startSec <= 59) _sec = _startSec; else _startSec = 0;
-    }
-
-    public void SetComplexityTriggerTime(int min, int sec)
+    internal void SetComplexityTriggerTime(int min, int sec)
     {
         _complexityMin.Add(min);
         _complexitySec.Add(sec);
-    }
-
-    void ResetTimer()
-    {
-        _sec = 0;
-        _min = 0;
-        _currentComplexity = 1;
-
-        CurrentTime();
     }
 
     IEnumerator RepeatingFunction()
@@ -61,11 +45,10 @@ public sealed class Timer : MonoBehaviour
             _min++;
         }
 
-        CurrentTime();
         CheckComplexityTriggerTime();
     }
 
-    void CurrentTime()
+    void UpdateCurrentTime()
     {
         if (_sec < 10) _s = "0" + _sec; 
         else _s = _sec.ToString();
@@ -85,6 +68,8 @@ public sealed class Timer : MonoBehaviour
         }
     }
 
+    #region TimerFunc
+
     void StartTimer()
     {
         if (stop)
@@ -94,13 +79,24 @@ public sealed class Timer : MonoBehaviour
         StartCoroutine(RepeatingFunction());
     }
 
+    void ResetTimer()
+    {
+        _sec = 0;
+        _min = 0;
+        _currentComplexity = 1;
+
+        UpdateCurrentTime();
+    }
+
     void ResumeTimer() => stop = false;
+
     void PauseTimer() => stop = true;
+    #endregion
 
     void CompleteTimer()
     {
         StopCoroutine(RepeatingFunction());
-        CurrentTime();
+        UpdateCurrentTime();
     }
 
     private void OnEnable()

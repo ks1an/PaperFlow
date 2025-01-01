@@ -31,12 +31,4 @@ public sealed class Menu : FsmGameState
 
         _menuUI.SetActiveMenu(false);
     }
-
-    public override void Update()
-    {
-        base.Update();
-
-        if (Input.GetKeyDown(KeyCode.Space))
-            Fsm.SetState<StartGame>();
-    }
 }

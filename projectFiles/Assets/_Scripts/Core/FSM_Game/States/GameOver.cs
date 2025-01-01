@@ -28,12 +28,4 @@ public sealed class GameOver : FsmGameState
         _gameOverUI.SetActive(false);
         System.GC.Collect();
     }
-
-    public override void Update()
-    {
-        base.Update();
-
-        if (Input.GetKeyUp(KeyCode.Space))
-            Fsm.SetState<Menu>();
-    }
 }

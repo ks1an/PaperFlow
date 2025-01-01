@@ -6,7 +6,7 @@ public class FsmGame
 {
     private FsmGameState StateCurrent { get; set; }
 
-    private Dictionary<Type, FsmGameState> _states = new Dictionary<Type, FsmGameState>();
+    private Dictionary<Type, FsmGameState> _states = new();
 
     public void AddState(FsmGameState state) => _states.Add(state.GetType(), state);
 
@@ -15,10 +15,7 @@ public class FsmGame
         var type = typeof(T);
 
         if(StateCurrent != null && StateCurrent.GetType() == type)
-        {
-            Debug.Log($"Trying to toggle {StateCurrent} state on FsmGame, but it's already on");
             return;
-        }
 
         if(_states.TryGetValue(type, out var newState))
         {
@@ -27,8 +24,6 @@ public class FsmGame
             StateCurrent = newState;
 
             StateCurrent.Enter();
-
-            Debug.Log($"The interface has entered the state {StateCurrent}");
         }
     }
 

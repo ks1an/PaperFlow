@@ -6,12 +6,15 @@ public sealed class Player : MonoBehaviour
 {
     internal int NeedStaminaForBall { get => _stamina.staminaForBall; set => NeedStaminaForBall = _stamina.staminaForBall; }
 
+    #region MovementParam
+
     [SerializeField]
     internal float forceUp = 54f,
     forceDown = 6f,
     chargeSpeed = 3.25f,
     correctionSpeed = 20f,
     maxChargingPoxX = 3.5f;
+    #endregion
 
     [Header("DieNonDestoryObstacle")]
     [SerializeField, Range(1, 5)] int _numJumps;
@@ -30,12 +33,12 @@ public sealed class Player : MonoBehaviour
     [SerializeField] bool _infinityStamina;
 
     internal bool canUseBallSkill = false;
-    internal CameraController _cam;
+    internal CameraController cam;
+    internal PlayerInputHandler inputHandler;
 
     Health _health;
     Stamina _stamina;
     FsmPlayer _fsm;
-
     Rigidbody2D _rb;
     SpriteRenderer _renderer;
     Collider2D _planeCollider, _ballCollider;
@@ -43,7 +46,10 @@ public sealed class Player : MonoBehaviour
 
     void Awake()
     {
-        _cam = Camera.main.GetComponent<CameraController>();
+        #region GetComponents
+
+        cam = Camera.main.GetComponent<CameraController>();
+        inputHandler = GetComponent<PlayerInputHandler>();
 
         _rb = GetComponent<Rigidbody2D>();
         _health = GetComponent<Health>();
@@ -51,6 +57,7 @@ public sealed class Player : MonoBehaviour
         _renderer = GetComponent<SpriteRenderer>();
         _planeCollider = GetComponent<PolygonCollider2D>();
         _ballCollider = GetComponent<CircleCollider2D>();
+        #endregion
 
         _stamina.SetInfinityStamina(_infinityStamina);
         _health.SetInfinityHealth(_infinityHealth);
@@ -60,6 +67,8 @@ public sealed class Player : MonoBehaviour
     {
         _startPos = transform.position;
 
+        #region StateMachine
+
         _fsm = new FsmPlayer();
 
         _fsm.AddState(new MovementState(_fsm, this, _rb, _stamina));
@@ -68,12 +77,13 @@ public sealed class Player : MonoBehaviour
         _fsm.AddState(new BallState(_fsm, _rb, this, _renderer, _ballSprite, _planeSprite, _ballCollider, _planeCollider, _health));
 
         _fsm.SetState<MovementState>();
+        #endregion
     }
 
     void Update() => _fsm.Update();
     void FixedUpdate() => _fsm.FixedUpdate();
 
-    #region SetStates
+    #region SetPlayer in StateMachine
     public void SetIdleState() => _fsm.SetState<IdleState>();
     public void SetMovementState() => _fsm.SetState<MovementState>();
     #endregion
@@ -82,7 +92,7 @@ public sealed class Player : MonoBehaviour
 
     void SetPlayerOnMenu()
     {
-        _fsm.SetState<IdleState>();
+        SetIdleState();
 
         gameObject.transform.DOKill();
         transform.position = _startPos;
@@ -97,7 +107,7 @@ public sealed class Player : MonoBehaviour
 
     void SetPlayerOnStartGame()
     {
-        _fsm.SetState<MovementState>();
+        SetMovementState();
 
         _health.HealthToMax();
         _stamina.StaminaToMax();
@@ -122,7 +132,7 @@ public sealed class Player : MonoBehaviour
             if (_fsm.CurrentState.GetType() == typeof(BallState))
             {
                 Destroy(collision.gameObject);
-                _cam.DoLightShake();
+                cam.DoLightShake();
                 _stamina.IncreaseStamina(10);
             }
             else
@@ -133,7 +143,7 @@ public sealed class Player : MonoBehaviour
                 if (_health.CurrentHelth == 0)
                     _controller.SetGameOverState();
                 else
-                    _cam.DoMediumShake();
+                    cam.DoMediumShake();
             }
 
         }
@@ -150,7 +160,7 @@ public sealed class Player : MonoBehaviour
 
             _health.TakeMaxDamage();
             _controller.SetGameOverState();
-            _cam.DoMediumShake();
+            cam.DoMediumShake();
 
             _planeCollider.enabled = false;
             _renderer.sprite = _ballSprite;
@@ -166,20 +176,26 @@ public sealed class Player : MonoBehaviour
 
     void OnEnable()
     {
+        #region Subscribe Actions
+
         GameStateController.onMenuState += SetPlayerOnMenu;
         GameStateController.OnStartGameState += SetPlayerOnStartGame;
         GameStateController.onPlayState += SetMovementState;
         GameStateController.onPauseState += SetIdleState;
 
         ComplexityController.OnPurchasedBallSkillAndStaminaBar += PurchaseBallSkillAndStamina;
+        #endregion
     }
     void OnDisable()
     {
+        #region Unsubscribe Actions
+
         GameStateController.onMenuState -= SetPlayerOnMenu;
         GameStateController.OnStartGameState -= SetPlayerOnStartGame;
         GameStateController.onPlayState -= SetMovementState;
         GameStateController.onPauseState -= SetIdleState;
 
         ComplexityController.OnPurchasedBallSkillAndStaminaBar -= PurchaseBallSkillAndStamina;
+        #endregion
     }
 }

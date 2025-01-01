@@ -6,7 +6,7 @@ public class FsmPlayer
 {
     public FSMPlayerState CurrentState { get; private set; }
 
-    Dictionary<Type, FSMPlayerState> _states = new Dictionary<Type, FSMPlayerState>();
+    Dictionary<Type, FSMPlayerState> _states = new();
 
     public void AddState(FSMPlayerState state) => _states.Add(state.GetType(), state);
 
@@ -15,10 +15,7 @@ public class FsmPlayer
         var type = typeof(T);
 
         if (CurrentState != null && CurrentState.GetType() == type)
-        {
-            Debug.Log($"Trying to toggle {CurrentState} state on FsmPlayer, but it's already on");
             return;
-        }
 
         if(_states.TryGetValue(type, out var newState))
         {
@@ -27,8 +24,6 @@ public class FsmPlayer
             CurrentState = newState;
 
             CurrentState.Enter();
-
-            Debug.Log($"The player has entered the state {CurrentState}");
         }
     }
 

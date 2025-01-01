@@ -10,14 +10,12 @@ public sealed class GameUI : MonoBehaviour
     {
         _staminaBar.SetActive(true);
         _ballIndicator.SetActive(true);
-        Debug.Log("Enable");
     }
 
     void DisableStaminaBarAndBallIndicator()
     {
         _staminaBar.SetActive(false);
         _ballIndicator.SetActive(false);
-        Debug.Log("Disable");
     }
 
     void OnEnable()

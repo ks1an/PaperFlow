@@ -28,12 +28,4 @@ public sealed class Pause : FsmGameState
 
         _pauseUI.SetActive(false);
     }
-
-    public override void Update()
-    {
-        base.Update();
-
-        if(Input.GetKeyDown(KeyCode.Escape))
-            Fsm.SetState<Play>();
-    }
 }

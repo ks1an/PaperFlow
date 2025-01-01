@@ -1,22 +1,20 @@
+using TMPro;
 using UnityEngine;
 
-public class ViewFPS : MonoBehaviour
+public sealed class ViewFPS : MonoBehaviour
 {
-    public float updateInterval = 0.5f; //How often should the number update
+    [SerializeField, Range(0,10)] int _viewUpdateInterval;
+    [SerializeField] float _updateInterval = 0.5f;
+    [SerializeField] TextMeshProUGUI _text;
 
     float accum = 0.0f;
     int frames = 0;
     float timeleft;
     float fps;
 
-    GUIStyle textStyle = new();
-
     void Start()
     {
-        timeleft = updateInterval;
-
-        textStyle.fontStyle = FontStyle.Bold;
-        textStyle.normal.textColor = Color.white;
+        timeleft = _updateInterval;
     }
 
     void Update()
@@ -28,14 +26,12 @@ public class ViewFPS : MonoBehaviour
         if (timeleft <= 0.0)
         {
             fps = (accum / frames);
-            timeleft = updateInterval;
+            timeleft = _updateInterval;
             accum = 0.0f;
             frames = 0;
         }
-    }
 
-    void OnGUI()
-    {
-        GUI.Label(new Rect(5, 5, 100, 25), fps.ToString("F2"), textStyle);
+        if(Time.frameCount % _viewUpdateInterval == 0)
+        _text.text = fps.ToString();
     }
 }

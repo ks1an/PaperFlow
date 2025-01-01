@@ -88,9 +88,5 @@ public sealed class ComplexityController : MonoBehaviour
     #endregion
 
     internal void InvokeOnComplexityAddedStamina() => OnComplexityAddedStamina?.Invoke();
-    internal void InvokeOnObtainedBallSkillAndStaminaBar()
-    {
-        OnPurchasedBallSkillAndStaminaBar?.Invoke();
-        Debug.Log("Invoke");
-    }
+    internal void InvokeOnObtainedBallSkillAndStaminaBar() => OnPurchasedBallSkillAndStaminaBar?.Invoke();
 }

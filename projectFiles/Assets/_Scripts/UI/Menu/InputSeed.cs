@@ -9,6 +9,7 @@ public sealed class InputSeed : MonoBehaviour
 
     bool _isDisablingAnim = false;
 
+
     public void DisableInputSeed()
     {
         if (_isDisablingAnim) return;
@@ -27,6 +28,6 @@ public sealed class InputSeed : MonoBehaviour
     void OnEnable()
     {
         _rect.DOLocalMoveX(0, _durationEnable).SetUpdate(true);
-        _pointerInputSeedState.DORotate(new Vector3(0, 0,  90) ,_pointerDuration).SetUpdate(true);
+        _pointerInputSeedState.DORotate(new Vector3(0, 0, 90), _pointerDuration).SetUpdate(true);
     }
 }

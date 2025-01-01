@@ -14,6 +14,7 @@ public sealed class Complexity_2 : FsmComplexityControllerState
         Timer.OnComplexityTimeTicked += NextComplexity;
 
         _complexityController.SetSpeed(_complexityController.speedsComplexityes[2]);
+        _complexityController.InvokeOnObtainedBallSkillAndStaminaBar();
     }
 
     public override void Exit()

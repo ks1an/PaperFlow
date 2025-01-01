@@ -29,12 +29,4 @@ public sealed class Play : FsmGameState
 
         _pauseBttn.SetActive(false);
     }
-
-    public override void Update()
-    {
-        base.Update();
-
-        if (Input.GetKeyDown(KeyCode.Escape))
-            Fsm.SetState<Pause>();
-    }
 }
