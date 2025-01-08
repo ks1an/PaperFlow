@@ -105,11 +105,11 @@ public sealed class CameraController : MonoBehaviour
     private void OnEnable()
     {
         GameStateController.onMenuState += OnMenu;
-        GameStateController.OnStartGameState += OnPlay;
+        GameStateController.OnStartProcedureGameState += OnPlay;
     }
     private void OnDisable()
     {
         GameStateController.onMenuState -= OnMenu;
-        GameStateController.OnStartGameState -= OnPlay;
+        GameStateController.OnStartProcedureGameState -= OnPlay;
     }
 }

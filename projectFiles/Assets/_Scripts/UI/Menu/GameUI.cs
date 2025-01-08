@@ -20,12 +20,12 @@ public sealed class GameUI : MonoBehaviour
 
     void OnEnable()
     {
-        GameStateController.OnStartGameState += DisableStaminaBarAndBallIndicator;
-        ComplexityController.OnPurchasedBallSkillAndStaminaBar += EnableStaminaBarAndBallIndicator;
+        GameStateController.OnStartProcedureGameState += DisableStaminaBarAndBallIndicator;
+        ComplexitySettingsInProcedure.OnPurchasedBallSkillAndStaminaBar += EnableStaminaBarAndBallIndicator;
     }
     void OnDisable()
     {
-        ComplexityController.OnPurchasedBallSkillAndStaminaBar -= EnableStaminaBarAndBallIndicator;
-        GameStateController.OnStartGameState -= DisableStaminaBarAndBallIndicator;
+        ComplexitySettingsInProcedure.OnPurchasedBallSkillAndStaminaBar -= EnableStaminaBarAndBallIndicator;
+        GameStateController.OnStartProcedureGameState -= DisableStaminaBarAndBallIndicator;
     }
 }

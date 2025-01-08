@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6437936221931633926}
-  - component: {fileID: 4708977682464831932}
+  - component: {fileID: 3361147579486733630}
   m_Layer: 3
   m_Name: Scoring (1)
   m_TagString: Scoring
@@ -25,15 +25,15 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7538569297804305364}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 7835165063886207942}
+  m_Father: {fileID: 6526487494410921479}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!61 &4708977682464831932
-BoxCollider2D:
+--- !u!70 &3361147579486733630
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -64,19 +64,9 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.89015245, y: 1.4777279}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 2.780405, y: 2.0549116}
-  m_EdgeRadius: 0
+  m_Offset: {x: -1, y: 1.5}
+  m_Size: {x: 2.5, y: 2.5}
+  m_Direction: 0
 --- !u!1 &8725900968192892299
 GameObject:
   m_ObjectHideFlags: 0
@@ -110,6 +100,7 @@ Transform:
   m_Children:
   - {fileID: 5151678590608408475}
   - {fileID: 7835165063886207942}
+  - {fileID: 6437936221931633926}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!58 &6907025680315417159
@@ -283,10 +274,7 @@ PrefabInstance:
     - {fileID: 8632811727803937209, guid: a677a010ab1947340ad4dd454a510375, type: 3}
     - {fileID: 456621885231328726, guid: a677a010ab1947340ad4dd454a510375, type: 3}
     m_RemovedGameObjects: []
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 358040689066401686, guid: a677a010ab1947340ad4dd454a510375, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 6437936221931633926}
+    m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a677a010ab1947340ad4dd454a510375, type: 3}
 --- !u!4 &7835165063886207942 stripped

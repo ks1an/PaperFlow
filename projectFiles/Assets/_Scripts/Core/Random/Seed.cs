@@ -12,25 +12,28 @@ public sealed class Seed : MonoBehaviour
 
     void GetFirstSeed()
     {
-        if (_inputSeedTxt.gameObject.activeSelf && _inputSeedTxt.text.Length > 2 && _inputSeedTxt.text[0] != '0')
-            _firstSeed = _inputSeedTxt.text;
+        _firstSeed = "";
+
+        if (_inputSeedTxt == null || !_inputSeedTxt.IsActive())
+        {
+            _firstSeed = DateTime.Now.Minute.ToString();
+            while (_firstSeed.Length < 6)
+                _firstSeed += Random.Range(0, 9).ToString();
+        }
         else
         {
-            _firstSeed = DateTime.Now.Second.ToString() + DateTime.Now.Minute.ToString();
-            while (_firstSeed.Length < 4)
-                _firstSeed += Random.Range(0, 9).ToString();
+            _firstSeed = _inputSeedTxt.text;
         }
 
         _random.GetSeed(Convert.ToUInt32(_firstSeed));
-        Debug.Log(_firstSeed);
     }
 
     private void OnEnable()
     {
-        GameStateController.OnStartGameState += GetFirstSeed;
+        GameStateController.OnStartProcedureGameState += GetFirstSeed;
     }
     private void OnDisable()
     {
-        GameStateController.OnStartGameState -= GetFirstSeed;
+        GameStateController.OnStartProcedureGameState -= GetFirstSeed;
     }
 }

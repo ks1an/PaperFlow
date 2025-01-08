@@ -20,32 +20,41 @@ public sealed class Score : MonoBehaviour
         _scoreText.text = CurrentScore.ToString();
     }
 
+    #region Set
+
     void SetScoreTextOnPlay() => _scoreText.text = CurrentScore.ToString();
 
     void SetScoreTextOnPause() => _scoreText.text = $"{CurrentScore}/{RecordScore}";
 
     public void TrySetNewRecord()
     {
-        if(CurrentScore > RecordScore)
+        if (CurrentScore > RecordScore)
         {
             RecordScore = CurrentScore;
         }
     }
 
     void SetCurrentScoreToZero() => CurrentScore = 0;
+    #endregion
 
     private void OnEnable()
     {
-        GameStateController.OnStartGameState += SetCurrentScoreToZero;
+        #region Subscribe
+
+        GameStateController.OnStartProcedureGameState += SetCurrentScoreToZero;
         GameStateController.onPauseState += SetScoreTextOnPause;
         GameStateController.onPlayState += SetScoreTextOnPlay;
         GameStateController.onGameOverState += TrySetNewRecord;
+        #endregion
     }
     private void OnDisable()
     {
-        GameStateController.OnStartGameState -= SetCurrentScoreToZero;
+        #region UnSubscribe
+
+        GameStateController.OnStartProcedureGameState -= SetCurrentScoreToZero;
         GameStateController.onPauseState -= SetScoreTextOnPause;
         GameStateController.onPlayState -= SetScoreTextOnPlay;
         GameStateController.onGameOverState -= TrySetNewRecord;
+        #endregion
     }
 }

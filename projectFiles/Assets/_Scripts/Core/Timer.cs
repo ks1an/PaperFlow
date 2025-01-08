@@ -1,12 +1,8 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public sealed class Timer : MonoBehaviour
 {
-    public static event Action OnComplexityTimeTicked;
-
     public string result;
 
     [SerializeField] bool stop;
@@ -14,22 +10,13 @@ public sealed class Timer : MonoBehaviour
     int _min, _sec;
     string _m, _s;
 
-    List<int> _complexityMin = new(), _complexitySec = new();
-    int _currentComplexity = 0;
-
     WaitForSeconds _oneSecDelay = new(1);
-
-    internal void SetComplexityTriggerTime(int min, int sec)
-    {
-        _complexityMin.Add(min);
-        _complexitySec.Add(sec);
-    }
 
     IEnumerator RepeatingFunction()
     {
         while (true)
         {
-            if (!stop) 
+            if (!stop)
                 TimeCount();
             yield return _oneSecDelay;
         }
@@ -44,28 +31,17 @@ public sealed class Timer : MonoBehaviour
             _sec = 0;
             _min++;
         }
-
-        CheckComplexityTriggerTime();
     }
 
-    void UpdateCurrentTime()
+    void UpdateStringCurrentTIme()
     {
-        if (_sec < 10) _s = "0" + _sec; 
+        if (_sec < 10) _s = "0" + _sec;
         else _s = _sec.ToString();
 
         if (_min < 10) _m = "0" + _min;
         else _m = _min.ToString();
 
         result = _m + ":" + _s;
-    }
-
-    void CheckComplexityTriggerTime()
-    {
-        if (_currentComplexity < _complexityMin.Count && _sec == _complexitySec[_currentComplexity] && _min == _complexityMin[_currentComplexity])
-        {
-            _currentComplexity++;
-            OnComplexityTimeTicked?.Invoke();
-        }
     }
 
     #region TimerFunc
@@ -83,9 +59,8 @@ public sealed class Timer : MonoBehaviour
     {
         _sec = 0;
         _min = 0;
-        _currentComplexity = 1;
 
-        UpdateCurrentTime();
+        UpdateStringCurrentTIme();
     }
 
     void ResumeTimer() => stop = false;
@@ -96,19 +71,19 @@ public sealed class Timer : MonoBehaviour
     void CompleteTimer()
     {
         StopCoroutine(RepeatingFunction());
-        UpdateCurrentTime();
+        UpdateStringCurrentTIme();
     }
 
     private void OnEnable()
     {
-        GameStateController.OnStartGameState += StartTimer;
+        GameStateController.OnStartProcedureGameState += StartTimer;
         GameStateController.onPlayState += ResumeTimer;
         GameStateController.onPauseState += PauseTimer;
         GameStateController.onGameOverState += CompleteTimer;
     }
     private void OnDisable()
     {
-        GameStateController.OnStartGameState -= StartTimer;
+        GameStateController.OnStartProcedureGameState -= StartTimer;
         GameStateController.onPlayState -= ResumeTimer;
         GameStateController.onPauseState -= PauseTimer;
         GameStateController.onGameOverState -= CompleteTimer;

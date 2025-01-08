@@ -4,7 +4,7 @@ using UnityEngine;
 public sealed class GameStateController : MonoBehaviour
 {
     public static Action onMenuState;
-    public static Action OnStartGameState;
+    public static Action OnStartProcedureGameState;
     public static Action onPlayState;
     public static Action onPauseState;
     public static Action onGameOverState;
@@ -25,7 +25,7 @@ public sealed class GameStateController : MonoBehaviour
         _fsm = new FsmGame();
 
         _fsm.AddState(new Menu(_fsm, this, _menuUI, _gameplayUI));
-        _fsm.AddState(new StartGame(_fsm, _gameplayUI, this));
+        _fsm.AddState(new ProcedureStartGame(_fsm, _gameplayUI, this));
         _fsm.AddState(new Play(_fsm, _pauseGameBttn, this));
         _fsm.AddState(new Pause(_fsm, _pauseUI, this));
         _fsm.AddState(new GameOver(_fsm, _gameOverUI, this));
@@ -36,7 +36,7 @@ public sealed class GameStateController : MonoBehaviour
     #region CallEvent
 
     public void CallMenuEvent() => onMenuState?.Invoke();
-    public void CallStartGameEvent() => OnStartGameState?.Invoke();
+    public void CallStartProcedureEvent() => OnStartProcedureGameState?.Invoke();
     public void CallPlayEvent() => onPlayState?.Invoke();
     public void CallPauseEvent() => onPauseState?.Invoke();
     public void CallGameOverEvent() => onGameOverState?.Invoke();
@@ -46,7 +46,7 @@ public sealed class GameStateController : MonoBehaviour
     #region SetStates
 
     public void SetMenuState() => _fsm.SetState<Menu>();
-    public void SetStartGameState() => _fsm.SetState<StartGame>();
+    public void SetStartProcedureGameState() => _fsm.SetState<ProcedureStartGame>();
     public void SetPlayState() => _fsm.SetState<Play>();
     public void SetPauseState() => _fsm.SetState<Pause>();
     public void SetGameOverState() => _fsm.SetState<GameOver>();

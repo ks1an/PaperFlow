@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class BallStateIndicator : MonoBehaviour
+public sealed class BallStateIndicator : MonoBehaviour
 {
     [SerializeField] Color _canGoToBallStateColor, _cannotGoToBallStateColor;
     [SerializeField] Image _image;
@@ -11,21 +11,21 @@ public class BallStateIndicator : MonoBehaviour
 
     public void SetCanGoToBallCollor()
     {
-        if (!_canGoToBallParticles.gameObject.activeSelf)
-            _canGoToBallParticles.gameObject.SetActive(true);
-
         if(!_currentCanGoToBall)
             _image.color = _canGoToBallStateColor;
+
+        if (!_canGoToBallParticles.gameObject.activeSelf)
+            _canGoToBallParticles.gameObject.SetActive(true);
 
         _currentCanGoToBall = true;
     }
     public void SetCannotGoToBallCollor()
     {
-        if (_canGoToBallParticles.gameObject.activeSelf)
-            _canGoToBallParticles.gameObject.SetActive(false);
-
         if (_currentCanGoToBall)
             _image.color = _cannotGoToBallStateColor;
+
+        if (_canGoToBallParticles.gameObject.activeSelf)
+            _canGoToBallParticles.gameObject.SetActive(false);
 
         _currentCanGoToBall = false;
     } 

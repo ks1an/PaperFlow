@@ -1,4 +1,5 @@
 using DG.Tweening;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -6,10 +7,8 @@ public sealed class Stamina : MonoBehaviour
 {
     public float CurrentStamina { get => _currentStamina; set => CurrentStamina = _currentStamina; }
 
-    [SerializeField] int addStaminaOnChangedComplexity = 5;
-
     [Header("Spells stamina cost")]
-    public int staminaForBall = 60;
+    public int staminaForBall;
 
     [Space(10)]
     [SerializeField] Slider _staminaSlider;
@@ -18,31 +17,35 @@ public sealed class Stamina : MonoBehaviour
     #region Effects Settings
     [Header("Decrease Effect Settings")]
     [SerializeField] Slider _staminaDecreaseEffectSlider;
-    [SerializeField] float _staminaDeacreaseAnimTime = 0.3f, _staminaDeacreaseAnimDelayTime = 0.15f;
+    [SerializeField] float _staminaDeacreaseAnimTime, _staminaDeacreaseAnimDelayTime;
 
     [Header("Increase Effect Settings")]
     [SerializeField] Slider _staminaIncreaseEffectSlider;
-    [SerializeField] float _staminaIncreaseAnimTime = 0.2f, _staminaIncreaseAnimDelayTime = 0.15f;
+    [SerializeField] float _staminaIncreaseAnimTime, _staminaIncreaseAnimDelayTime;
+    bool _isIncreaseAnimPlaying;
     #endregion
 
     [Space(10)]
     [SerializeField] BallStateIndicator _ballIndicator;
 
-    float _maxStamina = 100f;
+    int _maxStamina = 100;
     float _currentStamina = 100f;
     bool _canRegenStamina = true;
     bool _infinityStamina = false;
 
     private void Update()
     {
-        if (_canRegenStamina && _currentStamina < _maxStamina)
+        if (_canRegenStamina && _currentStamina <= _maxStamina)
         {
             _currentStamina += _fillSpeed * Time.deltaTime;
-            _staminaSlider.value = _currentStamina;
-        }
+            if (_currentStamina > _maxStamina)
+                _currentStamina = _maxStamina;
 
-        CheckNeedStamina();
+            if(!_isIncreaseAnimPlaying) 
+                _staminaSlider.value = _currentStamina;
+        }
     }
+    private void LateUpdate() => CheckNeedStaminaForSkill();
 
     #region public methods
 
@@ -65,7 +68,6 @@ public sealed class Stamina : MonoBehaviour
         if (_currentStamina < 0)
             _currentStamina = 0;
 
-        CheckNeedStamina();
         DeacreaseEffectAnim();
     }
 
@@ -85,32 +87,23 @@ public sealed class Stamina : MonoBehaviour
         if (_currentStamina > _maxStamina)
             _currentStamina = _maxStamina;
 
-        CheckNeedStamina();
         IncreaseEffectAnim();
     }
 
     public void StaminaToMax()
     {
-        _staminaSlider.DOKill();
-
         _staminaSlider.maxValue = _maxStamina;
         _staminaDecreaseEffectSlider.maxValue = _maxStamina;
         _staminaIncreaseEffectSlider.maxValue = _maxStamina;
 
-        _currentStamina = _maxStamina;
-
-        _staminaSlider.value = _currentStamina;
-        _staminaDecreaseEffectSlider.value = _currentStamina;
-        _staminaIncreaseEffectSlider.value = _currentStamina;
-
-        CheckNeedStamina();
+        IncreaseStamina(_maxStamina);
     }
 
     public void SetInfinityStamina(bool isTrue) => _infinityStamina = isTrue;
 
     #endregion
 
-    void CheckNeedStamina()
+    void CheckNeedStaminaForSkill()
     {
         if (CurrentStamina < staminaForBall)
             _ballIndicator.SetCannotGoToBallCollor();
@@ -118,33 +111,35 @@ public sealed class Stamina : MonoBehaviour
             _ballIndicator.SetCanGoToBallCollor();
     }
 
-    void AddStaminaOnChangedComplexity() => IncreaseStamina(addStaminaOnChangedComplexity);
+    void AddStaminaOnChangedComplexity() => StaminaToMax();
 
     #region Effects
 
     void DeacreaseEffectAnim()
     {
-        _staminaDecreaseEffectSlider.DOKill();
+        _staminaDecreaseEffectSlider.DOComplete();
         _staminaDecreaseEffectSlider.DOValue(_currentStamina, _staminaDeacreaseAnimTime).SetDelay(_staminaDeacreaseAnimDelayTime);
         _canRegenStamina = true;
     }
 
     void IncreaseEffectAnim()
     {
-        _staminaIncreaseEffectSlider.DOKill();
-        _staminaIncreaseEffectSlider.DOValue(_currentStamina + 8, _staminaIncreaseAnimTime).SetDelay(_staminaIncreaseAnimDelayTime);
+        _staminaIncreaseEffectSlider.DOComplete();
+        _isIncreaseAnimPlaying = true;
+        _staminaIncreaseEffectSlider.DOValue(_currentStamina, _staminaIncreaseAnimTime).SetDelay(_staminaIncreaseAnimDelayTime).
+            OnComplete(SetFalseIncreaseAnimPlaying);
     }
 
+    void SetFalseIncreaseAnimPlaying() => _isIncreaseAnimPlaying = false;
     #endregion
 
     void OnEnable()
     {
-        ComplexityController.OnComplexityAddedStamina += AddStaminaOnChangedComplexity;
+        ComplexitySettingsInProcedure.OnComplexityAddedStamina += AddStaminaOnChangedComplexity;
     }
 
     void OnDisable()
     {
-        ComplexityController.OnComplexityAddedStamina -= AddStaminaOnChangedComplexity;
+        ComplexitySettingsInProcedure.OnComplexityAddedStamina -= AddStaminaOnChangedComplexity;
     }
 }
-

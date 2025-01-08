@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9082851610784537010}
-  - component: {fileID: 1571297974787051806}
+  - component: {fileID: 2004627475002004905}
   m_Layer: 0
   m_Name: scoring
   m_TagString: Scoring
@@ -32,8 +32,8 @@ Transform:
   m_Children: []
   m_Father: {fileID: 7924256604458026907}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!61 &1571297974787051806
-BoxCollider2D:
+--- !u!70 &2004627475002004905
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -64,19 +64,9 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.5}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 10}
-  m_EdgeRadius: 0
+  m_Offset: {x: 0, y: 0}
+  m_Size: {x: 0.5, y: 12}
+  m_Direction: 0
 --- !u!1 &4503312727955224390
 GameObject:
   m_ObjectHideFlags: 0
@@ -170,7 +160,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5436183595268315913}
-  - component: {fileID: 5716328038123408217}
+  - component: {fileID: 890500607000033641}
   m_Layer: 0
   m_Name: scoring (1)
   m_TagString: Scoring
@@ -193,8 +183,8 @@ Transform:
   m_Children: []
   m_Father: {fileID: 7924256604458026907}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!61 &5716328038123408217
-BoxCollider2D:
+--- !u!70 &890500607000033641
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -225,19 +215,9 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.0016888082}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1.9840114}
-  m_EdgeRadius: 0
+  m_Offset: {x: 0, y: 0}
+  m_Size: {x: 0.5, y: 2}
+  m_Direction: 0
 --- !u!1001 &3743457644553732474
 PrefabInstance:
   m_ObjectHideFlags: 0

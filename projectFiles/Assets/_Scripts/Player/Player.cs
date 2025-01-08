@@ -131,7 +131,7 @@ public sealed class Player : MonoBehaviour
 
             if (_fsm.CurrentState.GetType() == typeof(BallState))
             {
-                Destroy(collision.gameObject);
+                collision.gameObject.SetActive(false);
                 cam.DoLightShake();
                 _stamina.IncreaseStamina(10);
             }
@@ -142,8 +142,8 @@ public sealed class Player : MonoBehaviour
 
                 if (_health.CurrentHelth == 0)
                     _controller.SetGameOverState();
-                else
-                    cam.DoMediumShake();
+
+                cam.DoMediumShake();
             }
 
         }
@@ -155,7 +155,7 @@ public sealed class Player : MonoBehaviour
                 _score.IncreaseScore(1);
 
         }
-        else if (collision.CompareTag("nonDestroyObstacle"))
+        else if (collision.CompareTag("nonDestroyObstacle") && !_infinityHealth)
         {
 
             _health.TakeMaxDamage();
@@ -179,11 +179,11 @@ public sealed class Player : MonoBehaviour
         #region Subscribe Actions
 
         GameStateController.onMenuState += SetPlayerOnMenu;
-        GameStateController.OnStartGameState += SetPlayerOnStartGame;
+        GameStateController.OnStartProcedureGameState += SetPlayerOnStartGame;
         GameStateController.onPlayState += SetMovementState;
         GameStateController.onPauseState += SetIdleState;
 
-        ComplexityController.OnPurchasedBallSkillAndStaminaBar += PurchaseBallSkillAndStamina;
+        ComplexitySettingsInProcedure.OnPurchasedBallSkillAndStaminaBar += PurchaseBallSkillAndStamina;
         #endregion
     }
     void OnDisable()
@@ -191,11 +191,11 @@ public sealed class Player : MonoBehaviour
         #region Unsubscribe Actions
 
         GameStateController.onMenuState -= SetPlayerOnMenu;
-        GameStateController.OnStartGameState -= SetPlayerOnStartGame;
+        GameStateController.OnStartProcedureGameState -= SetPlayerOnStartGame;
         GameStateController.onPlayState -= SetMovementState;
         GameStateController.onPauseState -= SetIdleState;
 
-        ComplexityController.OnPurchasedBallSkillAndStaminaBar -= PurchaseBallSkillAndStamina;
+        ComplexitySettingsInProcedure.OnPurchasedBallSkillAndStaminaBar -= PurchaseBallSkillAndStamina;
         #endregion
     }
 }

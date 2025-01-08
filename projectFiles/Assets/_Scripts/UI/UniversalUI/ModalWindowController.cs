@@ -48,7 +48,7 @@ public class ModalWindowController : MonoBehaviour
 
     void Restart()
     {
-        _gameController.SetStartGameState();
+        _gameController.SetStartProcedureGameState();
         CloseModalWindow();
     }
 }
