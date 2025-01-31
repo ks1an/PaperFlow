@@ -8,6 +8,6 @@ public sealed class VersionText : MonoBehaviour
     private void Awake()
     {
         _text = GetComponent<TextMeshProUGUI>();
-        _text.text = Application.version + "  ";
+        _text.text = Application.version + "    ";
     }
 }

@@ -141,6 +141,7 @@ GameObject:
   - component: {fileID: 1341303416425709780}
   - component: {fileID: 6497696213177382270}
   - component: {fileID: 6594062306183125904}
+  - component: {fileID: 5844676962564401504}
   m_Layer: 3
   m_Name: CellingLamp
   m_TagString: Untagged
@@ -196,9 +197,9 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.014075756, y: 0.5324626}
+  m_Offset: {x: -0.031182766, y: 0.5324595}
   serializedVersion: 2
-  m_Radius: 1.55283
+  m_Radius: 1.7371786
 --- !u!114 &6594062306183125904
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -209,5 +210,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7e574669b3215564eb495f3076fb7bba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &5844676962564401504
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3379722516047864418}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b7e70ff91efed240a67089959ff788c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

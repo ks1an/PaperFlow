@@ -1,4 +1,6 @@
+#if UNITY_EDITOR
 using UnityEngine;
+
 
 public sealed class ObstacleTester : MonoBehaviour
 {
@@ -15,3 +17,4 @@ public sealed class ObstacleTester : MonoBehaviour
         _obs.Init(_followVector2);
     }
 }
+#endif

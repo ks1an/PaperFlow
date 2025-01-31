@@ -1,22 +1,17 @@
-#if UNITY_EDITOR
 using UnityEngine;
 
 public sealed class GameTester : MonoBehaviour
 {
-    public static bool CantSpawning;
-
-    [SerializeField] bool _cantSpawning = true;
-    [SerializeField] Health playerHealth;
-    [SerializeField] ComplexitySettingsInProcedure procedureComplexitySettings;
-    [SerializeField] DirectorObstaclesFabric obstaclesDirector;
-
     private void Awake()
     {
-        CantSpawning = _cantSpawning;
-
         if(!Application.isEditor)
             Destroy(gameObject);
     }
+
+#if UNITY_EDITOR
+    [SerializeField] Health playerHealth;
+    [SerializeField] ComplexitySettingsInProcedure procedureComplexitySettings;
+    [SerializeField] DirectorObstaclesFabric obstaclesDirector;
 
     #region Stamina&Skill
 
@@ -40,17 +35,13 @@ public sealed class GameTester : MonoBehaviour
 
     internal void StopSpawningObstacles()
     {
-        CantSpawning = true;
-        obstaclesDirector.StopProcedureSpawningObstacles();
+        obstaclesDirector.StopSpawning();
     }
 
     internal void StartSpawningObstacles()
     {
-        CantSpawning = false;
-        obstaclesDirector.StartProcedureSpawnignObstacles();
+        obstaclesDirector.StartSpawning();
     }
     #endregion
-
-
-}
 #endif
+}

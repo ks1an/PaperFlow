@@ -9,7 +9,7 @@ public sealed class DirectorDecorFabric : MonoBehaviour
 
     DecorFabric _fabric;
     bool _readyToSpawnCall, _spawning;
-    Vector3 _rightSpawnPos = new Vector2(0,0);
+    Vector3 _rightSpawnPos = new Vector2(0, 0);
 
     private void Awake()
     {
@@ -20,19 +20,19 @@ public sealed class DirectorDecorFabric : MonoBehaviour
     }
 
     private void Start()
-    { 
+    {
         _fabric.SetFabricBaseData(_bdFabric, _container);
         _fabric.SetFabricSpawnsPos(_rightSpawnPos);
     }
 
-    #region ByRandom
+    #region SpawnByRnd
     IEnumerator SpawnObjectsByRandom()
     {
         yield return new WaitForFixedUpdate();
 
         while (_spawning)
         {
-            if (!_readyToSpawnCall) { yield return null;  continue; }
+            if (!_readyToSpawnCall) { yield return null; continue; }
 
             _fabric.CreateObjByRandom();
             _readyToSpawnCall = false;
@@ -46,15 +46,17 @@ public sealed class DirectorDecorFabric : MonoBehaviour
 
     void StartSpawning()
     {
-        StopCoroutine(SpawnObjectsByRandom());
-        _readyToSpawnCall = true;
+        StopAllCoroutines();
+        SetTrueReadyToSpawnCall();
         _spawning = true;
+
         StartCoroutine(SpawnObjectsByRandom());
     }
     void StopSpawning()
     {
         _spawning = false;
-        StopCoroutine(SpawnObjectsByRandom());
+        _readyToSpawnCall = false;
+        StopAllCoroutines();
     }
     #endregion
 
@@ -64,9 +66,9 @@ public sealed class DirectorDecorFabric : MonoBehaviour
     {
         #region Subscribe
 
-        GameStateController.OnStartProcedureGameState += StartSpawning;
-        GameStateController.onGameOverState += StopSpawning;
-        GameStateController.onMenuState += StopSpawning;
+        GameStateController.OnGameStarted += StartSpawning;
+        GameStateController.OnGameOverStarted += StopSpawning;
+        GameStateController.OnMenuStarted += StopSpawning;
         RightObstaclesTrigger.onObstacleExitRightTrigger += SetTrueReadyToSpawnCall;
         #endregion
     }
@@ -74,11 +76,10 @@ public sealed class DirectorDecorFabric : MonoBehaviour
     {
         #region Unsubscribe
 
-        GameStateController.OnStartProcedureGameState -= StartSpawning;
-        GameStateController.onGameOverState -= StopSpawning;
-        GameStateController.onMenuState -= StopSpawning;
+        GameStateController.OnGameStarted -= StartSpawning;
+        GameStateController.OnGameOverStarted -= StopSpawning;
+        GameStateController.OnMenuStarted -= StopSpawning;
         RightObstaclesTrigger.onObstacleExitRightTrigger -= SetTrueReadyToSpawnCall;
         #endregion
     }
 }
-    

@@ -208,6 +208,7 @@ GameObject:
   - component: {fileID: 4960344950098641233}
   - component: {fileID: 1500939261105434315}
   - component: {fileID: 2917764976180697728}
+  - component: {fileID: 1462550536154981212}
   m_Layer: 3
   m_Name: shelf
   m_TagString: Untagged
@@ -277,5 +278,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7e574669b3215564eb495f3076fb7bba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _myDestroyDetails: []
+--- !u!114 &1462550536154981212
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8558870611095830736}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b7e70ff91efed240a67089959ff788c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

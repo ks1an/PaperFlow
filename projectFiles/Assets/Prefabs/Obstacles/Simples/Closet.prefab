@@ -208,6 +208,7 @@ GameObject:
   - component: {fileID: 8422371692295097995}
   - component: {fileID: 4453457831098271524}
   - component: {fileID: 6592989343762785523}
+  - component: {fileID: 3416215456064553274}
   m_Layer: 3
   m_Name: Closet
   m_TagString: Untagged
@@ -277,5 +278,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7e574669b3215564eb495f3076fb7bba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _myDestroyDetails: []
+--- !u!114 &3416215456064553274
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6523571456076481687}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b7e70ff91efed240a67089959ff788c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

@@ -6,9 +6,9 @@ public sealed class DecorFabric
     int _currentObjTypeNum;
     int _currentObjNum;
 
-    Vector3 _rightSpawn;
+    Vector2 _rightSpawn;
 
-    RandomNumberGenerator _random;
+    readonly RandomNumberGenerator _random = RandomNumberGenerator.GetInstance();
     Transform _container;
     BaseDataDecorFabric _db;
 
@@ -18,7 +18,6 @@ public sealed class DecorFabric
     {
         _db = db;
         _container = container;
-        _random = RandomNumberGenerator.GetInstance();
     }
 
     public void SetFabricSpawnsPos(Vector3 rightSpawn)
@@ -40,18 +39,23 @@ public sealed class DecorFabric
         _currentObjTypeNum = SelectRandomSupType();
         _currentObjNum = SelectRandomObs();
 
+        #region Create
 
         var linkToCurObs = _db.decorObjects.categories[_currentObjCategoryNum].types[_currentObjTypeNum].obj[_currentObjNum];
 
         GameObject prefab = linkToCurObs.prefab;
-        Vector3 pos = linkToCurObs.position + _rightSpawn +
-            new Vector3(0, _random.RangeFloat(linkToCurObs.minHeight, linkToCurObs.maxHeight));
+        Vector3 pos = linkToCurObs.position +
+            new Vector3(_rightSpawn.x, _random.RangeFloat(linkToCurObs.minHeight, linkToCurObs.maxHeight) + _rightSpawn.y);
 
         var go = GameObject.Instantiate(prefab, pos, CachedMath.QuaternionIdentity, _container);
+        #endregion
+
+        #region PostCreate
 
         go.transform.Rotate(linkToCurObs.rotation);
         if (linkToCurObs.rotateYOnSpawn && _random.CheckChance(50))
             go.transform.Rotate(CachedMath.Vector2_0_180);
+        #endregion
 
 
         var obs = go.GetComponent<DecorObject>();
@@ -61,19 +65,21 @@ public sealed class DecorFabric
     #region SelectByRandom
     int SelectRandomType()
     {
+        Category[] categories = _db.decorObjects.categories;
         while (true)
         {
-            int num = _random.Range(0, _db.decorObjects.categories.Length);
-            if (_random.CheckChance(_db.decorObjects.categories[num].chance)) return num;
+            int num = _random.Range(0, categories.Length);
+            if (_random.CheckChance(categories[num].chance)) return num;
         }
     }
 
     int SelectRandomSupType()
     {
+        TypeLayer[] types = _db.decorObjects.categories[_currentObjCategoryNum].types;
         while (true)
         {
-            int num = _random.Range(0, _db.decorObjects.categories[_currentObjCategoryNum].types.Length);
-            if (_random.CheckChance(_db.decorObjects.categories[_currentObjCategoryNum].types[num].chance)) return num;
+            int num = _random.Range(0, types.Length);
+            if (_random.CheckChance(types[num].chance)) return num;
         }
     }
 

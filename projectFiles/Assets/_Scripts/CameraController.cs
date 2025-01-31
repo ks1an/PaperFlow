@@ -1,4 +1,5 @@
 using DG.Tweening;
+using UnityEditor;
 using UnityEngine;
 
 public sealed class CameraController : MonoBehaviour
@@ -6,14 +7,20 @@ public sealed class CameraController : MonoBehaviour
     [Space(10)]
     [SerializeReference] Transform _playerTransform;
 
-    [Header("OnPlay")]
-    [SerializeField] float _zoomOutSize;
-    [SerializeField] float _zoomOutPosX, _camStartPosXOnPlay, _playerPosXForStartZoomIn;
-    [SerializeField, Range(0, 10)] float _zoomSpeed;
-
-    [Header("OnMenu")]
+    [Header("OnMenu"), Space(10)]
     [SerializeField] float _onMenuPosX;
     [SerializeField, Range(0, 10)] float _durationMenuChange;
+
+    [Header("OnPlay"), Space(10)]
+    [SerializeField] float _camStartPosXOnPlay;
+
+    [Header("ZoomOut")]
+    [SerializeField] float _zoomOutSize;
+    [SerializeField] float _playerPosXForStartZoomOut, _zoomOutDuration;
+
+    [Header("ZoomIn")]
+    [SerializeField] float _zoomInSize;
+    [SerializeField] float _zoomInDuration;
 
     [Header("LoopingShake")]
     [SerializeField] float _durationLoopShake;
@@ -23,26 +30,21 @@ public sealed class CameraController : MonoBehaviour
 
     Camera _cam;
     Vector3 _startRotateVector;
-    bool _zoomIn = true;
+    bool _playingZoomIn;
 
     void Awake()
     {
         _cam = gameObject.GetComponent<Camera>();
         _startRotateVector = new Vector3(0, 0, 0);
-    } 
+    }
 
     void LateUpdate()
     {
-        if (_playerTransform.position.x > _playerPosXForStartZoomIn)
-            _zoomIn = false;
-        else
-            _zoomIn = true;
-
-
-        if (_zoomIn)
+        if (!_playingZoomIn && _playerTransform.position.x <= _playerPosXForStartZoomOut)
             ZoomIn();
-        else
+        else if (_playingZoomIn && _playerTransform.position.x > _playerPosXForStartZoomOut)
             ZoomOut();
+
     }
 
     #region Shake
@@ -54,22 +56,24 @@ public sealed class CameraController : MonoBehaviour
 
     public void DoLightShake()
     {
-        transform.DOShakePosition(0.25f, 0.1f, 5);
+        transform.DOShakePosition(0.25f, 0.1f, 3);
         transform.DOShakeRotation(0.2f, 0.1f, 5);
     }
 
 
     public void DoLoopingShake(bool isStartLoop)
     {
-        if(isStartLoop)
-        {
-            transform.DOShakeRotation(duration: _durationLoopShake,strength: _forceLoopShake,vibrato: _vibratoLoopShake, 90, true, ShakeRandomnessMode.Harmonic).SetLoops(-1);
-        }
+        int loops;
+        if (isStartLoop)
+            loops = -1;
         else
         {
-            transform.DOKill(true);
+            loops = 0;
             transform.DOLocalRotate(_startRotateVector, 0.25f);
         }
+
+        transform.DOShakeRotation(duration: _durationLoopShake, strength: _forceLoopShake, vibrato: _vibratoLoopShake,
+            90, true, ShakeRandomnessMode.Harmonic).SetLoops(loops);
     }
 
     #endregion
@@ -78,14 +82,16 @@ public sealed class CameraController : MonoBehaviour
 
     void ZoomIn()
     {
-        _cam.orthographicSize = Mathf.Lerp(_cam.orthographicSize, 5, _zoomSpeed * Time.deltaTime);
-        transform.position = new Vector3(Mathf.Lerp(transform.position.x, 0, _zoomSpeed * Time.deltaTime), transform.position.y, transform.position.z);
+        _playingZoomIn = true;
+
+        _cam.DOOrthoSize(_zoomInSize, _zoomInDuration).SetEase(Ease.InOutCubic);
     }
 
     void ZoomOut()
     {
-        _cam.orthographicSize = Mathf.Lerp(_cam.orthographicSize, _zoomOutSize, _zoomSpeed * Time.deltaTime);
-        transform.position = new Vector3(Mathf.Lerp(transform.position.x, _zoomOutPosX, _zoomSpeed * Time.deltaTime), transform.position.y, transform.position.z);
+        _playingZoomIn = false;
+
+        _cam.DOOrthoSize(_zoomOutSize, _zoomOutDuration).SetEase(Ease.InOutCubic);
     }
 
     #endregion
@@ -97,19 +103,20 @@ public sealed class CameraController : MonoBehaviour
     void OnPlay()
     {
         transform.DOKill();
-        transform.DOLocalMoveX(_camStartPosXOnPlay, 1).SetUpdate(true);
+        ZoomIn();
+        transform.DOMoveX(_camStartPosXOnPlay, _zoomInDuration);
     }
     #endregion
 
 
     private void OnEnable()
     {
-        GameStateController.onMenuState += OnMenu;
-        GameStateController.OnStartProcedureGameState += OnPlay;
+        GameStateController.OnMenuStarted += OnMenu;
+        GameStateController.OnGameStarted += OnPlay;
     }
     private void OnDisable()
     {
-        GameStateController.onMenuState -= OnMenu;
-        GameStateController.OnStartProcedureGameState -= OnPlay;
+        GameStateController.OnMenuStarted -= OnMenu;
+        GameStateController.OnGameStarted -= OnPlay;
     }
 }

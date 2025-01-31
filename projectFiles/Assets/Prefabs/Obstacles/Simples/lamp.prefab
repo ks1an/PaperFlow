@@ -214,6 +214,7 @@ GameObject:
   - component: {fileID: 358040689066401686}
   - component: {fileID: 456621885231328726}
   - component: {fileID: 8632811727803937209}
+  - component: {fileID: 6847795238492076847}
   m_Layer: 3
   m_Name: lamp
   m_TagString: Untagged
@@ -284,6 +285,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7e574669b3215564eb495f3076fb7bba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _myDestroyDetails:
+  - {fileID: 8301064701384202511}
+--- !u!114 &6847795238492076847
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7797247004186894903}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b7e70ff91efed240a67089959ff788c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &8710019112018083522

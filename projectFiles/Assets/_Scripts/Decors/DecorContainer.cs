@@ -10,10 +10,10 @@ public sealed class DecorContainer : MonoBehaviour
 
     private void OnEnable()
     {
-        GameStateController.OnStartProcedureGameState += DestoryAllObstacles;
+        GameStateController.OnGameStarted += DestoryAllObstacles;
     }
     private void OnDisable()
     {
-        GameStateController.OnStartProcedureGameState -= DestoryAllObstacles;
+        GameStateController.OnGameStarted -= DestoryAllObstacles;
     }
 }

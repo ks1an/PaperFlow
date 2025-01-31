@@ -246,6 +246,7 @@ GameObject:
   - component: {fileID: 7336861022068800332}
   - component: {fileID: 5159935292190062765}
   - component: {fileID: 6925442423230747982}
+  - component: {fileID: 3365775317395149657}
   m_Layer: 3
   m_Name: chair
   m_TagString: Untagged
@@ -315,6 +316,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7e574669b3215564eb495f3076fb7bba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _myDestroyDetails: []
+--- !u!114 &3365775317395149657
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4143297268536363244}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b7e70ff91efed240a67089959ff788c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &5775372946259164554

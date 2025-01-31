@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1684813536375634268}
   - component: {fileID: 134278813324030440}
   - component: {fileID: 100742631596236456}
+  - component: {fileID: 3513523417207148138}
   m_Layer: 3
   m_Name: Accelerator
   m_TagString: Untagged
@@ -79,6 +80,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8135b24c24faf08498c2094768bf4b9e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3513523417207148138
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3651771616299894701}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b7e70ff91efed240a67089959ff788c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &4833922572336789655

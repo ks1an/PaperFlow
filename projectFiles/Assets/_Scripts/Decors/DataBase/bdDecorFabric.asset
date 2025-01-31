@@ -30,7 +30,7 @@ MonoBehaviour:
           spawnDelay: 15
         - nameId: Chair
           prefab: {fileID: 5191982840403783520, guid: d0478200044813c4a9306b0d0ea751d4, type: 3}
-          position: {x: 0, y: -3.3, z: 0}
+          position: {x: 0, y: -3.4, z: 0}
           rotation: {x: 0, y: 0, z: 0}
           maxHeight: 0
           minHeight: 0

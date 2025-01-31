@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class SimpleDecorObjects : SimpleDecors
+public sealed class SimpleDecorObjects : SimpleDecors
 {
     [SerializeField, Range(0, 1)] float multiplierSpeedX;
     Vector2 _followPos;
