@@ -8,8 +8,6 @@ public sealed class BrokenGroup : MonoBehaviour
 
     Vector2 _knockBackVector;
 
-    readonly RandomNumberGenerator _random = RandomNumberGenerator.GetInstance();
-
     void OnEnable()
     {
         for (int i = 0; i < _rbodies.Length; i++)
@@ -21,7 +19,7 @@ public sealed class BrokenGroup : MonoBehaviour
         _knockBackVector = new Vector2(_knockbackSpeedX, _knockbackSpeedY);
         for (int i = 0; i < _rbodies.Length; i++)
         {
-            _rbodies[i].velocity = _knockBackVector * _random.RangeFloat(_minRndMult, _maxRndMult);
+            _rbodies[i].velocity = _knockBackVector * Random.Range(_minRndMult, _maxRndMult);
             _rbodies[i].AddTorque(_torque, ForceMode2D.Impulse);
         }
     }

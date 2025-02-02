@@ -88,6 +88,7 @@ GameObject:
   - component: {fileID: 8638551551739358828}
   - component: {fileID: 4535676778608207323}
   - component: {fileID: 7417380161959857450}
+  - component: {fileID: -8454940411574030463}
   m_Layer: 3
   m_Name: (Acceler + closet)+(lamp+celling)
   m_TagString: Untagged
@@ -160,6 +161,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e574669b3215564eb495f3076fb7bba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _myDestroyDetails: []
+--- !u!50 &-8454940411574030463
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6173518472459466057}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4
 --- !u!1001 &1537139249912501340
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -219,6 +248,7 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 200930028912423111, guid: 2febe576239c39b4f8a5a392c55d10c8, type: 3}
     - {fileID: 4268588734922417052, guid: 2febe576239c39b4f8a5a392c55d10c8, type: 3}
+    - {fileID: 5528970554637809581, guid: 2febe576239c39b4f8a5a392c55d10c8, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -287,6 +317,7 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 134278813324030440, guid: 26ab40298bfdd0a4bb1a5e83dc3516f4, type: 3}
     - {fileID: 100742631596236456, guid: 26ab40298bfdd0a4bb1a5e83dc3516f4, type: 3}
+    - {fileID: -7898582745152500844, guid: 26ab40298bfdd0a4bb1a5e83dc3516f4, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -355,6 +386,7 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 6592989343762785523, guid: fa0506eef7ef0ed48b7dc7bb1e00bd5f, type: 3}
     - {fileID: 4453457831098271524, guid: fa0506eef7ef0ed48b7dc7bb1e00bd5f, type: 3}
+    - {fileID: 6851641102268179028, guid: fa0506eef7ef0ed48b7dc7bb1e00bd5f, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 8422371692295097995, guid: fa0506eef7ef0ed48b7dc7bb1e00bd5f, type: 3}

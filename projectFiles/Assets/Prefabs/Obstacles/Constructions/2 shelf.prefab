@@ -76,6 +76,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7924256604458026907}
+  - component: {fileID: 3698256354191991594}
   - component: {fileID: 8699423066466884137}
   - component: {fileID: 2106271652043528865}
   m_Layer: 3
@@ -104,6 +105,33 @@ Transform:
   - {fileID: 1902229506629032531}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!50 &3698256354191991594
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4503312727955224390}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4
 --- !u!58 &8699423066466884137
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -278,6 +306,7 @@ PrefabInstance:
     - {fileID: 2917764976180697728, guid: a880386b8c053c04eb5b12a3e7368701, type: 3}
     - {fileID: 1500939261105434315, guid: a880386b8c053c04eb5b12a3e7368701, type: 3}
     - {fileID: 1462550536154981212, guid: a880386b8c053c04eb5b12a3e7368701, type: 3}
+    - {fileID: 6666150433729323566, guid: a880386b8c053c04eb5b12a3e7368701, type: 3}
     m_RemovedGameObjects:
     - {fileID: 601511791944652464, guid: a880386b8c053c04eb5b12a3e7368701, type: 3}
     m_AddedGameObjects: []
@@ -348,6 +377,7 @@ PrefabInstance:
     - {fileID: 2917764976180697728, guid: a880386b8c053c04eb5b12a3e7368701, type: 3}
     - {fileID: 1500939261105434315, guid: a880386b8c053c04eb5b12a3e7368701, type: 3}
     - {fileID: 1462550536154981212, guid: a880386b8c053c04eb5b12a3e7368701, type: 3}
+    - {fileID: 6666150433729323566, guid: a880386b8c053c04eb5b12a3e7368701, type: 3}
     m_RemovedGameObjects:
     - {fileID: 601511791944652464, guid: a880386b8c053c04eb5b12a3e7368701, type: 3}
     m_AddedGameObjects: []

@@ -2646,7 +2646,7 @@ Transform:
   m_GameObject: {fileID: 429365191}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -30, y: 0.062499896, z: 0}
+  m_LocalPosition: {x: -32, y: 0.062499896, z: 0}
   m_LocalScale: {x: 1, y: 0.95835674, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3258,10 +3258,10 @@ MonoBehaviour:
   _onMenuPosX: -0.75
   _durationMenuChange: 3
   _camStartPosXOnPlay: 0.25
-  _zoomOutSize: 5.15
-  _playerPosXForStartZoomOut: 1.15
+  _playerPosXForZoomIn: 1.25
+  _zoomOutOrthoSize: 5.15
   _zoomOutDuration: 2
-  _zoomInSize: 5
+  _zoomInOrthoSize: 5
   _zoomInDuration: 1
   _durationLoopShake: 2
   _forceLoopShake: {x: 0, y: 0, z: 0.25}
@@ -6634,7 +6634,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 1
   m_AngularDrag: 0.05
-  m_GravityScale: 2.85
+  m_GravityScale: 2.75
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -6642,7 +6642,7 @@ Rigidbody2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_Interpolate: 1
+  m_Interpolate: 2
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
@@ -6725,11 +6725,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f74816585c7ee8547bfee1315ebec2b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  forceUp: 54
-  forceDown: 6
-  chargeSpeed: 3.25
-  correctionSpeed: 20
+  forceUp: 2500
+  forceDown: 50
+  chargeSpeed: 200
+  correctionSpeed: 3.5
   maxChargingPoxX: 3.5
+  ballUpForce: 100
   _numJumps: 2
   _jumpPower: 0.5
   _jumpDuration: 1.5

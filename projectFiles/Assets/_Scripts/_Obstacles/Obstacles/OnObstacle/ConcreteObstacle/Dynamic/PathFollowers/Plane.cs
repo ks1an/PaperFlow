@@ -43,6 +43,7 @@ public class Plane : PathFollower
             transform.position = Vector2.MoveTowards(transform.position, _followMovePos, ComplexitySettingsInProcedure.CurrentComplexitySpeed * Time.deltaTime);
 
         if (_pointInPath == null || _pointInPath.Current == null || _body == null) return;
+
         _body.position = Vector2.MoveTowards(_body.position, _pointInPath.Current.position, _speed * Time.deltaTime);
     }
 

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7418422379447749480}
   - component: {fileID: 8849150447752526136}
   - component: {fileID: 6081376465748996290}
+  - component: {fileID: 6702688643588492411}
   m_Layer: 3
   m_Name: Lamp+ (Table+Chair)
   m_TagString: Untagged
@@ -47,6 +48,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e574669b3215564eb495f3076fb7bba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _myDestroyDetails: []
 --- !u!58 &6081376465748996290
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -82,6 +84,33 @@ CircleCollider2D:
   m_Offset: {x: 1, y: 0}
   serializedVersion: 2
   m_Radius: 1.5
+--- !u!50 &6702688643588492411
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 153580830303849122}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4
 --- !u!1001 &1108876967402691054
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -141,6 +170,7 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 3010949118266148931, guid: fc7a299da86266047ab8c0eb187ac1da, type: 3}
     - {fileID: 6411973095395688485, guid: fc7a299da86266047ab8c0eb187ac1da, type: 3}
+    - {fileID: -141847107955604394, guid: fc7a299da86266047ab8c0eb187ac1da, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -209,6 +239,7 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 8632811727803937209, guid: a677a010ab1947340ad4dd454a510375, type: 3}
     - {fileID: 456621885231328726, guid: a677a010ab1947340ad4dd454a510375, type: 3}
+    - {fileID: -698365454411424371, guid: a677a010ab1947340ad4dd454a510375, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

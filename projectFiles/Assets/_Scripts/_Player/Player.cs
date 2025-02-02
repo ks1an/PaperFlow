@@ -9,11 +9,12 @@ public sealed class Player : MonoBehaviour
     #region MovementParam
 
     [SerializeField]
-    internal float forceUp = 54f,
-    forceDown = 6f,
-    chargeSpeed = 3.25f,
-    correctionSpeed = 20f,
-    maxChargingPoxX = 3.5f;
+    internal float forceUp,
+    forceDown,
+    chargeSpeed,
+    correctionSpeed,
+    maxChargingPoxX, 
+    ballUpForce;
     #endregion
 
     [Header("DieNonDestoryObstacle")]
@@ -67,7 +68,7 @@ public sealed class Player : MonoBehaviour
     {
         _startPos = transform.position;
 
-        #region StateMachine
+        #region AddStates
 
         _fsm = new FsmPlayer();
 
@@ -75,9 +76,9 @@ public sealed class Player : MonoBehaviour
         _fsm.AddState(new IdleState(_fsm));
         _fsm.AddState(new ChargeState(_fsm, this, _rb, _stamina));
         _fsm.AddState(new BallState(_fsm, _rb, this, _renderer, _ballSprite, _planeSprite, _ballCollider, _planeCollider, _health));
+        #endregion
 
         _fsm.SetState<MovementState>();
-        #endregion
     }
 
     void Update() => _fsm.Update();
@@ -126,6 +127,7 @@ public sealed class Player : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
+        //TODO: refactoring player OnTriggerEnter2D
         if (collision.CompareTag("destroyObstacle"))
         {
 
@@ -172,7 +174,6 @@ public sealed class Player : MonoBehaviour
 
         }
     }
-
 
     void OnEnable()
     {

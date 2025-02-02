@@ -10,8 +10,7 @@ public sealed class ChargeState : FSMPlayerState
 
     Vector2 _maxForceUp, _upForce,
         _downForce;
-    Vector2 _chargeUpForce, _chargeRightForce, _chargeLeftForce;
-
+    Vector2 _UpToBallForce, _chargeRightForce, _chargeLeftForce;
 
     #endregion
 
@@ -24,18 +23,13 @@ public sealed class ChargeState : FSMPlayerState
         #region GetForces
 
         _maxForceUp = new Vector3(0, _player.forceUp, 0);
-        _upForce = _player.forceUp * Time.fixedDeltaTime * CachedMath.Vector2Up;
-        _downForce = _player.forceDown * Time.fixedDeltaTime * CachedMath.Vector2Down;
-
-        _chargeUpForce = _player.chargeSpeed * Time.fixedDeltaTime * 10 * CachedMath.Vector2Up;
-        _chargeRightForce = _player.chargeSpeed * Time.fixedDeltaTime * CachedMath.Vector2Right;
-        _chargeLeftForce = _player.chargeSpeed * Time.fixedDeltaTime * CachedMath.Vector2Left;
+        _upForce = _player.forceUp * CachedMath.Vector2Up;
+        _downForce = _player.forceDown * CachedMath.Vector2Down;
+ 
+        _UpToBallForce = _player.ballUpForce * CachedMath.Vector2Up;
+        _chargeRightForce = _player.chargeSpeed * CachedMath.Vector2Right;
+        _chargeLeftForce = _player.chargeSpeed * CachedMath.Vector2Left;
         #endregion
-    }
-
-    public override void Enter()
-    {
-        _player.cam.DoLoopingShake(true);
     }
 
     public override void Update()
@@ -48,32 +42,36 @@ public sealed class ChargeState : FSMPlayerState
         else if (_player.inputHandler.BallSkillInput && _player.canUseBallSkill && _stamina.CurrentStamina >= _player.NeedStaminaForBall)
         {
             _stamina.DeacreaseStamina(_player.NeedStaminaForBall);
-            _rb.AddForce(_chargeUpForce, ForceMode2D.Impulse);
+            _rb.AddForce(_UpToBallForce);
             Fsm.SetState<BallState>();
             return;
         }
-    }
 
-    public override void FixedUpdate()
-    {
+        #region Y move
+
         if (_player.inputHandler.UpInput > 0)
-            _rb.AddForce(_upForce, ForceMode2D.Impulse);
+            _rb.AddForce(_upForce * Time.deltaTime);
         else
-            _rb.AddForce(_downForce, ForceMode2D.Impulse);
+            _rb.AddForce(_downForce * Time.deltaTime);
+
+        #endregion
+
+        #region X move
 
         if (_player.transform.position.x < _player.maxChargingPoxX)
-            _rb.AddForce(_chargeRightForce, ForceMode2D.Impulse);
+            _rb.AddForce(_chargeRightForce * Time.deltaTime);
         else if (_player.transform.position.x > _player.maxChargingPoxX)
-            _rb.AddForce(_chargeLeftForce, ForceMode2D.Impulse);
+            _rb.AddForce(_chargeLeftForce * Time.deltaTime);
 
-        if (_rb.velocity.y > _player.forceUp)
-            _rb.velocity = _maxForceUp;
+        #endregion
 
         if (_rb.velocity.y != 0)
             _player.transform.eulerAngles = new Vector3(_rb.velocity.y * 2 + 60, 0, -90);
     }
-    public override void Exit()
+
+    public override void FixedUpdate()
     {
-        _player.cam.DoLoopingShake(false);
+        if (_rb.velocity.y > _player.forceUp)
+            _rb.velocity = _maxForceUp;
     }
 }

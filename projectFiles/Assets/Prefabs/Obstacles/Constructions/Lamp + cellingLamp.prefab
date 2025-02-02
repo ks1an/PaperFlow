@@ -76,6 +76,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6526487494410921479}
+  - component: {fileID: 5887508104720058589}
   - component: {fileID: 6907025680315417159}
   - component: {fileID: 8633710042783525222}
   m_Layer: 3
@@ -103,6 +104,33 @@ Transform:
   - {fileID: 6437936221931633926}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!50 &5887508104720058589
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8725900968192892299}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4
 --- !u!58 &6907025680315417159
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -206,6 +234,7 @@ PrefabInstance:
     - {fileID: 6594062306183125904, guid: ad19e977b00356e4096a34753e489f56, type: 3}
     - {fileID: 6497696213177382270, guid: ad19e977b00356e4096a34753e489f56, type: 3}
     - {fileID: 5844676962564401504, guid: ad19e977b00356e4096a34753e489f56, type: 3}
+    - {fileID: 1455757275228700633, guid: ad19e977b00356e4096a34753e489f56, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -275,6 +304,7 @@ PrefabInstance:
     - {fileID: 8632811727803937209, guid: a677a010ab1947340ad4dd454a510375, type: 3}
     - {fileID: 456621885231328726, guid: a677a010ab1947340ad4dd454a510375, type: 3}
     - {fileID: 6847795238492076847, guid: a677a010ab1947340ad4dd454a510375, type: 3}
+    - {fileID: -698365454411424371, guid: a677a010ab1947340ad4dd454a510375, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

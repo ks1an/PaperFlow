@@ -1,5 +1,4 @@
 using DG.Tweening;
-using UnityEditor;
 using UnityEngine;
 
 public sealed class CameraController : MonoBehaviour
@@ -13,13 +12,14 @@ public sealed class CameraController : MonoBehaviour
 
     [Header("OnPlay"), Space(10)]
     [SerializeField] float _camStartPosXOnPlay;
+    [SerializeField] float _playerPosXForZoomIn;
 
     [Header("ZoomOut")]
-    [SerializeField] float _zoomOutSize;
-    [SerializeField] float _playerPosXForStartZoomOut, _zoomOutDuration;
+    [SerializeField] float _zoomOutOrthoSize;
+    [SerializeField] float _zoomOutDuration;
 
     [Header("ZoomIn")]
-    [SerializeField] float _zoomInSize;
+    [SerializeField] float _zoomInOrthoSize;
     [SerializeField] float _zoomInDuration;
 
     [Header("LoopingShake")]
@@ -29,22 +29,20 @@ public sealed class CameraController : MonoBehaviour
 
 
     Camera _cam;
-    Vector3 _startRotateVector;
-    bool _playingZoomIn;
+    bool _isCompletedZoomIn = true, _isCompletedZoomOut = true;
 
     void Awake()
     {
         _cam = gameObject.GetComponent<Camera>();
-        _startRotateVector = new Vector3(0, 0, 0);
     }
 
-    void LateUpdate()
+    private void LateUpdate()
     {
-        if (!_playingZoomIn && _playerTransform.position.x <= _playerPosXForStartZoomOut)
-            ZoomIn();
-        else if (_playingZoomIn && _playerTransform.position.x > _playerPosXForStartZoomOut)
-            ZoomOut();
-
+        if (_isCompletedZoomIn && _isCompletedZoomOut) 
+            if (_playerTransform.position.x > _playerPosXForZoomIn && _cam.orthographicSize == _zoomInOrthoSize)
+                ZoomOut();
+            else if (_playerTransform.position.x < _playerPosXForZoomIn && _cam.orthographicSize == _zoomOutOrthoSize)
+                ZoomIn();
     }
 
     #region Shake
@@ -60,38 +58,20 @@ public sealed class CameraController : MonoBehaviour
         transform.DOShakeRotation(0.2f, 0.1f, 5);
     }
 
-
-    public void DoLoopingShake(bool isStartLoop)
-    {
-        int loops;
-        if (isStartLoop)
-            loops = -1;
-        else
-        {
-            loops = 0;
-            transform.DOLocalRotate(_startRotateVector, 0.25f);
-        }
-
-        transform.DOShakeRotation(duration: _durationLoopShake, strength: _forceLoopShake, vibrato: _vibratoLoopShake,
-            90, true, ShakeRandomnessMode.Harmonic).SetLoops(loops);
-    }
-
     #endregion
 
     #region Zoom In/Out
 
-    void ZoomIn()
+    public void ZoomIn()
     {
-        _playingZoomIn = true;
-
-        _cam.DOOrthoSize(_zoomInSize, _zoomInDuration).SetEase(Ease.InOutCubic);
+        _isCompletedZoomIn = false;
+        _cam.DOOrthoSize(_zoomInOrthoSize, _zoomInDuration).SetEase(Ease.InOutCubic).OnComplete(() => _isCompletedZoomIn = true);
     }
 
-    void ZoomOut()
+    public void ZoomOut()
     {
-        _playingZoomIn = false;
-
-        _cam.DOOrthoSize(_zoomOutSize, _zoomOutDuration).SetEase(Ease.InOutCubic);
+        _isCompletedZoomOut = false;
+       _cam.DOOrthoSize(_zoomOutOrthoSize, _zoomOutDuration).SetEase(Ease.InOutCubic).OnComplete(() => _isCompletedZoomOut = true);
     }
 
     #endregion

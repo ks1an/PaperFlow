@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4095224032902135927}
   - component: {fileID: 4636349412617087482}
   - component: {fileID: 3124824848179081117}
+  - component: {fileID: 2648264424917441333}
   m_Layer: 3
   m_Name: Inhibitor x2
   m_TagString: Untagged
@@ -81,6 +82,33 @@ CircleCollider2D:
   m_Offset: {x: 1.747638, y: 0}
   serializedVersion: 2
   m_Radius: 2.247638
+--- !u!50 &2648264424917441333
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5979112485142676422}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4
 --- !u!1001 &9126333385517979069
 PrefabInstance:
   m_ObjectHideFlags: 0

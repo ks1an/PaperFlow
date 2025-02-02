@@ -11,11 +11,12 @@ public sealed class BallState : FSMPlayerState
 
     #region Forces
 
-    Vector2 _enterBallForce,_exitBallForce, _exitBallForceWithAcceler;
+    Vector2 _ballForceUp, _chargeForce;
     #endregion
 
     public BallState(FsmPlayer fsm, Rigidbody2D rb, Player player, SpriteRenderer renderer, Sprite ballSprite, Sprite planeSprite, Collider2D ballCollider, Collider2D planeCollider, Health hp) : base(fsm)
     {
+        #region GetLinks
         _rb = rb;
         _player = player;
         _ballSprite = ballSprite;
@@ -24,12 +25,12 @@ public sealed class BallState : FSMPlayerState
         _ballCollider = ballCollider;
         _planeCollider = planeCollider;
         _hp = hp;
+        #endregion
 
         #region GetForces
 
-        _enterBallForce = _player.forceUp * CachedMath.Vector2Up * Time.fixedDeltaTime;
-        _exitBallForce = _player.forceUp * 5 * CachedMath.Vector2Up * Time.fixedDeltaTime;
-        _exitBallForceWithAcceler = _player.chargeSpeed * 10 * CachedMath.Vector2Up * Time.fixedDeltaTime;
+        _ballForceUp = _player.ballUpForce * CachedMath.Vector2Up;
+        _chargeForce = _player.chargeSpeed * CachedMath.Vector2Up;
         #endregion
     }
 
@@ -39,13 +40,14 @@ public sealed class BallState : FSMPlayerState
         _player.transform.eulerAngles = new Vector3(0, 0, -90);
         _planeCollider.enabled = false;
         _ballCollider.enabled = true;
-        _rb.AddForce(_enterBallForce, ForceMode2D.Impulse);
+        _rb.AddForce(_ballForceUp);
     }
 
     public override void Exit()
     {
-        _renderer.sprite = _planeSprite;
         _hp.StartCooldawnDamage(0.1f);
+
+        _renderer.sprite = _planeSprite;
         _planeCollider.enabled = true;
         _ballCollider.enabled = false;
     }
@@ -55,11 +57,11 @@ public sealed class BallState : FSMPlayerState
         if (!_player.inputHandler.BallSkillInput)
         {
             _player.inputHandler.UseBallSkill();
-            _rb.AddForce(_exitBallForce, ForceMode2D.Impulse);
+            _rb.AddForce(_ballForceUp);
 
             if (_player.inputHandler.AccelerInput)
             {
-                _rb.AddForce(_exitBallForceWithAcceler, ForceMode2D.Impulse);
+                _rb.AddForce(_chargeForce);
                 Fsm.SetState<ChargeState>();
             }
             else

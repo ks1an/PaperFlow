@@ -76,6 +76,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5479925332728577887}
+  - component: {fileID: -5929691081687113343}
   - component: {fileID: 402271913939181796}
   - component: {fileID: 7069864059079558885}
   m_Layer: 3
@@ -103,6 +104,33 @@ Transform:
   - {fileID: 7089731326818954909}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!50 &-5929691081687113343
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2432269730533831199}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4
 --- !u!58 &402271913939181796
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -158,6 +186,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5479925332728577887}
     m_Modifications:
+    - target: {fileID: 3698256354191991594, guid: f3463fed2cd2a584b93f4b9878ae0665, type: 3}
+      propertyPath: m_BodyType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3698256354191991594, guid: f3463fed2cd2a584b93f4b9878ae0665, type: 3}
+      propertyPath: m_Constraints
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4503312727955224390, guid: f3463fed2cd2a584b93f4b9878ae0665, type: 3}
       propertyPath: m_Name
       value: 2 shelf
@@ -205,6 +241,7 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 2106271652043528865, guid: f3463fed2cd2a584b93f4b9878ae0665, type: 3}
     - {fileID: 8699423066466884137, guid: f3463fed2cd2a584b93f4b9878ae0665, type: 3}
+    - {fileID: 3698256354191991594, guid: f3463fed2cd2a584b93f4b9878ae0665, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -269,6 +306,7 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 100742631596236456, guid: 26ab40298bfdd0a4bb1a5e83dc3516f4, type: 3}
     - {fileID: 134278813324030440, guid: 26ab40298bfdd0a4bb1a5e83dc3516f4, type: 3}
+    - {fileID: -7898582745152500844, guid: 26ab40298bfdd0a4bb1a5e83dc3516f4, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
