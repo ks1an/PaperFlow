@@ -39,4 +39,4 @@ This entire project up to version 0.4.11.6 dev_3 is distributed under MIT
 
 Go to "PROMO" in files.
 
-<img src = "![me](https://github.com/ks1an/PaperFlow/blob/main/PROMO/GIF_LampBrokenAnim.gif)">
+<img src = "https://github.com/ks1an/PaperFlow/blob/main/PROMO/GIF_LampBrokenAnim.gif">
