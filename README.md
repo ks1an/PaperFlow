@@ -34,3 +34,9 @@ Next to the "Играть" button, there is a sliding panel arrow where you can 
 ## License
 
 This entire project up to version 0.4.11.6 dev_3 is distributed under MIT
+
+## Some Promo
+
+Go to "PROMO" in files.
+
+<img src = "![me](https://github.com/ks1an/PaperFlow/blob/main/PROMO/GIF_LampBrokenAnim.gif)">
